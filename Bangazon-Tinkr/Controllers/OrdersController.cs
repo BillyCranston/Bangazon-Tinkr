@@ -24,7 +24,20 @@ namespace Bangazon_Tinkr.Controllers
             var order = _ordersRepository.GetSingleOrder(id);
             if (order == null) NotFound("Couldn't find an order with that id");
             return Ok(order);
+        }
 
+        //api/Order/user/{userId}
+        [HttpGet("user/{userId}")]
+        public IActionResult GetAllOrdersByUserId(int userId)
+        {
+            // add user check to verify user exists once get user by id method is included
+            var orders = _ordersRepository.GetUserOrders(userId);
+            var isEmpty = !orders.Any();
+            if (isEmpty)
+            {
+                return NotFound("This user does not have any orders.");
+            }
+            return Ok(orders);
         }
     }
 }
