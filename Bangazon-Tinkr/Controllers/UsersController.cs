@@ -24,6 +24,8 @@ namespace Bangazon_Tinkr.Controllers
         public IActionResult GetAllUsers()
         {
             var allUsers = _userRepository.GetAll();
+            var isEmpty = !allUsers.Any();
+            if (isEmpty) return NotFound("There are no users!");
 
             return Ok(allUsers);
         }
