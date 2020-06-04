@@ -24,5 +24,18 @@ namespace Bangazon_Tinkr.DataAccess
                 return db.Query<User>("select * from [User]");
             }
         }
+
+        public PaymentType GetPaymentTypeById(int paymentTypeId)
+        {
+            var query = @"select * from PaymentType
+                          where PaymentTypeId = 3";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { PaymentTypeId = paymentTypeId };
+
+                return db.QueryFirstOrDefault<PaymentType>(query, parameters);
+            }
+        }
     }
 }
