@@ -9,7 +9,7 @@ namespace Bangazon_Tinkr.Models
     {
         public int OrderId { get; set; }
         public int UserId { get; set; }
-        public int PmtTypeId { get; set; }
+        public int PaymentId { get; set; }
         public bool IsComplete { get; set; }
     }
 }
