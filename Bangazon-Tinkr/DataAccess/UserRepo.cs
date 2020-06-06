@@ -135,5 +135,19 @@ namespace Bangazon_Tinkr.DataAccess
                 return results;
             }
         }
+
+        public IEnumerable<PaymentType> GetPaymentTypesByUserId(int userId)
+        {
+            var query = @"SELECT *
+                          FROM PaymentType
+                          WHERE UserId = @UserId";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { UserId = userId };
+
+                return db.Query<PaymentType>(query, parameters);
+            }
+        }
     }
 }
