@@ -46,8 +46,8 @@ namespace Bangazon_Tinkr.Controllers
             }
         }
 
-        //api/User/1/Delete
-        [HttpPost("{userIdToDelete}/Delete")]
+        //api/User/1
+        [HttpDelete("{userIdToDelete}")]
         public IActionResult DeleteUser(int userIdToDelete)
         {
             var existingUser = _userRepository.GetUserById(userIdToDelete);
