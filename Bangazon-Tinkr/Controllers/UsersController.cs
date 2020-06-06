@@ -46,6 +46,19 @@ namespace Bangazon_Tinkr.Controllers
             }
         }
 
+        //api/User/1
+        [HttpDelete("{userIdToDelete}")]
+        public IActionResult DeleteUser(int userIdToDelete)
+        {
+            var existingUser = _userRepository.GetUserById(userIdToDelete);
+            if (existingUser != null)
+            {
+                _userRepository.DeleteUserAccount(userIdToDelete);
+                return Ok($"User {userIdToDelete} and their payment info have successfully been deleted");
+            }
+            else { return NotFound("No user currently exists with that Id"); }
+        }
+
 
         // api/User/2
         [HttpGet("{userId}")]

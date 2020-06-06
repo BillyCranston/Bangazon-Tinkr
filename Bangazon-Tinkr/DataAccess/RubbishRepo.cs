@@ -52,5 +52,18 @@ namespace Bangazon_Tinkr.DataAccess
                 return affectedRows;
             }
         }
+
+        public Rubbish DeleteRubbish(int rubbishId)
+        {
+            var sql = @"DELETE from Rubbish
+                        WHERE RubbishId = @RubbishId;";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { RubbishId = rubbishId };
+                var result = db.QueryFirstOrDefault<Rubbish>(sql, parameters);
+                return result;
+            }
+        }
     }
 }
