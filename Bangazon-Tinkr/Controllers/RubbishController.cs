@@ -14,6 +14,24 @@ namespace Bangazon_Tinkr.Controllers
     public class RubbishController : ControllerBase
     {
         RubbishRepo _rubbishRepository;
+
+        public RubbishController(RubbishRepo repository)
+        {
+            _rubbishRepository = repository;
+        }
+
+        // api/Rubbish/2
+        [HttpGet("{rubbishId}")]
+        public IActionResult GetRubbishById(int rubbishId)
+        {
+            var singleRubbish = _rubbishRepository.getSingleRubbish(rubbishId);
+            if (singleRubbish != null)
+            {
+                return Ok(singleRubbish);
+            }
+            else return NotFound("That Rubbish does not exist.");
+        }
+        RubbishRepo _rubbishRepository;
         public RubbishController(RubbishRepo repository)
         {
             _rubbishRepository = repository;
