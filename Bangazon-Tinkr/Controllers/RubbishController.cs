@@ -31,11 +31,6 @@ namespace Bangazon_Tinkr.Controllers
             }
             else return NotFound("That Rubbish does not exist.");
         }
-        RubbishRepo _rubbishRepository;
-        public RubbishController(RubbishRepo repository)
-        {
-            _rubbishRepository = repository;
-        }
 
         // api/Rubbish/
         [HttpGet]

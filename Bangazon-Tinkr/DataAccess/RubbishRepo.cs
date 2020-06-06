@@ -17,6 +17,19 @@ namespace Bangazon_Tinkr.DataAccess
             connectionString = config.GetConnectionString("Tinkr");
         }
 
+        public Rubbish getSingleRubbish(int rubbishId)
+        {
+            var sql = @"SELECT * FROM Rubbish
+                        WHERE RubbishId = @RubbishId;";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { RubbishId = rubbishId };
+                var rubbish = db.QueryFirstOrDefault<Rubbish>(sql, parameters);
+                return rubbish;
+            }
+        }
+
         public List<Rubbish> GetRubbish()
         {
             using (var db = new SqlConnection(connectionString))
