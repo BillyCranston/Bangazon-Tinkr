@@ -41,5 +41,18 @@ namespace Bangazon_Tinkr.Controllers
 
             return Ok(allRubbish);
         }
+
+        // api/Rubbish/{rubbishId}
+        [HttpDelete("{rubbishId}")]
+        public IActionResult DeleteRubbishById(int rubbishId)
+        {
+            var isValidRubbish = _rubbishRepository.getSingleRubbish(rubbishId);
+            if (isValidRubbish != null)
+            {
+                var deletedRubbish = _rubbishRepository.DeleteRubbish(rubbishId);
+                return Ok("The rubbish has been successfully deleted.");
+            }
+            return NotFound("That rubbish does not exist and could not be deleted");
+        }
     }
 }
