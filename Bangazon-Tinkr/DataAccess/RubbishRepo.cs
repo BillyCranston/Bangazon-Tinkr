@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Bangazon_Tinkr.DataAccess
@@ -35,6 +36,20 @@ namespace Bangazon_Tinkr.DataAccess
             using (var db = new SqlConnection(connectionString))
             {
                 return db.Query<Rubbish>("select * from rubbish").ToList();
+            }
+        }
+
+        public Rubbish CreateRubbish(int userId, Rubbish rubbishToAdd)
+        {
+            var sql = @"INSERT INTO Rubbish ( Name, Description,                    CategoryId, IsAvailable, UserId, Price)
+                     output inserted.*
+                     VALUES(@Name, @Description, @CategoryId, @IsAvailable, @UserId, @Price);";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var affectedRows = db.QueryFirstOrDefault(sql, rubbishToAdd);
+                Console.WriteLine(affectedRows);
+                return affectedRows;
             }
         }
     }

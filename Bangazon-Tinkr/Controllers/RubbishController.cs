@@ -6,6 +6,7 @@ using Bangazon_Tinkr.DataAccess;
 using Bangazon_Tinkr.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace Bangazon_Tinkr.Controllers
 {
@@ -14,12 +15,15 @@ namespace Bangazon_Tinkr.Controllers
     public class RubbishController : ControllerBase
     {
         RubbishRepo _rubbishRepository;
+        UserRepo _usersRepository;
 
-        public RubbishController(RubbishRepo repository)
+        public RubbishController(RubbishRepo repository, UserRepo usersRepository)
         {
             _rubbishRepository = repository;
+            _usersRepository = usersRepository;
         }
 
+       
         // api/Rubbish/2
         [HttpGet("{rubbishId}")]
         public IActionResult GetRubbishById(int rubbishId)
@@ -41,5 +45,17 @@ namespace Bangazon_Tinkr.Controllers
 
             return Ok(allRubbish);
         }
+        // api/Rubbish/2/createRubbish
+        [HttpPost("{userId}/createRubbish")]
+        public IActionResult CreateNewRubbish(int userId, Rubbish rubbishToAdd)
+        {
+            var user =  _usersRepository.GetUserById(userId);
+            if (user != null) {
+                var newRubbish = _rubbishRepository.CreateRubbish(userId, rubbishToAdd);
+                return Created("", newRubbish);
+            }
+            return NotFound("User Not Found");
+        }
+
     }
 }
