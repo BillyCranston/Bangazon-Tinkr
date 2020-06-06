@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Bangazon_Tinkr.Models;
+using Dapper;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using Bangazon_Tinkr.Models;
-using Dapper;
-using System.Data.SqlClient;
 
 namespace Bangazon_Tinkr.DataAccess
 {
@@ -27,6 +27,14 @@ namespace Bangazon_Tinkr.DataAccess
                 var parameters = new { RubbishId = rubbishId };
                 var rubbish = db.QueryFirstOrDefault<Rubbish>(sql, parameters);
                 return rubbish;
+            }
+        }
+
+        public List<Rubbish> GetRubbish()
+        {
+            using (var db = new SqlConnection(connectionString))
+            {
+                return db.Query<Rubbish>("select * from rubbish").ToList();
             }
         }
     }
