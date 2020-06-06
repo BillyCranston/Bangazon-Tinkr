@@ -28,7 +28,7 @@ namespace Bangazon_Tinkr.DataAccess
         public PaymentType GetPaymentTypeById(int paymentTypeId)
         {
             var query = @"select * from PaymentType
-                          where PaymentTypeId = 3";
+                          where PaymentTypeId = @paymentTypeId";
 
             using (var db = new SqlConnection(connectionString))
             {

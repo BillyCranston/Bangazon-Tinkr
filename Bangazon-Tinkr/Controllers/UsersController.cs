@@ -34,7 +34,7 @@ namespace Bangazon_Tinkr.Controllers
         [HttpGet("PaymentTypes/{paymentTypeId}")]
         public IActionResult GetSinglePaymentTypeById(int paymentTypeId)
         {
-            var paymentType = _userRepository.GetPaymentTypeById();
+            var paymentType = _userRepository.GetPaymentTypeById(paymentTypeId);
 
             if (paymentType == null) return NotFound("No such payment type found");
 
