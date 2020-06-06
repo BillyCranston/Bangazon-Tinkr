@@ -87,5 +87,25 @@ namespace Bangazon_Tinkr.Controllers
 
             return Ok(paymentType);
         }
+
+        // api/User/1/PaymentTypes
+        [HttpGet("{userId}/PaymentTypes")]
+        public IActionResult GetAllPaymentTypes(int userId)
+        {
+            var result = GetSingleUserById(userId);
+            var okActionResult = result as OkObjectResult;
+
+            if (okActionResult != null && okActionResult.Value as User != null)
+            {
+                var paymentTypes = _userRepository.GetPaymentTypesByUserId(userId);
+                if (paymentTypes.Any())
+                {
+                    return Ok(paymentTypes);
+                }
+                else return NotFound("No payment types found for that User.");
+            }
+            else return result;
+
+        }
     }
 }
