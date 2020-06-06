@@ -17,7 +17,23 @@ namespace Bangazon_Tinkr.DataAccess
             connectionString = config.GetConnectionString("Tinkr");
         }
 
-        public OrderTotal GetSingleOrder(int orderId)
+        public bool CheckForValidOrderId(int orderId)
+        {
+            var sql = @"
+                        select *
+                        from [Order]
+                        where OrderId = @OrderId;
+                      ";
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { OrderId = orderId };
+                var result = db.QueryFirstOrDefault<Order>(sql, parameters);
+                if (result != null) return true;
+                return false;
+            }
+        }
+
+        public OrderTotal GetSingleOrderDetails(int orderId)
         {
             var orderLineItems = GetLineItemDetailsByOrderId(orderId);
             var sql = @"

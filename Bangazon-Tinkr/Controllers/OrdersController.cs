@@ -21,9 +21,14 @@ namespace Bangazon_Tinkr.Controllers
         [HttpGet("{id}")]
         public IActionResult GetSingleOrderById(int id)
         {
-            var order = _ordersRepository.GetSingleOrder(id);
-            if (order == null) NotFound("Couldn't find an order with that id");
-            return Ok(order);
+            var validOrder = _ordersRepository.CheckForValidOrderId(id);
+            if (validOrder)
+            {
+                var order = _ordersRepository.GetSingleOrderDetails(id);
+                if (order == null) NotFound("Couldn't find an order with that id");
+                return Ok(order);
+            }
+            return NotFound("Couldn't find an order with that id");
 
         }
     }
