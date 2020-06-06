@@ -62,5 +62,32 @@ namespace Bangazon_Tinkr.Controllers
         }
 
 
+        // api/User/2
+        [HttpGet("{userId}")]
+        public IActionResult GetSingleUserById(int userId)
+        {
+            var singleUserId = _userRepository.GetUserById(userId);
+            var singleUserAccountIsDeleted = _userRepository.CheckIfUserAccountIsDeleted(userId);
+            if (singleUserId != null)
+            {
+                return Ok(singleUserId);
+            }
+            else if (singleUserAccountIsDeleted != null)
+            {
+                return Ok("Account has been Deleted");
+            }
+            else return NotFound("That User does not exist.");
+        }
+
+        // api/User/PaymentTypes/3
+        [HttpGet("PaymentTypes/{paymentTypeId}")]
+        public IActionResult GetSinglePaymentTypeById(int paymentTypeId)
+        {
+            var paymentType = _userRepository.GetPaymentTypeById(paymentTypeId);
+
+            if (paymentType == null) return NotFound("No such payment type found");
+
+            return Ok(paymentType);
+        }
     }
 }
