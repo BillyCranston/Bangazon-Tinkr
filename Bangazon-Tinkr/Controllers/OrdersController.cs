@@ -12,10 +12,11 @@ namespace Bangazon_Tinkr.Controllers
     public class OrdersController : ControllerBase
     {
         OrdersRepo _ordersRepository;
-
-        public OrdersController(OrdersRepo repository)
+        UserRepo _usersRepository;
+        public OrdersController(OrdersRepo repository, UserRepo usersRepository)
         {
             _ordersRepository = repository;
+            _usersRepository = usersRepository;
         }
         //api/Order/{id}
         [HttpGet("{id}")]
@@ -29,7 +30,24 @@ namespace Bangazon_Tinkr.Controllers
                 return Ok(order);
             }
             return NotFound("Couldn't find an order with that id");
+        }
 
+        //api/Order/user/{userId}
+        [HttpGet("user/{userId}")]
+        public IActionResult GetAllOrdersByUserId(int userId)
+        {
+            var validUser = _usersRepository.GetUserById(userId);
+            if (validUser != null)
+            {
+                var orders = _ordersRepository.GetUserOrders(userId);
+                var isEmpty = !orders.Any();
+                if (isEmpty)
+                {
+                    return NotFound("This user does not have any orders.");
+                }
+                return Ok(orders);
+            }
+            return NotFound("That user does not exist");
         }
     }
 }

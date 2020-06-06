@@ -84,5 +84,22 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
+        public IEnumerable<Order> GetUserOrders(int userId)
+        {
+            var sql = @"
+                        select *
+                        from [Order]
+                        where UserId = @UserId;
+                        ";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { UserId = userId };
+                var result = db.Query<Order>(sql, parameters);
+                return result;
+            }
+        }
+
+
     }
 }
