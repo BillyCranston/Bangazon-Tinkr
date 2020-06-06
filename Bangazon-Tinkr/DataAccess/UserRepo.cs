@@ -105,7 +105,9 @@ namespace Bangazon_Tinkr.DataAccess
         {
             DeleteAllUserPaymentAccounts(id);
 
-            var sql = @"DELETE From [USER] Where UserId = @id";
+            var sql = @"UPDATE [User]
+                        SET FirstName = null, LastName = null, StreetAddress = null, City = null, [State] = null, Zip = null
+                        WHERE [User].UserId = @id";
 
             using (var db = new SqlConnection(connectionString))
             {
@@ -118,7 +120,8 @@ namespace Bangazon_Tinkr.DataAccess
 
         public IEnumerable<User> DeleteAllUserPaymentAccounts(int id)
         {
-            var sql = @"DELETE p
+            var sql = @"UPDATE p
+                        SET AccountNo = null
                         FROM PaymentType p
 	                        JOIN [User] u
 		                        ON u.UserId = p.UserId
