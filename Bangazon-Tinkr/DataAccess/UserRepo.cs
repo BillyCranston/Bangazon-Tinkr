@@ -23,6 +23,7 @@ namespace Bangazon_Tinkr.DataAccess
             {
                 return db.Query<User>("select * from [User]");
             }
+
         }
 
         public User GetUserById(int userId)
@@ -52,6 +53,20 @@ namespace Bangazon_Tinkr.DataAccess
                 var parameters = new { UserId = userId };
                 var user = db.QueryFirstOrDefault<User>(sql, parameters);
                 return user;
+
+            }
+        }
+
+        public PaymentType GetPaymentTypeById(int paymentTypeId)
+        {
+            var query = @"select * from PaymentType
+                          where PaymentTypeId = @paymentTypeId";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { PaymentTypeId = paymentTypeId };
+
+                return db.QueryFirstOrDefault<PaymentType>(query, parameters);
             }
         }
     }

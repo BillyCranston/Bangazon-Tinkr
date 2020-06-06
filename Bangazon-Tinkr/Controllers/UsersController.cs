@@ -46,5 +46,16 @@ namespace Bangazon_Tinkr.Controllers
             }
             else return NotFound("That User does not exist.");
         }
+
+        // api/User/PaymentTypes/3
+        [HttpGet("PaymentTypes/{paymentTypeId}")]
+        public IActionResult GetSinglePaymentTypeById(int paymentTypeId)
+        {
+            var paymentType = _userRepository.GetPaymentTypeById(paymentTypeId);
+
+            if (paymentType == null) return NotFound("No such payment type found");
+
+            return Ok(paymentType);
+        }
     }
 }
