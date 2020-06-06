@@ -100,6 +100,16 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
+        public IEnumerable<Order> AddNewOrder()
+        {
+            var sql = @"";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var result = db.
+            }
+        }
+
 
     }
 }
