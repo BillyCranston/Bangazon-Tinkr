@@ -49,5 +49,12 @@ namespace Bangazon_Tinkr.Controllers
             }
             return NotFound("That user does not exist");
         }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateOrderStatusToComplete(int orderId)
+        {
+
+        }
+
     }
 }
