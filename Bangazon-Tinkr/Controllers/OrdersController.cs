@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Bangazon_Tinkr.DataAccess;
 using Microsoft.AspNetCore.Mvc;
+using Bangazon_Tinkr.Models;
 
 namespace Bangazon_Tinkr.Controllers
 {
@@ -54,7 +55,7 @@ namespace Bangazon_Tinkr.Controllers
         [HttpPost("{userId}/new")]
         public IActionResult CreateNewOrder(int userId, Order orderToAdd)
         {
-            var newOrder = _ordersRepository.AddNewOrder();
+            var newOrder = _ordersRepository.AddNewOrder(userId, orderToAdd);
 
         }
     }

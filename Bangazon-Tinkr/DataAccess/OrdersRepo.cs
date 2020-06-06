@@ -100,7 +100,7 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
-        public IEnumerable<Order> AddNewOrder()
+        public IEnumerable<Order> AddNewOrder(int userId, Order orderToAdd)
         {
             var sql = @"";
 
