@@ -51,12 +51,21 @@ namespace Bangazon_Tinkr.Controllers
             return NotFound("That user does not exist");
         }
 
-        //api/Order/{userId}/new
-        [HttpPost("{userId}/new")]
-        public IActionResult CreateNewOrder(int userId, Order orderToAdd)
+        //api/Order/
+        [HttpPost]
+        public IActionResult CreateNewOrder(Order orderToAdd)
         {
-            var newOrder = _ordersRepository.AddNewOrder(userId, orderToAdd);
-
+            var isValidUser = _usersRepository.GetUserById(orderToAdd.UserId);
+            if (isValidUser != null)
+            {
+                var currentOrder = _ordersRepository.CheckForCurrentOrder(orderToAdd);
+                if (currentOrder == null)
+                {
+                    var newOrder = _ordersRepository.AddNewOrder(orderToAdd);
+                    return Created("", newOrder);
+                }
+            }
+            return NotFound("That user does not exist.");
         }
     }
 }
