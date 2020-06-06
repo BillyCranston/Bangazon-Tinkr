@@ -100,5 +100,40 @@ namespace Bangazon_Tinkr.DataAccess
                 return result;
             }
         }
+
+        public IEnumerable<User> DeleteUserAccount(int id)
+        {
+            DeleteAllUserPaymentAccounts(id);
+
+            var sql = @"UPDATE [User]
+                        SET FirstName = null, LastName = null, StreetAddress = null, City = null, [State] = null, Zip = null
+                        WHERE [User].UserId = @id";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { Id = id };
+
+                var results = db.Query<User>(sql, parameters);
+                return results;
+            }
+        }
+
+        public IEnumerable<User> DeleteAllUserPaymentAccounts(int id)
+        {
+            var sql = @"UPDATE p
+                        SET AccountNo = null
+                        FROM PaymentType p
+	                        JOIN [User] u
+		                        ON u.UserId = p.UserId
+			                        WHERE u.UserId = @id";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { Id = id };
+
+                var results = db.Query<User>(sql, parameters);
+                return results;
+            }
+        }
     }
 }
