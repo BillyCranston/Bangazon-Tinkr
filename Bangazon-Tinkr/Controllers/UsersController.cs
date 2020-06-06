@@ -30,6 +30,23 @@ namespace Bangazon_Tinkr.Controllers
             return Ok(allUsers);
         }
 
+        //api/User
+        [HttpPost]
+        public IActionResult CreateNewUser(User userToAdd)
+        {
+            var existingUser = _userRepository.GetUserByAddress(userToAdd.StreetAddress);
+            if (existingUser == null)
+            {
+                var newUser = _userRepository.Add(userToAdd);
+                return Created("", newUser);
+            }
+            else
+            {
+                return NotFound("A user already exists with this address. Please login.");
+            }
+        }
+
+
         // api/User/2
         [HttpGet("{userId}")]
         public IActionResult GetSingleUserById(int userId)
