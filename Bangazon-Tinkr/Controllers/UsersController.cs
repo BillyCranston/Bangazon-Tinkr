@@ -56,10 +56,6 @@ namespace Bangazon_Tinkr.Controllers
                 _userRepository.DeleteUserAccount(userIdToDelete);
                 return Ok($"User {userIdToDelete} and their payment info have successfully been deleted");
             }
-            else if (existingUser.FirstName == null)
-            {
-                return NotFound("That user has already been deleted.");
-            }
             else { return NotFound("No user currently exists with that Id"); }
         }
 
