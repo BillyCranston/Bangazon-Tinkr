@@ -41,15 +41,14 @@ namespace Bangazon_Tinkr.DataAccess
 
         public Rubbish CreateRubbish(int userId, Rubbish rubbishToAdd)
         {
-            var sql = @"INSERT INTO Rubbish ( Name, Description,                    CategoryId, IsAvailable, UserId, Price)
+            var sql = @"INSERT INTO Rubbish ( Name, Description, CategoryId, IsAvailable, UserId, Price)
                      output inserted.*
                      VALUES(@Name, @Description, @CategoryId, @IsAvailable, @UserId, @Price);";
 
             using (var db = new SqlConnection(connectionString))
             {
-                var affectedRows = db.QueryFirstOrDefault(sql, rubbishToAdd);
-                Console.WriteLine(affectedRows);
-                return affectedRows;
+                var results = db.QueryFirstOrDefault<Rubbish>(sql, rubbishToAdd);
+                return results;
             }
         }
 

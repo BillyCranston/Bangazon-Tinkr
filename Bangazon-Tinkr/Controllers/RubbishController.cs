@@ -57,7 +57,6 @@ namespace Bangazon_Tinkr.Controllers
             return NotFound("User Not Found");
         }
 
-
         // api/Rubbish/{rubbishId}
         [HttpDelete("{rubbishId}")]
         public IActionResult DeleteRubbishById(int rubbishId)
@@ -70,5 +69,6 @@ namespace Bangazon_Tinkr.Controllers
             }
             return NotFound("That rubbish does not exist and could not be deleted");
         }
+
     }
 }
