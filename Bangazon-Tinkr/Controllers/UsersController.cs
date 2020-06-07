@@ -107,5 +107,28 @@ namespace Bangazon_Tinkr.Controllers
             else return result;
 
         }
+
+        // api/User/1/PaymentTypes
+        [HttpPost("{userId}/PaymentTypes")]
+        public IActionResult AddPaymentType(int userId, PaymentType paymentType)
+        {
+            var result = GetAllPaymentTypes(userId);
+            var successfulResult = result as OkObjectResult;
+            var existingPaymentTypes = successfulResult.Value as IEnumerable<PaymentType>;
+
+            if (successfulResult != null && existingPaymentTypes != null)
+            {
+                // add the payment type to database
+            }
+            if (existingPaymentType == null)
+            {
+                var newUser = _userRepository.AddPaymentType(paymentType);
+                return Created("", newUser);
+            }
+            else
+            {
+                return NotFound("A payment type already exists with this account number.");
+            }
+        }
     }
 }
