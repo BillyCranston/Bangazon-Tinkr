@@ -55,13 +55,13 @@ namespace Bangazon_Tinkr.DataAccess
                 var parameters = new { OrderId = orderId };
                 var orderSum = db.QueryFirstOrDefault<int>(sql2, parameters);
                 var result = db.QueryFirstOrDefault<Order>(sql, parameters);
-                var parameters2 = new OrderTotal() 
-                { 
-                    OrderId = orderId, 
-                    LineItems = orderLineItems, 
-                    Total = orderSum, 
-                    UserId = result.UserId, 
-                    PaymentId = result.PaymentId 
+                var parameters2 = new OrderTotal()
+                {
+                    OrderId = orderId,
+                    LineItems = orderLineItems,
+                    Total = orderSum,
+                    UserId = result.UserId,
+                    PaymentId = result.PaymentId
                 };
                 return parameters2;
             }
@@ -96,6 +96,37 @@ namespace Bangazon_Tinkr.DataAccess
             {
                 var parameters = new { UserId = userId };
                 var result = db.Query<Order>(sql, parameters);
+                return result;
+            }
+        }
+
+        public Order AddNewOrder(Order orderToAdd)
+        {
+            var sql = @"insert into [Order](UserId, PaymentId, IsComplete)
+                        output inserted.*
+                        values(@UserId,null,0)";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { UserId = orderToAdd.UserId };
+                var result = db.QueryFirstOrDefault<Order>(sql, parameters);
+                return result;
+            }
+           
+        }
+
+        public Order CheckForCurrentOrder(Order orderToAdd)
+        {
+            var sql = @"
+                        select *
+                        from [Order]
+                        where userId = @UserId and IsComplete = 0;
+                      ";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { UserId = orderToAdd.UserId };
+                var result = db.QueryFirstOrDefault<Order>(sql, parameters);
                 return result;
             }
         }
