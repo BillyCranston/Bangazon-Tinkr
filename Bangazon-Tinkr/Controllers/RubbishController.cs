@@ -51,8 +51,12 @@ namespace Bangazon_Tinkr.Controllers
         {
             var user =  _usersRepository.GetUserById(userId);
             if (user != null) {
-                var newRubbish = _rubbishRepository.CreateRubbish(userId, rubbishToAdd);
-                return Created("", newRubbish);
+                var existingRubbish = _rubbishRepository.getSingleRubbish(rubbishToAdd.RubbishId);
+                if (existingRubbish == null)
+                {
+                    var newRubbish = _rubbishRepository.CreateRubbish(userId, rubbishToAdd);
+                    return Created("", newRubbish);
+                }
             }
             return NotFound("User Not Found");
         }
