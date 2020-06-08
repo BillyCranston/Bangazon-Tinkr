@@ -110,20 +110,13 @@ namespace Bangazon_Tinkr.Controllers
 
         // api/User/1/PaymentTypes
         [HttpPost("{userId}/PaymentTypes")]
-        public IActionResult AddPaymentType(int userId, PaymentType paymentType)
+        public IActionResult AddPaymentType(PaymentType paymentType)
         {
-            var result = GetAllPaymentTypes(userId);
-            var successfulResult = result as OkObjectResult;
-            var existingPaymentTypes = successfulResult.Value as IEnumerable<PaymentType>;
-
-            if (successfulResult != null && existingPaymentTypes != null)
-            {
-                // add the payment type to database
-            }
+            var existingPaymentType = _userRepository.GetPaymentTypeByAccountNo(paymentType.AccountNo);
             if (existingPaymentType == null)
             {
-                var newUser = _userRepository.AddPaymentType(paymentType);
-                return Created("", newUser);
+                var newPaymentType = _userRepository.AddPaymentType(paymentType);
+                return Created("", newPaymentType);
             }
             else
             {
