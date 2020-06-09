@@ -48,7 +48,7 @@ namespace Bangazon_Tinkr.Controllers
         {
             var rubbishByCategory = _rubbishRepository.GetAllRubbishByCategoryId(categoryId);
             var isEmpty = !rubbishByCategory.Any();
-            if (isEmpty) return NotFound("There are no users!");
+            if (isEmpty) return NotFound("Sorry, there is currently no rubbish available in that category.");
 
             return Ok(rubbishByCategory);
         }
