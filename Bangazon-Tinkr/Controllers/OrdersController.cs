@@ -14,10 +14,12 @@ namespace Bangazon_Tinkr.Controllers
     {
         OrdersRepo _ordersRepository;
         UserRepo _usersRepository;
-        public OrdersController(OrdersRepo repository, UserRepo usersRepository)
+        RubbishRepo _rubbishRepository;
+        public OrdersController(OrdersRepo repository, UserRepo usersRepository, RubbishRepo rubbishRepository)
         {
             _ordersRepository = repository;
             _usersRepository = usersRepository;
+            _rubbishRepository = rubbishRepository;
         }
         //api/Order/{id}
         [HttpGet("{id}")]
@@ -86,6 +88,25 @@ namespace Bangazon_Tinkr.Controllers
                 }
             }
             return NotFound("That user does not exist.");
+        }
+
+        //api/Order/AddItem
+        [HttpPost("AddItem")]
+        public IActionResult AddItemToOrder(LineItem lineItemToAdd)
+        {
+            var order = _ordersRepository.CheckForValidOrderId(lineItemToAdd.OrderId);
+            var checkOrderIsActive = _ordersRepository.CheckIfOrderIsActive(lineItemToAdd.OrderId);
+            if (order && checkOrderIsActive != null)
+            {
+                var rubbish = _rubbishRepository.CheckIfRubbishIsAvailable(lineItemToAdd.RubbishId);
+                if (rubbish != null)
+                {
+                    var newLineItem = _ordersRepository.AddNewLineItem(lineItemToAdd);
+                    return Ok(newLineItem);
+                }
+                return NotFound("That piece of rubbish is no longer available.");
+            }
+            return NotFound("An open order was not found");
         }
     }
 }
