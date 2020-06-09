@@ -1,10 +1,249 @@
 {
 	"info": {
-		"_postman_id": "046f14f5-0155-4a2e-b01f-9b1b9916008d",
+		"_postman_id": "cc5664fe-b444-4e03-bf54-5c055e4dadb3",
 		"name": "Bangazon-Tinkr",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Crystal",
+			"item": [
+				{
+					"name": "Create New Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"userId\": 2}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44300/api/Order/",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44300",
+							"path": [
+								"api",
+								"Order",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Line Item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orderId\": 3,\n\t\"rubbishId\": 8\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44300/api/Order/AddItem",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44300",
+							"path": [
+								"api",
+								"Order",
+								"AddItem"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Alesha",
+			"item": [
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"FirstName\": \"Connor\",\r\n        \"LastName\": \"Sullivan\",\r\n        \"Type\" : \"BuyerAndSeller\",\r\n        \"StreetAddress\": \"1234 Coding King Court\",\r\n        \"City\": \"Nashville\",\r\n        \"State\": \"TN\",\r\n        \"Zip\": 37221\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44300/api/User/3/UpdateUser",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44300",
+							"path": [
+								"api",
+								"User",
+								"3",
+								"UpdateUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44300/api/User/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44300",
+							"path": [
+								"api",
+								"User",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "John",
+			"item": [
+				{
+					"name": "Get All Payment Types for User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44300/api/User/3/PaymentTypes",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44300",
+							"path": [
+								"api",
+								"User",
+								"3",
+								"PaymentTypes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Payment Type",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"paymentTypeId\": 3,\n\t\"userId\": 2,\n\t\"pmtType\": \"Visa\",\n\t\"accountNo\": 123456789\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44300/api/User/PaymentTypes",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44300",
+							"path": [
+								"api",
+								"User",
+								"PaymentTypes"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Connor",
+			"item": [
+				{
+					"name": "Update Order to Complete",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44300/api/Order/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44300",
+							"path": [
+								"api",
+								"Order",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User Account",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44300/api/User/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44300",
+							"path": [
+								"api",
+								"User",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
 		{
 			"name": "Get By OrderId with Total",
 			"request": {
@@ -208,7 +447,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost:44300/api/Rubbish/1/createRubbish",
+					"raw": "https://localhost:44300/api/Rubbish/",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -217,8 +456,7 @@
 					"path": [
 						"api",
 						"Rubbish",
-						"1",
-						"createRubbish"
+						""
 					]
 				}
 			},
@@ -489,6 +727,67 @@
 						"User",
 						"PaymentTypes",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"FirstName\": \"Connor\",\r\n        \"LastName\": \"Sullivan\",\r\n        \"Type\" : \"BuyerAndSeller\",\r\n        \"StreetAddress\": \"1234 Coding King Court\",\r\n        \"City\": \"Nashville\",\r\n        \"State\": \"TN\",\r\n        \"Zip\": 37221\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44300/api/User/3/UpdateUser",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"User",
+						"3",
+						"UpdateUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Payment Type",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"paymentTypeId\": 3,\n\t\"userId\": 2,\n\t\"pmtType\": \"Visa\",\n\t\"accountNo\": 123456789\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44300/api/User/PaymentTypes",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"User",
+						"PaymentTypes"
 					]
 				}
 			},
