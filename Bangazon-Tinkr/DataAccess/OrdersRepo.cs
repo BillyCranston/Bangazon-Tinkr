@@ -99,6 +99,54 @@ namespace Bangazon_Tinkr.DataAccess
                 return result;
             }
         }
+        public bool VerifyIncompleteOrderExists(int orderId)
+        {
+           var sql = @"
+                        select*
+                        from[Order]
+                        where OrderId = @orderId and IsComplete = 0;
+            ";
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { OrderId = orderId };
+                var result = db.QueryFirstOrDefault<Order>(sql, parameters);
+                if (result != null) return true;
+                return false;
+            }
+        }
+
+        public bool VerifyCompletedOrderExists(int orderId)
+        {
+            var sql = @"
+                        select*
+                        from[Order]
+                        where OrderId = @orderId and IsComplete = 1;
+            ";
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { OrderId = orderId };
+                var result = db.QueryFirstOrDefault<Order>(sql, parameters);
+                if (result != null) return true;
+                return false;
+            }
+        }
+
+        public IEnumerable<Order> CompleteOrder(int orderId)
+        {
+            var sql = @"
+                        UPDATE [Order]
+                        Set IsComplete = 1
+                        Output inserted.*
+                        Where OrderId = @orderId;
+                      ";
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { OrderId = orderId };
+                var result = db.Query<Order>(sql, parameters);
+                return result;
+            }
+        }
+
 
         public Order AddNewOrder(Order orderToAdd)
         {
