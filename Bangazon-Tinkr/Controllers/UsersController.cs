@@ -145,7 +145,27 @@ namespace Bangazon_Tinkr.Controllers
             else
             {
                 _userRepository.DeletePaymentType(paymentTypeId);
-                return Ok($"That payment type has successfully been deleted.");
+                return Ok("That payment type has successfully been deleted.");
+            }
+        }
+
+        // api/User/PaymentTypes/1
+        [HttpPut("PaymentTypes/{pmtTypeId}")]
+        public IActionResult UpdatePmtTypeById(PaymentType pmtType)
+        {
+            var existingPmtType = _userRepository.GetPaymentTypeById(pmtType.PaymentTypeId);
+            if (existingPmtType == null)
+            {
+                return NotFound("No payment type exists with that Id.");
+            }
+            else if (existingPmtType.AccountNo == 0)
+            {
+                return BadRequest("That payment type has been deleted.");
+            }
+            else
+            {
+                var updatedPmtType = _userRepository.UpdatePaymentType(pmtType);
+                return Ok(updatedPmtType);
             }
         }
     }
