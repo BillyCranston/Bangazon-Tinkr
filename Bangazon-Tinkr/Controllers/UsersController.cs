@@ -108,6 +108,7 @@ namespace Bangazon_Tinkr.Controllers
 
         }
 
+        // api/User/2/UpdateUser
         [HttpPut("{userId}/UpdateUser")]
         public IActionResult UpdateUserInformation(User updateUser)
         {
