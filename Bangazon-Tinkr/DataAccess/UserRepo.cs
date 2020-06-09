@@ -149,5 +149,33 @@ namespace Bangazon_Tinkr.DataAccess
                 return db.Query<PaymentType>(query, parameters);
             }
         }
+
+        public PaymentType GetPaymentTypeByAccountNo(int accountNo)
+        {
+            var query = @"SELECT *
+                          FROM PaymentType
+                          WHERE AccountNo = @accountNo";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { AccountNo = accountNo };
+
+                var paymentType = db.QueryFirstOrDefault<PaymentType>(query, parameters);
+                return paymentType;
+            }
+        }
+
+        public PaymentType AddPaymentType(PaymentType paymentType)
+        {
+            var sql = $@"INSERT into PaymentType(UserId, PmtType, AccountNo)
+                         OUTPUT inserted.*
+                         VALUES(@UserId, @PmtType, @AccountNo)";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var result = db.QueryFirstOrDefault<PaymentType>(sql, paymentType);
+                return result;
+            }
+        }
     }
 }
