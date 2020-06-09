@@ -6,6 +6,7 @@ using Bangazon_Tinkr.DataAccess;
 using Bangazon_Tinkr.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace Bangazon_Tinkr.Controllers
 {
@@ -14,12 +15,15 @@ namespace Bangazon_Tinkr.Controllers
     public class RubbishController : ControllerBase
     {
         RubbishRepo _rubbishRepository;
+        UserRepo _usersRepository;
 
-        public RubbishController(RubbishRepo repository)
+        public RubbishController(RubbishRepo repository, UserRepo usersRepository)
         {
             _rubbishRepository = repository;
+            _usersRepository = usersRepository;
         }
 
+       
         // api/Rubbish/2
         [HttpGet("{rubbishId}")]
         public IActionResult GetRubbishById(int rubbishId)
@@ -41,6 +45,14 @@ namespace Bangazon_Tinkr.Controllers
 
             return Ok(allRubbish);
         }
+        // api/Rubbish/createRubbish
+        [HttpPost]
+        public IActionResult CreateNewRubbish(Rubbish rubbishToAdd)
+        {
+            var newRubbish = _rubbishRepository.CreateRubbish(rubbishToAdd);
+            return Created("", newRubbish);
+        }
+        
 
         // api/Rubbish/Category/{categoryId}
         [HttpGet("Category/{categoryId}")]
@@ -66,7 +78,7 @@ namespace Bangazon_Tinkr.Controllers
             return NotFound("That rubbish does not exist and could not be deleted");
         }
 
-        // api/Rubbish
+        // api/Rubbish/
         [HttpPut]
         public IActionResult UpdateRubbish(Rubbish rubbishToUpdate)
         {
@@ -76,7 +88,8 @@ namespace Bangazon_Tinkr.Controllers
                 var updatedRubbish = _rubbishRepository.Update(rubbishToUpdate);
                 return Ok(rubbishToUpdate);
             }
-            return NotFound("That rubbish does not exist and could not be updated.");
+            return NotFound("That rubbish does not exist and could not be deleted");
         }
+
     }
 }

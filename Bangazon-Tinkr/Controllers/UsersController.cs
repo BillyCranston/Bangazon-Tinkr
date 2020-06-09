@@ -108,8 +108,22 @@ namespace Bangazon_Tinkr.Controllers
 
         }
 
+        // api/User/UpdateUser
+        [HttpPut("UpdateUser")]
+        public IActionResult UpdateUserInformation(User updateUser)
+        {
+            var userIdToUpdate = _userRepository.GetUserById(updateUser.UserId);
+            if (userIdToUpdate == null) return NotFound("User Not found");
+            else
+            {
+                var updatedUsersInfo = _userRepository.UserInfoUpdate(updateUser);
+            }    
+
+            var getUserProfile = _userRepository.GetUserById(updateUser.UserId);
+                
+            return Ok(getUserProfile);
+        }
         // api/User/PaymentTypes
-        [HttpPost("PaymentTypes")]
         public IActionResult AddPaymentType(PaymentType paymentType)
         {
             var existingUser = _userRepository.GetUserById(paymentType.UserId);
@@ -145,7 +159,27 @@ namespace Bangazon_Tinkr.Controllers
             else
             {
                 _userRepository.DeletePaymentType(paymentTypeId);
-                return Ok($"That payment type has successfully been deleted.");
+                return Ok("That payment type has successfully been deleted.");
+            }
+        }
+
+        // api/User/PaymentTypes
+        [HttpPut("PaymentTypes")]
+        public IActionResult UpdatePmtTypeById(PaymentType pmtType)
+        {
+            var existingPmtType = _userRepository.GetPaymentTypeById(pmtType.PaymentTypeId);
+            if (existingPmtType == null)
+            {
+                return NotFound("No payment type exists with that Id.");
+            }
+            else if (existingPmtType.AccountNo == 0)
+            {
+                return BadRequest("That payment type has been deleted.");
+            }
+            else
+            {
+                var updatedPmtType = _userRepository.UpdatePaymentType(pmtType);
+                return Ok(updatedPmtType);
             }
         }
     }
