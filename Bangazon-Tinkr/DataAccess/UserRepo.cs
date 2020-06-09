@@ -208,6 +208,20 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
+        public PaymentType UpdatePaymentType(PaymentType pmtType)
+        {
+            var sql = @"UPDATE PaymentType
+                        SET UserId = @UserId, PmtType = @PmtType, AccountNo = @AccountNo
+                        OUTPUT inserted.*
+                        WHERE PaymentTypeId = @PaymentTypeId";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var result = db.QueryFirstOrDefault<PaymentType>(sql, pmtType);
+                return result;
+            }
+        }
+
         public IEnumerable<PaymentType> DeletePaymentType(int paymentTypeId)
         {
 
