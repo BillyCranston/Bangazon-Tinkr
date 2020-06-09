@@ -107,5 +107,22 @@ namespace Bangazon_Tinkr.Controllers
             else return result;
 
         }
+
+        // api/User/2/UpdateUser
+        [HttpPut("{userId}/UpdateUser")]
+        public IActionResult UpdateUserInformation(User updateUser)
+        {
+            var userIdToUpdate = _userRepository.GetUserById(updateUser.UserId);
+            if (userIdToUpdate == null) return NotFound("User Not found");
+            else
+            {
+                var updatedUsersInfo = _userRepository.UserInfoUpdate(updateUser);
+            }    
+
+            var getUserProfile = _userRepository.GetUserById(updateUser.UserId);
+                
+            return Ok(getUserProfile);
+            
+        }
     }
 }

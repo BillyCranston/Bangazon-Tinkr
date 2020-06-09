@@ -39,7 +39,7 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
-        public Rubbish CreateRubbish(int userId, Rubbish rubbishToAdd)
+        public Rubbish CreateRubbish(Rubbish rubbishToAdd)
         {
             var sql = @"INSERT INTO Rubbish ( Name, Description, CategoryId, IsAvailable, UserId, Price)
                      output inserted.*
@@ -64,5 +64,6 @@ namespace Bangazon_Tinkr.DataAccess
                 return result;
             }
         }
+        
     }
 }

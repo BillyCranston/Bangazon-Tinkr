@@ -45,21 +45,14 @@ namespace Bangazon_Tinkr.Controllers
 
             return Ok(allRubbish);
         }
-        // api/Rubbish/2/createRubbish
-        [HttpPost("{userId}/createRubbish")]
-        public IActionResult CreateNewRubbish(int userId, Rubbish rubbishToAdd)
+        // api/Rubbish/createRubbish
+        [HttpPost]
+        public IActionResult CreateNewRubbish(Rubbish rubbishToAdd)
         {
-            var user =  _usersRepository.GetUserById(userId);
-            if (user != null) {
-                var existingRubbish = _rubbishRepository.getSingleRubbish(rubbishToAdd.RubbishId);
-                if (existingRubbish == null)
-                {
-                    var newRubbish = _rubbishRepository.CreateRubbish(userId, rubbishToAdd);
-                    return Created("", newRubbish);
-                }
-            }
-            return NotFound("User Not Found");
+            var newRubbish = _rubbishRepository.CreateRubbish(rubbishToAdd);
+            return Created("", newRubbish);
         }
+        
 
         // api/Rubbish/{rubbishId}
         [HttpDelete("{rubbishId}")]
