@@ -96,5 +96,29 @@ namespace Bangazon_Tinkr.DataAccess
                 return result;
             }
         }
+
+        public Rubbish Update(Rubbish rubbishToUpdate)
+        {
+            var sql = @"
+                        update Rubbish
+                        set [name] = @Name, [Description] = @Description, [CategoryId] = @CategoryId, [Price] = @Price
+                        where RubbishId = @RubbishId;
+                      ";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new
+                {
+                    RubbishId = rubbishToUpdate.RubbishId,
+                    Name = rubbishToUpdate.Name,
+                    Description = rubbishToUpdate.Description,
+                    CategoryId = rubbishToUpdate.CategoryId,
+                    Price = rubbishToUpdate.Price
+                };
+                var result = db.QueryFirstOrDefault<Rubbish>(sql, parameters);
+                return result;
+
+            }
+        }
     }
 }
