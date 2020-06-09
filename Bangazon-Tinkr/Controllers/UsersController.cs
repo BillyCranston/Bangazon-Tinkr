@@ -108,8 +108,22 @@ namespace Bangazon_Tinkr.Controllers
 
         }
 
+        // api/User/UpdateUser
+        [HttpPut("UpdateUser")]
+        public IActionResult UpdateUserInformation(User updateUser)
+        {
+            var userIdToUpdate = _userRepository.GetUserById(updateUser.UserId);
+            if (userIdToUpdate == null) return NotFound("User Not found");
+            else
+            {
+                var updatedUsersInfo = _userRepository.UserInfoUpdate(updateUser);
+            }    
+
+            var getUserProfile = _userRepository.GetUserById(updateUser.UserId);
+                
+            return Ok(getUserProfile);
+        }
         // api/User/PaymentTypes
-        [HttpPost("PaymentTypes")]
         public IActionResult AddPaymentType(PaymentType paymentType)
         {
             var existingUser = _userRepository.GetUserById(paymentType.UserId);

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Bangazon_Tinkr.Models;
 using Dapper;
 using System.Data.SqlClient;
+using Microsoft.AspNetCore.Identity;
 
 namespace Bangazon_Tinkr.DataAccess
 {
@@ -150,6 +151,35 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
+        public bool UserInfoUpdate(User user)
+        {
+            var updateQuery = @"UPDATE[User]
+                     SET FirstName = @firstName, 
+                     LastName = @lastName,      
+                     [Type] = @Type,
+                     StreetAddress = @StreetAddress,
+                     City = @City, 
+                     [State] = @State, 
+                     Zip = @Zip
+                     Where UserId = @UserId;";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new
+                {
+                    UserId = user.UserId,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Type = user.Type,
+                    StreetAddress = user.StreetAddress,
+                    City = user.City,
+                    State = user.State,
+                    Zip = user.Zip
+                };
+                var result = db.Execute(updateQuery, parameters);
+                return result > 0;
+            }
+        } 
         public PaymentType GetPaymentTypeByAccountNo(int accountNo)
         {
             var query = @"SELECT *
