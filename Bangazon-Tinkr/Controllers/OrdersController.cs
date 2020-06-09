@@ -51,6 +51,26 @@ namespace Bangazon_Tinkr.Controllers
             return NotFound("That user does not exist");
         }
 
+        //api/Order/{orderId}
+         [HttpPut("checkout/{orderId}")]
+         public IActionResult UpdateOrderStatusToComplete(int orderId)
+         {
+            var checkIncompleteOrder = _ordersRepository.VerifyIncompleteOrderExists(orderId);
+            if (checkIncompleteOrder == true)
+            {
+                var completeOrder = _ordersRepository.CompleteOrder(orderId);
+                return Ok(completeOrder);
+            }
+            else
+            {
+                var checkForCompletedOrder = _ordersRepository.VerifyCompletedOrderExists(orderId);
+                if (checkForCompletedOrder == true)
+                {
+                    return Ok("This order has already been completed. No further action necessary.");
+                }
+                return NotFound("The requested order does not exist.");            }
+         }
+
         //api/Order/
         [HttpPost]
         public IActionResult CreateNewOrder(Order orderToAdd)
