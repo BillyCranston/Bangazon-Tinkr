@@ -52,7 +52,7 @@ namespace Bangazon_Tinkr.Controllers
         }
 
         //api/Order/{orderId}
-         [HttpPut("{orderId}")]
+         [HttpPut("checkout/{orderId}")]
          public IActionResult UpdateOrderStatusToComplete(int orderId)
          {
             var checkIncompleteOrder = _ordersRepository.VerifyIncompleteOrderExists(orderId);
@@ -68,7 +68,7 @@ namespace Bangazon_Tinkr.Controllers
                 {
                     return Ok("This order has already been completed. No further action necessary.");
                 }
-                return NotFound("The requested order does not exist");            }
+                return NotFound("The requested order does not exist.");            }
          }
 
         //api/Order/
