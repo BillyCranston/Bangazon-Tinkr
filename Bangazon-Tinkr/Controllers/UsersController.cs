@@ -149,8 +149,8 @@ namespace Bangazon_Tinkr.Controllers
             }
         }
 
-        // api/User/PaymentTypes/1
-        [HttpPut("PaymentTypes/{pmtTypeId}")]
+        // api/User/PaymentTypes
+        [HttpPut("PaymentTypes")]
         public IActionResult UpdatePmtTypeById(PaymentType pmtType)
         {
             var existingPmtType = _userRepository.GetPaymentTypeById(pmtType.PaymentTypeId);
