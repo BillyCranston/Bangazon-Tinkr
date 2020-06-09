@@ -210,5 +210,33 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
+        public LineItem GetLineItemById(int lineItemId)
+        {
+            var sql = @"
+                        select * 
+                        from LineItem 
+                        where LineItemId = @LineItemId;
+                      ";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { LineItemId = lineItemId };
+                var result = db.QueryFirstOrDefault<LineItem>(sql, parameters);
+                return result;
+            }
+        }
+         public LineItem DeleteLine(int lineItemId)
+        {
+            var sql = @"DELETE from LineItem
+                        WHERE LineItemId = @LineItemId;";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { LineItemId = lineItemId };
+                var result = db.QueryFirstOrDefault<LineItem>(sql, parameters);
+                return result;
+            }
+        }
+
     }
 }

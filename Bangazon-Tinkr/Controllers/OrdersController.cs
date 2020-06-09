@@ -54,9 +54,9 @@ namespace Bangazon_Tinkr.Controllers
         }
 
         //api/Order/{orderId}
-         [HttpPut("checkout/{orderId}")]
-         public IActionResult UpdateOrderStatusToComplete(int orderId)
-         {
+        [HttpPut("checkout/{orderId}")]
+        public IActionResult UpdateOrderStatusToComplete(int orderId)
+        {
             var checkIncompleteOrder = _ordersRepository.VerifyIncompleteOrderExists(orderId);
             if (checkIncompleteOrder == true)
             {
@@ -70,8 +70,8 @@ namespace Bangazon_Tinkr.Controllers
                 {
                     return Ok("This order has already been completed. No further action necessary.");
                 }
-                return NotFound("The requested order does not exist.");            }
-         }
+                return NotFound("The requested order does not exist."); }
+        }
 
         //api/Order/
         [HttpPost]
@@ -107,6 +107,19 @@ namespace Bangazon_Tinkr.Controllers
                 return NotFound("That piece of rubbish is no longer available.");
             }
             return NotFound("An open order was not found");
+        }
+
+        // api/Order/deleteItem/{lineItemId}
+        [HttpDelete("deleteItem/{lineItemId}")]
+        public IActionResult DeleteItemFromOrder(int lineItemId)
+        {
+            var isValidLine = _ordersRepository.GetLineItemById(lineItemId);
+            if (isValidLine!= null)
+            {
+                var deletedLine = _ordersRepository.DeleteLine(lineItemId);
+                return Ok("The line item has been successfully deleted.");
+            }
+            return NotFound("That line does not exist and could not be deleted");
         }
     }
 }
