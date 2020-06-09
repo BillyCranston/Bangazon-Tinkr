@@ -121,7 +121,7 @@ namespace Bangazon_Tinkr.Controllers
             var getUserProfile = _userRepository.GetUserById(updateUser.UserId);
                 
             return Ok(getUserProfile);
-            
+        }
         // api/User/PaymentTypes
         public IActionResult AddPaymentType(PaymentType paymentType)
         {
