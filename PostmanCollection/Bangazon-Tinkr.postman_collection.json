@@ -1,0 +1,499 @@
+{
+	"info": {
+		"_postman_id": "046f14f5-0155-4a2e-b01f-9b1b9916008d",
+		"name": "Bangazon-Tinkr",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get By OrderId with Total",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44300/api/Order/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Order",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get List of Orders By User Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44300/api/Order/user/333",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Order",
+						"user",
+						"333"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Payment Type By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44300/api/User/PaymentTypes/3",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"User",
+						"PaymentTypes",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"FirstName\": \"Crystal\",\r\n        \"LastName\": \"Broach\",\r\n        \"Type\" : \"BuyerAndSeller\",\r\n        \"StreetAddress\": \"1234 Coding Queen Court\",\r\n        \"City\": \"Nashville\",\r\n        \"State\": \"TN\",\r\n        \"Zip\": 37221\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44300/api/User/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"User",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get single Rubbish",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44300/api/Rubbish/2222",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Rubbish",
+						"2222"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Rubbish",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"rubbishId\":  11,\n\t\"name\": \"Green Stool\",\n\t\"description\": \"Needs a coat of paint\",\n\t\"categoryId\": 4,\n\t\"price\": 44\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44300/api/rubbish/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"rubbish",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Rubbish",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44300/api/Rubbish/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Rubbish",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Rubbish",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44300/api/Rubbish/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Rubbish",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Rubbish",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Vintage Stool\",\n\t\"Description\": \"Stool needs to be covered and repair to one leg\",\n\t\"categoryId\": 1,\n\t\"isAvailable\": true,\n\t\"userId\": 1,\n\t\"price\": 10.99\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44300/api/Rubbish/1/createRubbish",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Rubbish",
+						"1",
+						"createRubbish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Order to Complete",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44300/api/Order/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Order",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Line Item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"orderId\": 3,\n\t\"rubbishId\": 8\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44300/api/Order/AddItem",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Order",
+						"AddItem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Line Item",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44300/api/Order/deleteItem/6",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Order",
+						"deleteItem",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44300/api/User",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"User"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Single User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44300/api/User/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"User",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User Account",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44300/api/User/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"User",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"userId\": 2}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44300/api/Order/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Order",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Payment Types for User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44300/api/User/3/PaymentTypes",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"User",
+						"3",
+						"PaymentTypes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Payment Type",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\": 2,\n\t\"pmtType\": \"Visa\",\n\t\"accountNo\": 123456789\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44300/api/User/PaymentTypes",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"User",
+						"PaymentTypes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Rubbish By Category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44300/api/Rubbish/Category/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Rubbish",
+						"Category",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Payment Type",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44300/api/User/PaymentTypes/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"User",
+						"PaymentTypes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
