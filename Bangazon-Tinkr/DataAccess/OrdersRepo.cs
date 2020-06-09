@@ -179,6 +179,64 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
+        public Order CheckIfOrderIsActive(int orderId)
+        {
+            var sql = @"
+                        select *
+                        from [Order]
+                        where orderId = @OrderId and IsComplete = 0;
+                      ";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { OrderId = orderId };
+                var result = db.QueryFirstOrDefault<Order>(sql, parameters);
+                return result;
+            }
+        }
+
+        public LineItem AddNewLineItem(LineItem lineItemToAdd)
+        {
+            var sql = @"
+                        insert into LineItem(OrderId, RubbishId)
+                        output inserted.*
+                        values(@OrderId,@RubbishId);
+                      ";
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { OrderId = lineItemToAdd.OrderId, RubbishId = lineItemToAdd.RubbishId };
+                var result = db.QueryFirstOrDefault<LineItem>(sql, parameters);
+                return result;
+            }
+        }
+
+        public LineItem GetLineItemById(int lineItemId)
+        {
+            var sql = @"
+                        select * 
+                        from LineItem 
+                        where LineItemId = @LineItemId;
+                      ";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { LineItemId = lineItemId };
+                var result = db.QueryFirstOrDefault<LineItem>(sql, parameters);
+                return result;
+            }
+        }
+         public LineItem DeleteLine(int lineItemId)
+        {
+            var sql = @"DELETE from LineItem
+                        WHERE LineItemId = @LineItemId;";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { LineItemId = lineItemId };
+                var result = db.QueryFirstOrDefault<LineItem>(sql, parameters);
+                return result;
+            }
+        }
 
     }
 }
