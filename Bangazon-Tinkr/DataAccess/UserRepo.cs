@@ -151,7 +151,6 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
-<<<<<<< HEAD
         public bool UserInfoUpdate(User user)
         {
             var updateQuery = @"UPDATE[User]
@@ -181,7 +180,6 @@ namespace Bangazon_Tinkr.DataAccess
                 return result > 0;
             }
         } 
-=======
         public PaymentType GetPaymentTypeByAccountNo(int accountNo)
         {
             var query = @"SELECT *
@@ -209,6 +207,5 @@ namespace Bangazon_Tinkr.DataAccess
                 return result;
             }
         }
->>>>>>> master
     }
 }

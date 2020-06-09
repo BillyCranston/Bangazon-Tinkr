@@ -108,8 +108,6 @@ namespace Bangazon_Tinkr.Controllers
 
         }
 
-<<<<<<< HEAD
-        // api/User/2/UpdateUser
         [HttpPut("{userId}/UpdateUser")]
         public IActionResult UpdateUserInformation(User updateUser)
         {
@@ -124,9 +122,7 @@ namespace Bangazon_Tinkr.Controllers
                 
             return Ok(getUserProfile);
             
-=======
         // api/User/PaymentTypes
-        [HttpPost("PaymentTypes")]
         public IActionResult AddPaymentType(PaymentType paymentType)
         {
             var existingUser = _userRepository.GetUserById(paymentType.UserId);
@@ -144,7 +140,5 @@ namespace Bangazon_Tinkr.Controllers
             {
                 return NotFound("A payment type already exists with this account number.");
             }
->>>>>>> master
         }
     }
-}

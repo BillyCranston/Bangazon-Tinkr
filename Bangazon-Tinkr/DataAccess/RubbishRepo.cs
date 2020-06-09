@@ -39,7 +39,6 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
-<<<<<<< HEAD
         public Rubbish CreateRubbish(Rubbish rubbishToAdd)
         {
             var sql = @"INSERT INTO Rubbish ( Name, Description, CategoryId, IsAvailable, UserId, Price)
@@ -50,7 +49,8 @@ namespace Bangazon_Tinkr.DataAccess
             {
                 var results = db.QueryFirstOrDefault<Rubbish>(sql, rubbishToAdd);
                 return results;
-=======
+            }
+        }
         public IEnumerable<Rubbish> GetAllRubbishByCategoryId(int categoryId)
         {
             var sql = @"select r.* 
@@ -64,7 +64,6 @@ namespace Bangazon_Tinkr.DataAccess
                 var parameters = new { CategoryId = categoryId };
                 var result = db.Query<Rubbish>(sql, parameters);
                 return result;
->>>>>>> master
             }
         }
 
