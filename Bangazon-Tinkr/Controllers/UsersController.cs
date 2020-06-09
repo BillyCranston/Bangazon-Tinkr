@@ -141,5 +141,25 @@ namespace Bangazon_Tinkr.Controllers
                 return NotFound("A payment type already exists with this account number.");
             }
         }
+
+        // api/User/PaymentTypes/1
+        [HttpDelete("PaymentTypes/{paymentTypeId}")]
+        public IActionResult DeletePaymentTypeById(int paymentTypeId)
+        {
+            var existingPaymentType = _userRepository.GetPaymentTypeById(paymentTypeId);
+            if (existingPaymentType == null)
+            {
+                return NotFound("No payment type exists with that Id.");
+            }
+            else if (existingPaymentType.AccountNo == 0) 
+            { 
+                return BadRequest("That payment type has already been deleted."); 
+            }
+            else
+            {
+                _userRepository.DeletePaymentType(paymentTypeId);
+                return Ok($"That payment type has successfully been deleted.");
+            }
+        }
     }
 }

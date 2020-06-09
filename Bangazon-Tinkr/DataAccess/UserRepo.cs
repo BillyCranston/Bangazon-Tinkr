@@ -207,5 +207,21 @@ namespace Bangazon_Tinkr.DataAccess
                 return result;
             }
         }
+
+        public IEnumerable<PaymentType> DeletePaymentType(int paymentTypeId)
+        {
+
+            var sql = @"UPDATE PaymentType
+                        SET AccountNo = null
+                        WHERE PaymentTypeId = @id";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { Id = paymentTypeId };
+
+                var results = db.Query<PaymentType>(sql, parameters);
+                return results;
+            }
+        }
     }
 }
