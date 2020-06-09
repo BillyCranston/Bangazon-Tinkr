@@ -42,6 +42,17 @@ namespace Bangazon_Tinkr.Controllers
             return Ok(allRubbish);
         }
 
+        // api/Rubbish/Category/{categoryId}
+        [HttpGet("Category/{categoryId}")]
+        public IActionResult GetAllRubbishByCategory(int categoryId)
+        {
+            var rubbishByCategory = _rubbishRepository.GetAllRubbishByCategoryId(categoryId);
+            var isEmpty = !rubbishByCategory.Any();
+            if (isEmpty) return NotFound("There are no users!");
+
+            return Ok(rubbishByCategory);
+        }
+
         // api/Rubbish/{rubbishId}
         [HttpDelete("{rubbishId}")]
         public IActionResult DeleteRubbishById(int rubbishId)

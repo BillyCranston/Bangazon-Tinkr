@@ -38,6 +38,22 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
+        public IEnumerable<Rubbish> GetAllRubbishByCategoryId(int categoryId)
+        {
+            var sql = @"select r.* 
+                        from Rubbish r
+                        JOIN Category c
+                        ON r.CategoryId = c.CategoryId
+                        Where c.CategoryId = @categoryId";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { CategoryId = categoryId };
+                var result = db.Query<Rubbish>(sql, parameters);
+                return result;
+            }
+        }
+
         public Rubbish DeleteRubbish(int rubbishId)
         {
             var sql = @"DELETE from Rubbish
