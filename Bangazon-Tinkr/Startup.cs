@@ -26,6 +26,11 @@ namespace Bangazon_Tinkr
         {
             services.AddControllers();
 
+            services.AddCors(options =>
+                options.AddPolicy("ItsAllGood",
+                    builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin())
+                );
+
             //service registration
             services.AddTransient<UserRepo>(); // create new instance every time
             services.AddTransient<RubbishRepo>();
@@ -44,6 +49,8 @@ namespace Bangazon_Tinkr
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("ItsAllGood");
 
             app.UseAuthorization();
 
