@@ -38,8 +38,10 @@ class Products extends React.Component {
   render() {
     return (
       <div className="Products">
-        <h1>All Products Component</h1>
-        {this.renderProductView()}
+        <h1>All Products</h1>
+        <div className="card-group">
+          {this.renderProductView()}
+        </div>
       </div>
     );
   }
