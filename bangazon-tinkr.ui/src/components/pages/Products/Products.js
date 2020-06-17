@@ -26,7 +26,8 @@ class Products extends React.Component {
     const { products } = this.state;
     if (products.length !== 0) {
       return (
-        products.map((product) => <ProductCard key={product.id} product={product}/>)
+        products.filter((product) => product.isAvailable)
+          .map((product) => <ProductCard key={product.rubbishId} product={product}/>)
       );
     }
     return (
