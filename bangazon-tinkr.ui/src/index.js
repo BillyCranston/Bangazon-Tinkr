@@ -4,6 +4,11 @@ import './styles/index.scss';
 import App from './App/App';
 import * as serviceWorker from './serviceWorker';
 
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'jquery';
+import 'popper.js';
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

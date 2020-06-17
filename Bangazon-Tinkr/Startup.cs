@@ -30,7 +30,6 @@ namespace Bangazon_Tinkr
                 options.AddPolicy("ItsAllGood",
                     builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin())
                 );
-
             //service registration
             services.AddTransient<UserRepo>(); // create new instance every time
             services.AddTransient<RubbishRepo>();

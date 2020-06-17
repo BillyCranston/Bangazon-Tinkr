@@ -24,4 +24,5 @@ yarn-error.log*
 
 package-lock.json
 .eslintrc
-apiKeys.json
+
+src/helpers/apiKeys.json
