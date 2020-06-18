@@ -52,6 +52,7 @@ class App extends React.Component {
           <PublicRoute path="/shoppingCart" exact component={ShoppingCart} authed={authed} />
           <PublicRoute path="/products" exact component={Products} authed={authed} />
           <PublicRoute path="/product/:productId" exact component={SingleProduct} authed={authed} />
+          <PublicRoute path="/products/:sellerId" exact component={SellerStore} authed={authed} />
         </Switch>
       </Router>
     </div>

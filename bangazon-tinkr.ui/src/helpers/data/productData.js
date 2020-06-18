@@ -13,4 +13,13 @@ const getProducts = () => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export default { getProducts };
+const getProductsByUserId = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/Rubbish/User/{userId}`)
+    .then((result) => {
+      const allRubbishByUser = result.data;
+      resolve(allRubbishByUser);
+    })
+    .catch((err) => reject(err));
+});
+
+export default { getProducts, getProductsByUserId };
