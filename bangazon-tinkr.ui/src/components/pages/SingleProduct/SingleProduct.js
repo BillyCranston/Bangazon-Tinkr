@@ -1,6 +1,6 @@
 import React from 'react';
 
-import rubbishData from '../../../helpers/data/rubbishData';
+import productData from '../../../helpers/data/productData';
 
 import './SingleProduct.scss';
 
@@ -10,8 +10,8 @@ class SingleProduct extends React.Component {
   }
 
   getRubbish = (rubbishId) => {
-    rubbishData.getRubbishById(rubbishId)
-      .then((response) => console.log(response.data))//this.setState({ rubbish: response.data }))
+    productData.getRubbishById(rubbishId)
+      .then((response) => /* console.log(response))// */this.setState({ rubbish: response }))
       .catch((err) => console.error('error in get rubbish', err));
   }
 
@@ -25,7 +25,7 @@ class SingleProduct extends React.Component {
     const { rubbish } = this.state;
     return (
       <div className="SingleProduct">
-        <h2>Product Name {rubbish.Name}</h2>
+        <h2>Product Name {rubbish.name}</h2>
         {/* title, description, quantity available, price per unit, and a button labeled Add to Cart */}
         <p>Description</p>
         <p>Quantity available</p>
