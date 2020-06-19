@@ -53,7 +53,7 @@ namespace Bangazon_Tinkr.DataAccess
             using (var db = new SqlConnection(connectionString))
             {
                 var parameters = new { OrderId = orderId };
-                var orderSum = db.QueryFirstOrDefault<int>(sql2, parameters);
+                var orderSum = db.QueryFirstOrDefault<decimal>(sql2, parameters);
                 var result = db.QueryFirstOrDefault<Order>(sql, parameters);
                 var parameters2 = new OrderTotal()
                 {
@@ -70,7 +70,7 @@ namespace Bangazon_Tinkr.DataAccess
         public IEnumerable<LineItemDetailed> GetLineItemDetailsByOrderId(int orderId)
         {
             var sql = @"
-                        select Rubbish.[Name] as RubbishName, Rubbish.[Description] as RubbishDescription, Rubbish.Price as RubbishPrice
+                        select Rubbish.[Name] as RubbishName, Rubbish.[Description] as RubbishDescription, Rubbish.Price as RubbishPrice, Rubbish.RubbishId
                         from LineItem
 	                        join Rubbish
 		                        on LineItem.RubbishId = Rubbish.RubbishId
