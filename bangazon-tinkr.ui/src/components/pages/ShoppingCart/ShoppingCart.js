@@ -3,20 +3,67 @@ import React from 'react';
 import CartProductCard from '../../shared/CartProductCard/CartProductCard';
 
 import './ShoppingCart.scss';
+import orderData from '../../../helpers/data/orderData';
 
 class ShoppingCart extends React.Component {
+  state = {
+    itemTotal: 20,
+    shipping: 15,
+    orderTax: 0,
+    products: [],
+    userId: 3,
+    order: {},
+  }
+
+  // TODO:
+  // Function to get order with details
+  // Set order details to state
+  // Pull total into the cart summary space allocated
+  // Set line items to products array in state
+  // Map over the products array to create the CartProductCard component
+  // Grab the userId from authed user when authentication is complete
+  // From the user information include the user's address
+
+  getCurrentOrder = () => {
+    const { userId } = this.state;
+    orderData.getUserOrder(userId)
+      .then((order) => {
+        this.setState({ order });
+        this.setState({ products: order.lineItems });
+      })
+      .catch((err) => console.error('error from get order', err));
+  }
+
+  componentDidMount() {
+    this.getCurrentOrder();
+  }
+
+  renderCartItemView = () => {
+    const { products } = this.state;
+    if (products.length !== 0) {
+      return (
+        products.map((product) => <CartProductCard key={product.rubbishId} product={product}/>)
+      );
+    }
+    return (
+      <h3>There are currently no items available.</h3>
+    );
+  }
+
   render() {
+    const {
+      itemTotal,
+      user,
+      orderTax,
+    } = this.state;
+
     return (
       <div className="ShoppingCart p-3">
         <h1 className="text-center mb-3">Shopping Cart</h1>
         <div className="row">
           <div className="col-8">
             <div className="row">
-              <CartProductCard />
-              <CartProductCard />
-              <CartProductCard />
-              <CartProductCard />
-              <CartProductCard />
+              {this.renderCartItemView()}
             </div>
           </div>
           <div className="col-4 mx-auto px-4">
@@ -26,7 +73,7 @@ class ShoppingCart extends React.Component {
                 <tbody>
                   <tr>
                     <td>Items:</td>
-                    <td>$343.99</td>
+                    <td>${itemTotal}.00</td>
                   </tr>
                   <tr>
                     <td>Shipping:</td>
@@ -34,7 +81,7 @@ class ShoppingCart extends React.Component {
                   </tr>
                   <tr>
                     <td>Tax:</td>
-                    <td>$0.00</td>
+                    <td>${orderTax}.00</td>
                   </tr>
                   <tr>
                     <td><hr></hr></td>
