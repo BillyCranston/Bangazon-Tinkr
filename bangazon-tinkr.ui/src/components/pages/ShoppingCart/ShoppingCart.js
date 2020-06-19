@@ -4,6 +4,7 @@ import CartProductCard from '../../shared/CartProductCard/CartProductCard';
 
 import './ShoppingCart.scss';
 import orderData from '../../../helpers/data/orderData';
+import userData from '../../../helpers/data/userData';
 
 class ShoppingCart extends React.Component {
   state = {
@@ -11,31 +12,35 @@ class ShoppingCart extends React.Component {
     shipping: 15,
     orderTax: 0,
     products: [],
+    // TODO: The below userId will need to be updated once user authentication is implemented.
     userId: 3,
     order: {},
+    user: {},
   }
 
-  // TODO:
-  // Function to get order with details
-  // Set order details to state
-  // Pull total into the cart summary space allocated
-  // Set line items to products array in state
-  // Map over the products array to create the CartProductCard component
-  // Grab the userId from authed user when authentication is complete
-  // From the user information include the user's address
-
+  // Function below gets the current order and details then sets the information into state of the component to be used in the rendering.
   getCurrentOrder = () => {
     const { userId } = this.state;
     orderData.getUserOrder(userId)
       .then((order) => {
-        this.setState({ order });
-        this.setState({ products: order.lineItems });
+        this.setState({ order, products: order.lineItems, itemTotal: order.total });
       })
       .catch((err) => console.error('error from get order', err));
   }
 
+  // Function below gets the users information so you can view the shipping address in the cart summary.
+  getUserById = () => {
+    const { userId } = this.state;
+    userData.getUser(userId)
+      .then((user) => {
+        this.setState({ user });
+      })
+      .catch((err) => console.error('error from get user', err));
+  }
+
   componentDidMount() {
     this.getCurrentOrder();
+    this.getUserById();
   }
 
   renderCartItemView = () => {
@@ -46,7 +51,7 @@ class ShoppingCart extends React.Component {
       );
     }
     return (
-      <h3>There are currently no items available.</h3>
+      <h3>There are currently no items in your cart. Start shopping now!</h3>
     );
   }
 
@@ -55,6 +60,7 @@ class ShoppingCart extends React.Component {
       itemTotal,
       user,
       orderTax,
+      shipping,
     } = this.state;
 
     return (
@@ -77,7 +83,7 @@ class ShoppingCart extends React.Component {
                   </tr>
                   <tr>
                     <td>Shipping:</td>
-                    <td>$15.00</td>
+                    <td>${shipping}.00</td>
                   </tr>
                   <tr>
                     <td>Tax:</td>
@@ -89,7 +95,7 @@ class ShoppingCart extends React.Component {
                   </tr>
                   <tr>
                     <td><strong>Order Total:</strong></td>
-                    <td><strong>$343.99</strong></td>
+                    <td><strong>${itemTotal + shipping + orderTax}.00</strong></td>
                   </tr>
                 </tbody>
               </table>
@@ -97,8 +103,8 @@ class ShoppingCart extends React.Component {
               <div className="row">
                 <img className="mapImage col" src="https://d26d74ht2k6aj1.cloudfront.net/images/street-map-sample.png"/>
                 <div className="col">
-                  <p>Street Address Sample</p>
-                  <p>City, State  Zip Code</p>
+                  <p>{user.streetAddress}</p>
+                  <p>{user.city}, {user.state}  {user.zip}</p>
                 </div>
               </div>
             </div>
