@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './CartProductCard.scss';
 
@@ -24,7 +25,7 @@ class CartProductCard extends React.Component {
           </div>
           <div className="card-footer row justify-content-around">
             <a href="#" className="card-link btn btn-dark btn-sm">Remove From Cart</a>
-            <a href="#" className="card-link btn btn-outline-dark btn-sm">More Info...</a>
+            <Link to="/product/${product.rubbishId}" className="card-link btn btn-outline-dark">More Info...</Link>
           </div>
         </div>
       </div>
