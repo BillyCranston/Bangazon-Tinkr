@@ -13,6 +13,7 @@ class ShoppingCart extends React.Component {
     orderTax: 0,
     products: [],
     // TODO: The below userId will need to be updated once user authentication is implemented.
+    // TEST NOTE: For testing you may need to change the userId below to something different depending on your data.  The user will need to be valid along with their line items and item Ids.
     userId: 3,
     order: {},
     user: {},
