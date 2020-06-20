@@ -23,7 +23,7 @@ namespace Bangazon_Tinkr.Controllers
         }
         //api/Order/{id}
         [HttpGet("{id}")]
-        public IActionResult GetSingleOrderById(int id)
+        public IActionResult GetSingleOrderByIdDetailed(int id)
         {
             var validOrder = _ordersRepository.CheckForValidOrderId(id);
             if (validOrder)
@@ -34,6 +34,29 @@ namespace Bangazon_Tinkr.Controllers
             }
             return NotFound("Couldn't find an order with that id");
         }
+
+        // api/Order/userOpenOrder/{userId}
+        [HttpGet("userOpenOrder/{userId}")]
+        public IActionResult GetOpenOrderByUserId(Order userId)
+        {
+            // 1. validate user exists
+            var validUser = _usersRepository.GetUserById(userId);
+            if (validUser != null)
+            {
+                var orders = _ordersRepository.GetUserOrders(userId);
+                var isEmpty = !orders.Any();
+                if (isEmpty)
+                {
+                    _ordersRepository.AddNewOrder(userId);
+                }
+            }
+            // 2. go to repo and check to see if there are any open orders for the user
+            
+            // 3a. if yes, return the order id
+            
+            // 4a. if not, create a new order and return the id on the new order
+        }
+
 
         //api/Order/user/{userId}
         [HttpGet("user/{userId}")]
