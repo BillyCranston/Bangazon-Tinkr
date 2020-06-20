@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import './ProductCard.scss';
 import ModalExample from '../SuccessModal/SuccessModal';
@@ -30,7 +31,7 @@ class ProductCard extends React.Component {
             <div className="modal-holder" onClick={this.addProductToCartEvent}>
               <ModalExample buttonLabel="Add To Cart" className="success-modal"/>
             </div>
-            <a href="#" className="card-link btn btn-outline-dark">More Info...</a>
+            <Link to={`/product/${product.rubbishId}`} className="card-link btn btn-outline-dark">More Info...</Link>
           </div>
         </div>
       </div>
