@@ -13,6 +13,7 @@ import Products from '../components/pages/Products/Products';
 import Profile from '../components/pages/Profile/Profile';
 import ShoppingCart from '../components/pages/ShoppingCart/ShoppingCart';
 import SingleProduct from '../components/pages/SingleProduct/SingleProduct';
+import Categories from '../components/pages/Categories/Categories';
 
 import './App.scss';
 
@@ -52,6 +53,7 @@ class App extends React.Component {
           <PublicRoute path="/shoppingCart" exact component={ShoppingCart} authed={authed} />
           <PublicRoute path="/products" exact component={Products} authed={authed} />
           <PublicRoute path="/product/:productId" exact component={SingleProduct} authed={authed} />
+          <PublicRoute path="/categories" exact component={Categories} authed={authed} />
         </Switch>
       </Router>
     </div>
