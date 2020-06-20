@@ -17,11 +17,12 @@ class Categories extends React.Component {
       .catch((err) => console.error('error from getCategories in Categories', err));
   }
 
-  /* showCategories = () => {
+  showCategories = (categories) => {
+    console.log(categories.map((category) => category.name));
     return (
-      <h2>{this.state.categories[0].Name}</h2>
-    )
-  } */
+      categories.map((category) => <h2>{category.name}</h2>)
+    );
+  }
 
   /* getThreeRubbishes = (categoryId) => {
     const domString = '';
@@ -45,9 +46,8 @@ class Categories extends React.Component {
     return (
       <div className="Categories">
         <h1>All Categories</h1>
-        <h2>Appliances</h2>
         {/* this.getThreeRubbishes(5) */}
-        <h2>{categories[0] ? categories[0].name : ''}</h2>
+        {categories[0] ? this.showCategories(categories) : ''}
       </div>
     )
   }
