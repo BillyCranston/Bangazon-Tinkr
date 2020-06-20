@@ -3,20 +3,74 @@ import React from 'react';
 import CartProductCard from '../../shared/CartProductCard/CartProductCard';
 
 import './ShoppingCart.scss';
+import orderData from '../../../helpers/data/orderData';
+import userData from '../../../helpers/data/userData';
 
 class ShoppingCart extends React.Component {
+  state = {
+    itemTotal: 20,
+    shipping: 15,
+    orderTax: 0,
+    products: [],
+    // TODO: The below userId will need to be updated once user authentication is implemented.
+    // TEST NOTE: For testing you may need to change the userId below to something different depending on your data.  The user will need to be valid along with their line items and item Ids.
+    userId: 3,
+    order: {},
+    user: {},
+  }
+
+  // Function below gets the current order and details then sets the information into state of the component to be used in the rendering.
+  getCurrentOrder = () => {
+    const { userId } = this.state;
+    orderData.getUserOrder(userId)
+      .then((order) => {
+        this.setState({ order, products: order.lineItems, itemTotal: order.total });
+      })
+      .catch((err) => console.error('error from get order', err));
+  }
+
+  // Function below gets the users information so you can view the shipping address in the cart summary.
+  getUserById = () => {
+    const { userId } = this.state;
+    userData.getUser(userId)
+      .then((user) => {
+        this.setState({ user });
+      })
+      .catch((err) => console.error('error from get user', err));
+  }
+
+  componentDidMount() {
+    this.getCurrentOrder();
+    this.getUserById();
+  }
+
+  renderCartItemView = () => {
+    const { products } = this.state;
+    if (products.length !== 0) {
+      return (
+        products.map((product) => <CartProductCard key={product.rubbishId} product={product}/>)
+      );
+    }
+    return (
+      <h3>There are currently no items in your cart. Start shopping now!</h3>
+    );
+  }
+
   render() {
+    const {
+      itemTotal,
+      user,
+      orderTax,
+      shipping,
+    } = this.state;
+
     return (
       <div className="ShoppingCart p-3">
         <h1 className="text-center mb-3">Shopping Cart</h1>
         <div className="row">
           <div className="col-8">
             <div className="row">
-              <CartProductCard />
-              <CartProductCard />
-              <CartProductCard />
-              <CartProductCard />
-              <CartProductCard />
+              {this.renderCartItemView()}
             </div>
           </div>
           <div className="col-4 mx-auto px-4">
@@ -26,15 +80,15 @@ class ShoppingCart extends React.Component {
                 <tbody>
                   <tr>
                     <td>Items:</td>
-                    <td>$343.99</td>
+                    <td>${itemTotal}.00</td>
                   </tr>
                   <tr>
                     <td>Shipping:</td>
-                    <td>$15.00</td>
+                    <td>${shipping}.00</td>
                   </tr>
                   <tr>
                     <td>Tax:</td>
-                    <td>$0.00</td>
+                    <td>${orderTax}.00</td>
                   </tr>
                   <tr>
                     <td><hr></hr></td>
@@ -42,7 +96,7 @@ class ShoppingCart extends React.Component {
                   </tr>
                   <tr>
                     <td><strong>Order Total:</strong></td>
-                    <td><strong>$343.99</strong></td>
+                    <td><strong>${itemTotal + shipping + orderTax}.00</strong></td>
                   </tr>
                 </tbody>
               </table>
@@ -50,8 +104,8 @@ class ShoppingCart extends React.Component {
               <div className="row">
                 <img className="mapImage col" src="https://d26d74ht2k6aj1.cloudfront.net/images/street-map-sample.png"/>
                 <div className="col">
-                  <p>Street Address Sample</p>
-                  <p>City, State  Zip Code</p>
+                  <p>{user.streetAddress}</p>
+                  <p>{user.city}, {user.state}  {user.zip}</p>
                 </div>
               </div>
             </div>
