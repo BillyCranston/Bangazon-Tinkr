@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import orderData from '../../../helpers/data/orderData';
-
 import './ProductCard.scss';
+import ModalExample from '../SuccessModal/SuccessModal';
 
 class ProductCard extends React.Component {
   static propTypes = {
@@ -28,8 +27,10 @@ class ProductCard extends React.Component {
             <p className="card-text">{product.description}</p>
           </div>
           <div className="card-footer">
-            <btn className="card-link btn btn-dark" onClick={this.addProductToCartEvent}>Add To Cart</btn>
-            <btn href="#" className="card-link btn btn-outline-dark">More Info...</btn>
+            <div className="modal-holder" onClick={this.addProductToCartEvent}>
+              <ModalExample buttonLabel="Add To Cart" className="success-modal"/>
+            </div>
+            <a href="#" className="card-link btn btn-outline-dark">More Info...</a>
           </div>
         </div>
       </div>

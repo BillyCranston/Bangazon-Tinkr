@@ -21,21 +21,6 @@ class Products extends React.Component {
       .catch((err) => console.error('error from get products', err));
   }
 
-  // the below function should call the method in api that will get open order, or create new order and return orderId
-  // this will allow to pass the order Id property to the products so new line items can be created.
-
-  // getCurrentOrder = () => {
-  //   const { userId } = this.state;
-  //   orderData.getUserOrder(userId)
-  //     .then((order) => {
-  //       if (order === null) {
-  //         // create a new order...
-  //       }
-  //       this.setState({ orderId: order.orderId });
-  //     })
-  //     .catch((err) => console.error('error from get order', err));
-  // }
-
   getCurrentOrder = () => {
     const { currentUserId } = this.state;
     const orderObj = { userId: currentUserId };
@@ -55,7 +40,8 @@ class Products extends React.Component {
       const { order } = this.state;
       const itemObj = { rubbishId: productId, orderId: order.orderId };
       orderData.addItemToOrder(itemObj)
-        .then(() => console.log('add Item worked??'))
+        // once we are removing items from availability we can add additional function in .then section below:
+        .then()
         .catch((err) => console.error('error from addProductToCart', err));
     }
 
