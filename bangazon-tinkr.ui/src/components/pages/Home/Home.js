@@ -3,6 +3,7 @@ import Dropdown from '../../shared/DropDown/DropDown';
 import RubbishView from '../../shared/RubbishView/RubbishView';
 import Products from '../Products/Products';
 import './Home.scss';
+import SearchInput from '../../shared/SearchInput/SearchInput';
 
 class Home extends React.Component {
   
@@ -22,7 +23,7 @@ class Home extends React.Component {
             <div className=" home-content col d-flex justify-content-center align-items-center">
               <div className="input-group mb-3">    
                   <div className="input-group-append">
-                    <Products/>
+                   <Products/>
                   </div>
               </div>
             </div>
