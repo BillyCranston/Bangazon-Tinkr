@@ -42,6 +42,22 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
+        public User GetUserByRubbishId(int rubbishId)
+        {
+            var sql = @"select u.*
+                        FROM [User] u
+                        JOIN Rubbish r
+                        ON u.UserId = r.UserId
+                        WHERE r.RubbishId = @rubbishId";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { RubbishId = rubbishId };
+                var user = db.QueryFirstOrDefault<User>(sql, parameters);
+                return user;
+            }
+        }
+
         public User CheckIfUserAccountIsDeleted(int userId)
         {
             var sql = @"Select * 

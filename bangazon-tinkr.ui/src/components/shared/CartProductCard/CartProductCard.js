@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import './CartProductCard.scss';
 
 class CartProductCard extends React.Component {
-
   // static propTypes = {
   //   product: productShape.productShape,
   // }
