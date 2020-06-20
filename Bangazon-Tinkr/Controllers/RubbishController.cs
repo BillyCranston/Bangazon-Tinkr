@@ -23,7 +23,7 @@ namespace Bangazon_Tinkr.Controllers
             _usersRepository = usersRepository;
         }
 
-       
+
         // api/Rubbish/2
         [HttpGet("{rubbishId}")]
         public IActionResult GetRubbishById(int rubbishId)
@@ -45,6 +45,17 @@ namespace Bangazon_Tinkr.Controllers
 
             return Ok(allRubbish);
         }
+
+        // api/Rubbish/User/1
+        [HttpGet("User/{userId}")]
+        public IActionResult GetAllRubbishByUserId(int userId)
+        {
+            var allRubbishByUser = _rubbishRepository.GetRubbishByUserId(userId);
+            if (allRubbishByUser == null) return NotFound(" This user has no rubbish available for sale.");
+
+            return Ok(allRubbishByUser);
+        }
+
         // api/Rubbish/createRubbish
         [HttpPost]
         public IActionResult CreateNewRubbish(Rubbish rubbishToAdd)
