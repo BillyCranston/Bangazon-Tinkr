@@ -22,7 +22,8 @@ class CartProductCard extends React.Component {
             <hr></hr>
           <div className="row justify-content-around">
             <a href="#" className="card-link btn btn-dark btn-sm">Remove From Cart</a>
-            <Link to="/product/${product.rubbishId}" className="card-link btn btn-outline-dark">More Info...</Link>
+            {/* TO DO: Please test this link to make sure it is grabbing the rubbish id */}
+            <Link to={`/product/${product.rubbishId}`} className="card-link btn btn-outline-dark">More Info...</Link>
           </div>
           </div>
         </div>
