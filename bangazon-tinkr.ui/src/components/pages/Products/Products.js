@@ -1,19 +1,25 @@
 import React from 'react';
-import ProductCard from '../../shared/ProductCard/ProductCard';
-
+import SearchInput from '../../shared/SearchInput/SearchInput';
 import productData from '../../../helpers/data/productData';
-
+import ProductGrid from '../../shared/ProductGrid/ProductGrid';
 import './Products.scss';
+import ProductCard from '../../shared/ProductCard/ProductCard';
+import Dropdown  from '../../shared/DropDown/DropDown';
 
 class Products extends React.Component {
   state = {
-    products: [],
+    filteredProducts: [],
+    originalProducts: [],
+    searchTerm: ""
   }
 
   getProducts = () => {
     productData.getProducts()
-      .then((products) => {
-        this.setState({ products });
+      .then((productsFromAPI) => {
+        this.setState({
+          filteredProducts: productsFromAPI,
+          originalProducts: productsFromAPI
+         });
       })
       .catch((err) => console.error('error from get products', err));
   }
@@ -22,29 +28,28 @@ class Products extends React.Component {
     this.getProducts();
   }
 
-  renderProductView = () => {
-    const { products } = this.state;
-    if (products.length !== 0) {
-      return (
-        products.filter((product) => product.isAvailable)
-          .map((product) => <ProductCard key={product.rubbishId} product={product}/>)
-      );
-    }
-    return (
-      <h3>There are currently no items available.</h3>
-    );
+  searchTermChanged = (onChangeEvent) => {
+    debugger;
+    this.setState({searchTerm: onChangeEvent.target.value});
+    var filteredProducts = this.state.originalProducts.filter((product) => {
+      return product.name.includes(onChangeEvent.target.value);
+    });
+    this.setState({filteredProducts: filteredProducts});
   }
 
   render() {
     return (
-      <div className="Products">
-        <h1>All Products</h1>
-        <div className="card-group">
-          {this.renderProductView()}
-        </div>
-      </div>
+      <>
+        <SearchInput
+          searchTermChanged={this.searchTermChanged}
+        />
+        <Dropdown />
+        <ProductGrid
+          products={this.state.filteredProducts}
+        />
+      </>
     );
   }
 }
 
-export default Products;
+export default Products ;

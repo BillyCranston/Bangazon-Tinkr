@@ -1,8 +1,11 @@
 import React from 'react';
-import Button from '../../shared/Button/Button';
+import Dropdown from '../../shared/DropDown/DropDown';
+import RubbishView from '../../shared/RubbishView/RubbishView';
+import Products from '../Products/Products';
 import './Home.scss';
 
 class Home extends React.Component {
+  
   render() {
     return (
       <div className="Home d-flex justify-content-center align-items-center">
@@ -18,9 +21,9 @@ class Home extends React.Component {
             </div>
             <div className=" home-content col d-flex justify-content-center align-items-center">
               <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Find something to Tinkr with..." aria-label="tinkrSearch" aria-describedby="basic-addon2"/>
+                
                   <div className="input-group-append">
-                    <Button />
+                    <Products/>
                   </div>
               </div>
             </div>

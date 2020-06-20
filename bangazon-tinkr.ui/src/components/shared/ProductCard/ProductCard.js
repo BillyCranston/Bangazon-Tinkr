@@ -3,13 +3,6 @@ import React from 'react';
 import './ProductCard.scss';
 
 class ProductCard extends React.Component {
-  // static propTypes = {
-  //   product: productShape.productShape,
-  // }
-
-  // componentDidMount() {
-  //   const { product } = this.props;
-  // }
 
   render() {
     const { product } = this.props;
