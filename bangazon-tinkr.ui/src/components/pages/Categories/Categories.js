@@ -6,7 +6,7 @@ class Categories extends React.Component {
       <div className="Categories">
         <h1>All Categories</h1>
         <h2>Appliances</h2>
-        {}
+        {this.getThreeRubbishes()}
       </div>
     )
   }
