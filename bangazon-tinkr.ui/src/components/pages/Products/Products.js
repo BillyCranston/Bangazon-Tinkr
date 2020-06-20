@@ -4,10 +4,13 @@ import ProductCard from '../../shared/ProductCard/ProductCard';
 import productData from '../../../helpers/data/productData';
 
 import './Products.scss';
+import orderData from '../../../helpers/data/orderData';
 
 class Products extends React.Component {
   state = {
     products: [],
+    userId: 5,
+    orderId: 0,
   }
 
   getProducts = () => {
@@ -18,8 +21,23 @@ class Products extends React.Component {
       .catch((err) => console.error('error from get products', err));
   }
 
+  // the below function should call the method in api that will get open order, or create new order and return orderId
+  // this will allow to pass the order Id property to the products so new line items can be created.
+  getOrder = () => {
+    const { userId } = this.state;
+    orderData.getUserOrder(userId)
+      .then((order) => {
+        if (order === null) {
+          // create a new order...
+        }
+        this.setState({ orderId: order.orderId });
+      })
+      .catch((err) => console.error('error from get order', err));
+  }
+
   componentDidMount() {
     this.getProducts();
+    this.getOrder();
   }
 
   renderProductView = () => {

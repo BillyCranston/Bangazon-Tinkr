@@ -1,5 +1,7 @@
 import React from 'react';
 
+import orderData from '../../../helpers/data/orderData';
+
 import './ProductCard.scss';
 
 class ProductCard extends React.Component {
@@ -10,6 +12,11 @@ class ProductCard extends React.Component {
   // componentDidMount() {
   //   const { product } = this.props;
   // }
+
+  addProductToCart = () => {
+    const itemObj = { productId: '', orderId: '' };
+    orderData.addItemToOrder(itemObj);
+  }
 
   render() {
     const { product } = this.props;
@@ -23,8 +30,8 @@ class ProductCard extends React.Component {
             <p className="card-text">{product.description}</p>
           </div>
           <div className="card-footer">
-            <a href="#" className="card-link btn btn-dark">Add To Cart</a>
-            <a href="#" className="card-link btn btn-outline-dark">More Info...</a>
+            <btn className="card-link btn btn-dark">Add To Cart</btn>
+            <btn href="#" className="card-link btn btn-outline-dark">More Info...</btn>
           </div>
         </div>
       </div>

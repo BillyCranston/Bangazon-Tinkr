@@ -13,4 +13,6 @@ const getUserOrder = (userId) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export default { getUserOrder };
+const addItemToOrder = (itemObj) => axios.post(`${baseUrl}/Order/AddItem`, itemObj);
+
+export default { getUserOrder, addItemToOrder };
