@@ -91,5 +91,14 @@ namespace Bangazon_Tinkr.Controllers
             return NotFound("That rubbish does not exist and could not be deleted");
         }
 
+        // api/Rubbish/Categories
+        [HttpGet("Categories")]
+        public IActionResult GetAllCategories()
+        {
+            var allCategories = _rubbishRepository.GetCategories();
+            if (allCategories == null) return NotFound("No categories found.");
+
+            return Ok(allCategories);
+        }
     }
 }

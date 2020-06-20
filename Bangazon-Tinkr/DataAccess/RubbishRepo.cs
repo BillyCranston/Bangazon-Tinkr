@@ -120,5 +120,13 @@ namespace Bangazon_Tinkr.DataAccess
 
             }
         }
+
+        public IEnumerable<Category> GetCategories()
+        {
+            using (var db = new SqlConnection(connectionString))
+            {
+                return db.Query<Category>("select * from Category");
+            }
+        }
     }
 }
