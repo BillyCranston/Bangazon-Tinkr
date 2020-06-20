@@ -58,7 +58,7 @@ class SellerStore extends React.Component {
       <div className="sellerStoreDetails">
           <h1>Seller Store</h1>
           <h2>{seller.firstName} {seller.lastName}</h2>
-          <h2>{seller.City}, {seller.state}</h2>
+          <h2>{seller.city}, {seller.state}</h2>
           <div className="seller-card-group">
             {this.renderSellerProducts()}
           </div>
