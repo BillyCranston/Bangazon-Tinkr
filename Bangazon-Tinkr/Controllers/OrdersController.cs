@@ -21,40 +21,57 @@ namespace Bangazon_Tinkr.Controllers
             _usersRepository = usersRepository;
             _rubbishRepository = rubbishRepository;
         }
-        //api/Order/{id}
-        [HttpGet("{id}")]
-        public IActionResult GetSingleOrderByIdDetailed(int id)
+        //api/Order/{orderId}
+        [HttpGet("{orderId}")]
+        public IActionResult GetSingleOrderByIdDetailed(int orderId)
         {
-            var validOrder = _ordersRepository.CheckForValidOrderId(id);
+            var validOrder = _ordersRepository.CheckForValidOrderId(orderId);
             if (validOrder)
             {
-                var order = _ordersRepository.GetSingleOrderDetails(id);
+                var order = _ordersRepository.GetSingleOrderDetails(orderId);
                 if (order == null) NotFound("Couldn't find an order with that id");
                 return Ok(order);
             }
             return NotFound("Couldn't find an order with that id");
         }
 
-        // api/Order/userOpenOrder/{userId}
-        [HttpGet("userOpenOrder/{userId}")]
-        public IActionResult GetOpenOrderByUserId(Order userId)
+        //api/Order/OpenOrder/{userId}
+        [HttpGet("OpenOrder/{userId}")]
+        public IActionResult GetUserOpenOrder(int userId)
         {
-            // 1. validate user exists
             var validUser = _usersRepository.GetUserById(userId);
             if (validUser != null)
             {
-                var orders = _ordersRepository.GetUserOrders(userId);
-                var isEmpty = !orders.Any();
-                if (isEmpty)
+                var order = _ordersRepository.GetOpenUserOrder(userId);
+                return Ok(order);
+            }
+            return NotFound("User could not be found.");
+        }
+
+        // api/Order/userOpenOrder
+        [HttpPost("userOpenOrder")]
+        public IActionResult GetOpenOrderByUserId(Order userId)
+        {
+            // 1. validate user exists
+            var validUser = _usersRepository.GetUserById(userId.UserId);
+            if (validUser != null)
+            {
+                // 2. go to repo and check to see if there are any open orders for the user
+                // TODO: this should be only open orders below...
+                var order = _ordersRepository.GetOpenUserOrder(userId.UserId);
+                //var isEmpty = !order.Any();
+                // 3a. if not, create a new order and return the id on the new order
+                if (order == null)
                 {
                     _ordersRepository.AddNewOrder(userId);
+                    var newOrder = _ordersRepository.GetOpenUserOrder(userId.UserId);
+                    return Created("", newOrder);
                 }
+                // 3a. if yes, return the order id
+                return Ok(order);
             }
-            // 2. go to repo and check to see if there are any open orders for the user
-            
-            // 3a. if yes, return the order id
-            
-            // 4a. if not, create a new order and return the id on the new order
+            return NotFound("This user does not exist.");
+
         }
 
 

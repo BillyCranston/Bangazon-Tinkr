@@ -1,22 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import orderData from '../../../helpers/data/orderData';
 
 import './ProductCard.scss';
 
 class ProductCard extends React.Component {
-  // static propTypes = {
-  //   product: productShape.productShape,
-  // }
-
-  // componentDidMount() {
-  //   const { product } = this.props;
-  // }
-
-  addProductToCart = () => {
-    const itemObj = { productId: '', orderId: '' };
-    orderData.addItemToOrder(itemObj);
+  static propTypes = {
+    addProductToCart: PropTypes.func,
   }
+
+  addProductToCartEvent = (e) => {
+    e.preventDefault();
+    const { product, addProductToCart } = this.props;
+    addProductToCart(product.rubbishId);
+  };
 
   render() {
     const { product } = this.props;
@@ -30,7 +28,7 @@ class ProductCard extends React.Component {
             <p className="card-text">{product.description}</p>
           </div>
           <div className="card-footer">
-            <btn className="card-link btn btn-dark">Add To Cart</btn>
+            <btn className="card-link btn btn-dark" onClick={this.addProductToCartEvent}>Add To Cart</btn>
             <btn href="#" className="card-link btn btn-outline-dark">More Info...</btn>
           </div>
         </div>
