@@ -13,6 +13,7 @@ import Products from '../components/pages/Products/Products';
 import Profile from '../components/pages/Profile/Profile';
 import ShoppingCart from '../components/pages/ShoppingCart/ShoppingCart';
 import SingleProduct from '../components/pages/SingleProduct/SingleProduct';
+import SellerStore from '../components/pages/SellerStore/SellerStore';
 
 import './App.scss';
 
