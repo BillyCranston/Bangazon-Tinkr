@@ -20,8 +20,7 @@ class Home extends React.Component {
             </div>
             </div>
             <div className=" home-content col d-flex justify-content-center align-items-center">
-              <div className="input-group mb-3">
-                
+              <div className="input-group mb-3">    
                   <div className="input-group-append">
                     <Products/>
                   </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './ProductCard.scss';
 
@@ -17,7 +18,7 @@ class ProductCard extends React.Component {
           </div>
           <div className="card-footer">
             <a href="#" className="card-link btn btn-dark">Add To Cart</a>
-            <a href="#" className="card-link btn btn-outline-dark">More Info...</a>
+            <Link to={`/product/${product.rubbishId}`} className="card-link btn btn-outline-dark">More Info...</Link>
           </div>
         </div>
       </div>
