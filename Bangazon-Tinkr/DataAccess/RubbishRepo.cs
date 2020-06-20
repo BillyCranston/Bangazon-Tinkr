@@ -51,6 +51,23 @@ namespace Bangazon_Tinkr.DataAccess
                 return results;
             }
         }
+
+        public IEnumerable<Rubbish> GetRubbishByUserId(int userId)
+        {
+            var sql = @"select r.* 
+                        from Rubbish r
+                        JOIN [User] u
+                        ON r.UserId = u.UserId
+                        Where r.UserId = @userId AND r.IsAvailable = 1";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { UserId = userId };
+                var result = db.Query<Rubbish>(sql, parameters);
+                return result;
+            }
+        }
+
         public IEnumerable<Rubbish> GetAllRubbishByCategoryId(int categoryId)
         {
             var sql = @"select r.* 
