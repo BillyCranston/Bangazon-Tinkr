@@ -10,5 +10,6 @@ namespace Bangazon_Tinkr.Models
         public string RubbishName { get; set; }
         public string RubbishDescription { get; set; }
         public decimal RubbishPrice { get; set; }
+        public int RubbishId { get; set; }
     }
 }
