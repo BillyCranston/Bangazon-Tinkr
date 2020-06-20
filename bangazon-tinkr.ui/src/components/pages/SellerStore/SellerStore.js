@@ -49,13 +49,9 @@ class SellerStore extends React.Component {
 
   renderSellerStore = () => {
     const { seller } = this.state;
-    if (seller.type === 'Buyer') {
+    if (seller.type === 'Seller' || seller.type === 'BuyerAndSeller') {
       return (
-        <h2>This user does not have a store.</h2>
-      );
-    }
-    return (
-      <div className="sellerStoreDetails">
+        <div className="sellerStoreDetails">
           <h1>Seller Store</h1>
           <h2>{seller.firstName} {seller.lastName}</h2>
           <h2>{seller.city}, {seller.state}</h2>
@@ -63,6 +59,10 @@ class SellerStore extends React.Component {
             {this.renderSellerProducts()}
           </div>
         </div>
+      );
+    }
+    return (
+      <h2>This user does not have a store.</h2>
     );
   }
 
