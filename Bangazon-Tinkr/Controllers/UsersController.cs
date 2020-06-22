@@ -77,6 +77,24 @@ namespace Bangazon_Tinkr.Controllers
             else return NotFound("That User does not exist.");
         }
 
+        // api/User/Rubbish/2
+        [HttpGet("Rubbish/{rubbishId}")]
+        public IActionResult GetSingleUserByRubbishId(int rubbishId)
+        {
+            var singleUser = _userRepository.GetUserByRubbishId(rubbishId);
+            var userId = singleUser.UserId;
+            var singleUserAccountIsDeleted = _userRepository.CheckIfUserAccountIsDeleted(userId);
+            if (singleUser != null)
+            {
+                return Ok(singleUser);
+            }
+            else if (singleUserAccountIsDeleted != null)
+            {
+                return Ok("Account has been Deleted");
+            }
+            else return NotFound("That User does not exist.");
+        }
+
         // api/User/PaymentTypes/3
         [HttpGet("PaymentTypes/{paymentTypeId}")]
         public IActionResult GetSinglePaymentTypeById(int paymentTypeId)
