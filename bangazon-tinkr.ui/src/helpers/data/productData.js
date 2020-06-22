@@ -29,8 +29,11 @@ const getProductsByUserId = (userId) => new Promise((resolve, reject) => {
 });
 
 const getRubbishByName = (name) => new Promise((resolve, reject) => {
-  axios.get(`${baseUrl}/Rubbish/name/${name}`)
-    .then((result) => resolve(result.data))
+  axios.get(`${baseUrl}/Rubbish/Name/${name}`)
+    .then((result) => {
+      const rubName= result.data;
+      resolve(rubName)
+    })
     .catch((error) => reject(error));
 });
 

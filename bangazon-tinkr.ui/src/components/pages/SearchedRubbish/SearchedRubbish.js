@@ -12,8 +12,8 @@ class SearchedRubbish extends React.Component {
   }
 
   getRubbishByName = () => {
-    const name = this.props.match.params.rubbishName;
-    const { searchTerm } = this.props;
+    const name = this.props.match.params.searchTerm;
+    // const { searchTerm } = this.props;
     productData.getRubbishByName(name)
     .then((response) => { 
       this.setState({
@@ -24,9 +24,8 @@ class SearchedRubbish extends React.Component {
   }
 
   componentDidMount() {
-    const name = this.props.match.params.rubbishName
-    this.getProducts();
-    this.getRubbishByName();
+    const name = this.props.match.params.searchTerm
+    this.getRubbishByName(name);
   }
 
   render() {
