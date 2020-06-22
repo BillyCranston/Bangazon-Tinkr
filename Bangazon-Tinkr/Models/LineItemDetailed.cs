@@ -7,6 +7,7 @@ namespace Bangazon_Tinkr.Models
 {
     public class LineItemDetailed
     {
+        public int LineItemId { get; set; }
         public string RubbishName { get; set; }
         public string RubbishDescription { get; set; }
         public decimal RubbishPrice { get; set; }

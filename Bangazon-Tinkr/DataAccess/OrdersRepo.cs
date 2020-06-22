@@ -22,7 +22,7 @@ namespace Bangazon_Tinkr.DataAccess
             var sql = @"
                         select *
                         from [Order]
-                        where OrderId = @OrderId;
+                        where orderId = @OrderId;
                       ";
             using (var db = new SqlConnection(connectionString))
             {
@@ -70,7 +70,7 @@ namespace Bangazon_Tinkr.DataAccess
         public IEnumerable<LineItemDetailed> GetLineItemDetailsByOrderId(int orderId)
         {
             var sql = @"
-                        select Rubbish.[Name] as RubbishName, Rubbish.[Description] as RubbishDescription, Rubbish.Price as RubbishPrice, Rubbish.RubbishId
+                        select LineItem.LineItemId, Rubbish.[Name] as RubbishName, Rubbish.[Description] as RubbishDescription, Rubbish.Price as RubbishPrice, Rubbish.RubbishId
                         from LineItem
 	                        join Rubbish
 		                        on LineItem.RubbishId = Rubbish.RubbishId
@@ -99,6 +99,25 @@ namespace Bangazon_Tinkr.DataAccess
                 return result;
             }
         }
+
+        public Order GetOpenUserOrder(int userId)
+        {
+            var sql = @"
+                        select *
+                        from [Order]
+                        where UserId = @UserId
+                        and IsComplete = 0;
+                        ";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { UserId = userId };
+                var result = db.QueryFirstOrDefault<Order>(sql, parameters);
+                return result;
+            }
+        }
+
+
         public bool VerifyIncompleteOrderExists(int orderId)
         {
            var sql = @"
