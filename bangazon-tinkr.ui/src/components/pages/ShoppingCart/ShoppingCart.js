@@ -20,13 +20,22 @@ class ShoppingCart extends React.Component {
   }
 
   // Function below gets the current order and details then sets the information into state of the component to be used in the rendering.
-  getCurrentOrder = () => {
-    const { userId } = this.state;
-    orderData.getUserOrder(userId)
-      .then((order) => {
-        this.setState({ order, products: order.lineItems, itemTotal: order.total });
+  getCurrentOrderDetails = (orderId) => {
+    orderData.getUserOrder(orderId)
+      .then((newOrder) => {
+        this.setState({ products: newOrder.lineItems, itemTotal: newOrder.total });
       })
       .catch((err) => console.error('error from get order', err));
+  }
+
+  setCurrentOrder = () => {
+    const { userId } = this.state;
+    orderData.getOpenOrderByUserId(userId)
+      .then((currentOrder) => {
+        this.setState({ order: currentOrder });
+        this.getCurrentOrderDetails(currentOrder.orderId);
+      })
+      .catch((err) => console.error('error from setCurrentOrder', err));
   }
 
   // Function below gets the users information so you can view the shipping address in the cart summary.
@@ -40,8 +49,8 @@ class ShoppingCart extends React.Component {
   }
 
   componentDidMount() {
-    this.getCurrentOrder();
     this.getUserById();
+    this.setCurrentOrder();
   }
 
   renderCartItemView = () => {
