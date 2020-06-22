@@ -18,9 +18,8 @@ class Categories extends React.Component {
   }
 
   showCategories = (categories) => {
-    console.log(categories.map((category) => category.name));
     return (
-      categories.map((category) => <h2>{category.name}</h2>)
+      categories.map((category) => <h2 key={category.categoryId}>{category.name}</h2>)
     );
   }
 

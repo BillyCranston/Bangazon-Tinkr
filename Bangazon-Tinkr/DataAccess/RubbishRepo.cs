@@ -142,7 +142,7 @@ namespace Bangazon_Tinkr.DataAccess
         {
             using (var db = new SqlConnection(connectionString))
             {
-                return db.Query<Category>("select * from Category");
+                return db.Query<Category>("select * from Category order by Name");
             }
         }
     }
