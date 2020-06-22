@@ -53,11 +53,18 @@ class ShoppingCart extends React.Component {
     this.setCurrentOrder();
   }
 
+  // delete item function to be included here, the function will need to be provided to the products mapped below in the render.
+  deleteLine = (lineItemId) => {
+    orderData.deleteLineItem(lineItemId)
+      .then(() => this.setCurrentOrder())
+      .catch((err) => console.error('err from deleteline', err));
+  }
+
   renderCartItemView = () => {
     const { products } = this.state;
     if (products.length !== 0) {
       return (
-        products.map((product) => <CartProductCard key={product.rubbishId} product={product}/>)
+        products.map((product) => <CartProductCard key={product.rubbishId} product={product} deleteLine={this.deleteLine}/>)
       );
     }
     return (
