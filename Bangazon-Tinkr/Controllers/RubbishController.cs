@@ -70,8 +70,8 @@ namespace Bangazon_Tinkr.Controllers
         public IActionResult GetAllRubbishByCategory(int categoryId)
         {
             var rubbishByCategory = _rubbishRepository.GetAllRubbishByCategoryId(categoryId);
-            var isEmpty = !rubbishByCategory.Any();
-            if (isEmpty) return NotFound("Sorry, there is currently no rubbish available in that category.");
+            //var isEmpty = !rubbishByCategory.Any();
+            //if (isEmpty) return NotFound("Sorry, there is currently no rubbish available in that category.");
 
             return Ok(rubbishByCategory);
         }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ProductCard from '../../shared/ProductCard/ProductCard';
+// import ProductCard from '../../shared/ProductCard/ProductCard';
 
 import productData from '../../../helpers/data/productData';
 
@@ -30,20 +30,39 @@ class Categories extends React.Component {
   }
 
   getThreeRubbishes = (categoryId) => {
-    let domString = '';
+    let demProducts = [];
     productData.getProductsByCategory(categoryId)
       .then((products) => {
-        // for (let i = 0; i < 3; i++) {
-          // domString += <ProductCard key={products[i].rubbishId} product={products[i]}/>;
-          products ? 
-            domString += <ProductCard key={products[0].rubbishId} product={products[0]}/>
-            :
-            domString += 'Sorry, nothing here';
-          
-        // }
-        return domString;
+        demProducts = products;
       })
-      .catch((err) => console.error(err));
+      .catch((error) => console.error(error));
+    console.log(demProducts);
+    if (demProducts.length > 0) {
+      return <p>{categoryId}, {demProducts[0].name}</p>;
+    } else {
+      return <p>Nothing in this category yet</p>
+    }
+    /* let domString = '';
+    productData.getProductsByCategory(categoryId)
+      .then((products) => {
+        if (products.length > 0) {
+          if (products.length > 3) {
+
+            for (let i = 0; i < 3; i++) {
+              domString += products[i].name;
+            }
+            return domString;
+          } else {
+            for (let i = 0; i < products.length; i++) {
+              domString += products[i].name;
+            }
+            return domString;
+          }
+        } else {
+          return 'Nothing in this category yet';
+        }
+      })
+      .catch((err) => console.error(err)); */
   }
 
   componentDidMount() {
