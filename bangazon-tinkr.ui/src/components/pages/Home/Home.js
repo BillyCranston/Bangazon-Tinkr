@@ -6,37 +6,38 @@ import SearchInput from '../../shared/SearchInput/SearchInput';
 
 class Home extends React.Component {
   state = {
-    selectedSearchType: "",
-    searchTerm: "",
+    selectedSearchType: '',
+    searchTerm: '',
   }
-  
-  searchTermChanged = (onChangeEvent) => {
-    this.setState({searchTerm: onChangeEvent.target.value});
 
-    if (this.state.selectedSearchType == "product") {
-      var filteredProducts = this.state.originalProducts.filter((product) => {
-        return product.name.includes(onChangeEvent.target.value);
-    
+  searchTermChanged = (onChangeEvent) => {
+    this.setState({ searchTerm: onChangeEvent.target.value });
+
+    if (this.state.selectedSearchType === 'product') {
+      const filteredProducts = this.state.originalProducts.filter((product) => {
+        const filteredProductNameBySearch = product.name.includes(onChangeEvent.target.value);
+        return filteredProductNameBySearch;
       });
-      this.setState({filteredProducts: filteredProducts});
-      this.selectedSearchType.router.push("/product/")
-    } else if (this.state.selectedSearchType == "seller") {
-      // filter the users
+      this.setState({ filteredRubbish: filteredProducts });
+      this.selectedSearchType.router.push('/product/');
+    } else if (this.state.selectedSearchType === 'seller') {
+      const filteredSellers = this.state.originalUsers.filter((user) => {
+        const filteredSellerNameBySearch = user.name.includes(onChangeEvent.target.value);
+        return filteredSellerNameBySearch;
+      });
+      this.setState({ filteredUsers: filteredSellers });
+      this.selectedSearchType.router.push('/user/');
     }
   }
 
   saveSearchType = (e) => {
-    this.setState({selectedSearchType: e.target.value})
-    console.log(e.target.value)
-
-        
-      
-    
+    this.setState({ selectedSearchType: e.target.value });
+    console.log(e.target.value);
   }
 
   SearchCategory = (e) => {
-    this.setState({selectedSearchType: e.target.value})
-    if (e.keyCode === 13){
+    this.setState({ selectedSearchType: e.target.value });
+    if (e.keyCode === 13) {
       console.log('hi');
       // this.selectedSearchType.router.push(`/product/`)
     }
@@ -56,7 +57,7 @@ class Home extends React.Component {
             </div>
             </div>
             <div className=" home-content col d-flex justify-content-center align-items-center">
-              <div className="input-group mb-3">    
+              <div className="input-group mb-3">
                   <div className="input-group-append">
                   <SearchInput
                     searchTermChanged={this.searchTermChanged}

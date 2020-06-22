@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import './ProductCard.scss';
 
 class ProductCard extends React.Component {
-
   render() {
     const { product } = this.props;
     return (
