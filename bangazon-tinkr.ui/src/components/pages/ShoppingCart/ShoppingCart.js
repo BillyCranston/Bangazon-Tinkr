@@ -53,6 +53,8 @@ class ShoppingCart extends React.Component {
     this.setCurrentOrder();
   }
 
+  // delete item function to be included here, the function will need to be provided to the products mapped below in the render.
+
   renderCartItemView = () => {
     const { products } = this.state;
     if (products.length !== 0) {
