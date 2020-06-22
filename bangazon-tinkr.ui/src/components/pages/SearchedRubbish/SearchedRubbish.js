@@ -2,27 +2,17 @@ import React from 'react';
 import SearchInput from '../../shared/SearchInput/SearchInput';
 import productData from '../../../helpers/data/productData';
 import ProductGrid from '../../shared/ProductGrid/ProductGrid';
-import './Products.scss';
 import ProductCard from '../../shared/ProductCard/ProductCard';
 import Dropdown  from '../../shared/DropDown/DropDown';
 
-class Products extends React.Component {
+class SearchedRubbish extends React.Component {
   state = {
     filteredProducts: [],
     originalProducts: [],
   }
-  getProducts = () => {
-    productData.getProducts()
-      .then((productsFromAPI) => {
-        this.setState({
-          filteredProducts: productsFromAPI,
-          originalProducts: productsFromAPI
-         });
-      })
-      .catch((err) => console.error('error from get products', err));
-  }
 
-  getRubbishByName = (name) => {
+  getRubbishByName = () => {
+    const name = this.props.match.params.rubbishName;
     const { searchTerm } = this.props;
     productData.getRubbishByName(name)
     .then((response) => { 
@@ -34,7 +24,7 @@ class Products extends React.Component {
   }
 
   componentDidMount() {
-    const name = this.props.match.params.name
+    const name = this.props.match.params.rubbishName
     this.getProducts();
     this.getRubbishByName();
   }
@@ -43,11 +33,11 @@ class Products extends React.Component {
     return (
       <>
         <ProductGrid
-          products={this.state.filteredProducts}
+          searchTerm={this.state.searchTerm}
         /> 
       </>
     );
   }
 }
 
-export default Products ;
+export default SearchedRubbish ;

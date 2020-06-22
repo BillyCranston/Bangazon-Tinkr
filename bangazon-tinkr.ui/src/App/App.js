@@ -14,8 +14,10 @@ import Profile from '../components/pages/Profile/Profile';
 import ShoppingCart from '../components/pages/ShoppingCart/ShoppingCart';
 import SingleProduct from '../components/pages/SingleProduct/SingleProduct';
 import SellerStore from '../components/pages/SellerStore/SellerStore';
+import SearchRubbish from '../components/pages/SearchedRubbish/SearchedRubbish';
 
 import './App.scss';
+import SearchedRubbish from '../components/pages/SearchedRubbish/SearchedRubbish';
 
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = (props) => (authed === false ? <Component {...props} {...rest}/> : <Redirect to={{ pathname: '/', state: { from: props.location } }} />);
@@ -54,6 +56,8 @@ class App extends React.Component {
           <PublicRoute path="/products" exact component={Products} authed={authed} />
           <PublicRoute path="/product/:productId" exact component={SingleProduct} authed={authed} />
           <PublicRoute path="/products/:sellerId" exact component={SellerStore} authed={authed} />
+          <PublicRoute path="/products/:rubbishName" exact component={SearchedRubbish} authed={authed} />
+
         </Switch>
       </Router>
     </div>

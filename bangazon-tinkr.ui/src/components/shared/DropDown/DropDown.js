@@ -6,17 +6,12 @@ class DropDown extends React.Component {
     selectedSearchType: ''
   }
 
-  saveSearchType = (e) => {
-    this.setState({selectedSearchType: e.target.value})
-    console.log(e.target.value)
-  }
-  
-
   render() {
+    const {dropDownChanged} = this.props;
+    const {viewChanged} = this.props;
     return (
-            <select className="form-control" value={this.state.selectedSearchType} id="searchOptions" onChange={this.saveSearchType}>
-              <option defaultValue>Choose An Option</option>
-              <option id="productOption" value="product">Products</option>
+            <select className="form-control" value={this.state.selectedSearchType} id="searchOptions" onChange={dropDownChanged} onKeyDown={viewChanged}>
+              <option id="productOption" value="product" defaultValue>Products</option>
               <option id="productOption" value="seller">Seller</option>
             </select>
     );

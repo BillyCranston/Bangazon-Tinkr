@@ -1,12 +1,47 @@
 import React from 'react';
 import Dropdown from '../../shared/DropDown/DropDown';
-import RubbishView from '../../shared/RubbishView/RubbishView';
 import Products from '../Products/Products';
 import './Home.scss';
 import SearchInput from '../../shared/SearchInput/SearchInput';
 
 class Home extends React.Component {
+  state = {
+    selectedSearchType: "",
+    searchTerm: "",
+  }
   
+  searchTermChanged = (onChangeEvent) => {
+    this.setState({searchTerm: onChangeEvent.target.value});
+
+    if (this.state.selectedSearchType == "product") {
+      var filteredProducts = this.state.originalProducts.filter((product) => {
+        return product.name.includes(onChangeEvent.target.value);
+    
+      });
+      this.setState({filteredProducts: filteredProducts});
+      this.selectedSearchType.router.push("/product/")
+    } else if (this.state.selectedSearchType == "seller") {
+      // filter the users
+    }
+  }
+
+  saveSearchType = (e) => {
+    this.setState({selectedSearchType: e.target.value})
+    console.log(e.target.value)
+
+        
+      
+    
+  }
+
+  SearchCategory = (e) => {
+    this.setState({selectedSearchType: e.target.value})
+    if (e.keyCode === 13){
+      console.log('hi');
+      // this.selectedSearchType.router.push(`/product/`)
+    }
+  }
+
   render() {
     return (
       <div className="Home d-flex justify-content-center align-items-center">
@@ -23,7 +58,13 @@ class Home extends React.Component {
             <div className=" home-content col d-flex justify-content-center align-items-center">
               <div className="input-group mb-3">    
                   <div className="input-group-append">
-                   <Products/>
+                  <SearchInput
+                    searchTermChanged={this.searchTermChanged}
+                  />
+                  <Dropdown
+                    dropDownChanged={this.saveSearchType}
+                    viewChanged={this.SearchCategory}
+                  />
                   </div>
               </div>
             </div>
