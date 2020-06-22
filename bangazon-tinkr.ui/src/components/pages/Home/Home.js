@@ -1,6 +1,5 @@
 import React from 'react';
 import Dropdown from '../../shared/DropDown/DropDown';
-import Products from '../Products/Products';
 import './Home.scss';
 import SearchInput from '../../shared/SearchInput/SearchInput';
 
@@ -10,6 +9,7 @@ class Home extends React.Component {
     searchTerm: '',
   }
 
+  // function to search based on input of search bar. WIP
   searchTermChanged = (onChangeEvent) => {
     this.setState({ searchTerm: onChangeEvent.target.value });
 
@@ -20,7 +20,9 @@ class Home extends React.Component {
       });
       this.setState({ filteredRubbish: filteredProducts });
       this.selectedSearchType.router.push('/product/');
+      // need to create a separate component to list Sellers
     } else if (this.state.selectedSearchType === 'seller') {
+      // originalUsers will be an empty array in the State of the new Sellers component
       const filteredSellers = this.state.originalUsers.filter((user) => {
         const filteredSellerNameBySearch = user.name.includes(onChangeEvent.target.value);
         return filteredSellerNameBySearch;
@@ -30,16 +32,17 @@ class Home extends React.Component {
     }
   }
 
+  // only works for console logging the value of 'Seller'. Likely an issue with the dropdown setup
   saveSearchType = (e) => {
     this.setState({ selectedSearchType: e.target.value });
     console.log(e.target.value);
   }
 
+  // WIP
   SearchCategory = (e) => {
     this.setState({ selectedSearchType: e.target.value });
     if (e.keyCode === 13) {
-      console.log('hi');
-      // this.selectedSearchType.router.push(`/product/`)
+      // this.selectedSearchType.router.push(`/product/`);
     }
   }
 

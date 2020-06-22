@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SearchInput from '../../shared/SearchInput/SearchInput';
 import ProductGrid from '../../shared/ProductGrid/ProductGrid';
 import ProductCard from '../../shared/ProductCard/ProductCard';
@@ -14,6 +15,12 @@ class Products extends React.Component {
     order: {},
     filteredRubbish: [],
     originalProducts: [],
+  }
+
+  static propTypes = {
+    searchTermChanged: PropTypes.func,
+    saveSearchType: PropTypes.func,
+    SearchCategory: PropTypes.func,
   }
 
   getProducts = () => {
@@ -74,12 +81,14 @@ class Products extends React.Component {
     );
   }
 
+  // below should eventually render the products page to include a search bar and dropdown at the top, and a list of filtered product cards based on the search underneath
   render() {
+    const { searchTermChanged, saveSearchType, SearchCategory } = this.props;
     return (
       <>
-        <ProductGrid
-          products={this.state.filteredProducts}
-        />
+        <SearchInput searchTermChanged={searchTermChanged}/>
+        <Dropdown dropDownChanged={saveSearchType} viewChanged={SearchCategory}/>
+        <ProductGrid products={this.state.filteredProducts}/>
       </>
     );
   }
