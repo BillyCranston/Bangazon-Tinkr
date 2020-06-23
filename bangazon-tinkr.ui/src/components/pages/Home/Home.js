@@ -12,15 +12,14 @@ class Home extends React.Component {
   
   searchTermChanged = (onChangeEvent) => {
     this.setState({searchTerm: onChangeEvent.target.value});
-
-    if (this.state.selectedSearchType == "product") {
+    if (this.state.selectedSearchType === "product") {
       var filteredProducts = this.state.originalProducts.filter((product) => {
         return product.name.includes(onChangeEvent.target.value);
     
       });
       this.setState({filteredProducts: filteredProducts});
-      this.selectedSearchType.router.push("/product/")
-    } else if (this.state.selectedSearchType == "seller") {
+      this.selectedSearchType.router.push("/product/") //where does this go
+    } else if (this.state.selectedSearchType === "seller") {
       // filter the users
     }
   }
@@ -28,18 +27,11 @@ class Home extends React.Component {
   saveSearchType = (e) => {
     this.setState({selectedSearchType: e.target.value})
     console.log(e.target.value)
-
-        
-      
     
   }
 
   SearchCategory = (e) => {
-    this.setState({selectedSearchType: e.target.value})
-    if (e.keyCode === 13){
-      console.log('hi');
-      // this.selectedSearchType.router.push(`/product/`)
-    }
+      this.props.history.push(`/products/search/${this.state.searchTerm}`)
   }
 
   render() {
@@ -63,8 +55,8 @@ class Home extends React.Component {
                   />
                   <Dropdown
                     dropDownChanged={this.saveSearchType}
-                    viewChanged={this.SearchCategory}
                   />
+                  <button onClick={this.SearchCategory}>Search</button>
                   </div>
               </div>
             </div>

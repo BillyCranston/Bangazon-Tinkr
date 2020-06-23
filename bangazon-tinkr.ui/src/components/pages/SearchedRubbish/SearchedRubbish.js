@@ -7,8 +7,7 @@ import Dropdown  from '../../shared/DropDown/DropDown';
 
 class SearchedRubbish extends React.Component {
   state = {
-    filteredProducts: [],
-    originalProducts: [],
+    filteredProducts: []
   }
 
   getRubbishByName = () => {
@@ -17,7 +16,7 @@ class SearchedRubbish extends React.Component {
     productData.getRubbishByName(name)
     .then((response) => { 
       this.setState({
-                    searchTerm: response
+        filteredProducts: response
           });
     })
       .catch((err) => console.error('error from get search product', err));
@@ -32,7 +31,7 @@ class SearchedRubbish extends React.Component {
     return (
       <>
         <ProductGrid
-          searchTerm={this.state.searchTerm}
+          products={this.state.filteredProducts}
         /> 
       </>
     );
