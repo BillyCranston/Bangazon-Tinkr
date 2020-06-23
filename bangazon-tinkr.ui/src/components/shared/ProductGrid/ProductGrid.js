@@ -1,12 +1,10 @@
 import React from 'react';
-import ProductCard from '../../shared/ProductCard/ProductCard';
-import productData from '../../../helpers/data/productData';
-
+import ProductCard from '../ProductCard/ProductCard';
+// import productData from '../../../helpers/data/productData';
 
 import './ProductGrid.scss';
 
 class ProductGrid extends React.Component {
-
   renderProductView = () => {
     const { products } = this.props;
     if (products.length !== 0) {

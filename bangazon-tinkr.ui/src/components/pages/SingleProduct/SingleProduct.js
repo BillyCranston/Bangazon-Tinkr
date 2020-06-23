@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import productData from '../../../helpers/data/productData';
+import orderData from '../../../helpers/data/orderData';
 
 import './SingleProduct.scss';
 import userData from '../../../helpers/data/userData';
@@ -10,6 +11,8 @@ class SingleProduct extends React.Component {
   state = {
     rubbish: {},
     seller: {},
+    order: {},
+    currentUserId: 3,
   }
 
   getSellerByRubbishId = () => {
@@ -29,6 +32,27 @@ class SingleProduct extends React.Component {
     const rubbishId = this.props.match.params.productId;
     this.getRubbish(rubbishId);
     this.getSellerByRubbishId();
+    this.getCurrentOrder();
+  }
+
+  getCurrentOrder = () => {
+    const { currentUserId } = this.state;
+    const orderObj = { userId: currentUserId };
+    orderData.getOpenUserOrder(orderObj)
+      .then((newOrder) => {
+        this.setState({ order: newOrder });
+      })
+      .catch((err) => console.error('error from getCurrentOrder', err));
+  }
+
+  addProductToCart = (e) => {
+    e.preventDefault();
+    const { rubbish, order } = this.state;
+    const itemObj = { rubbishId: rubbish.rubbishId, orderId: order.orderId };
+    orderData.addItemToOrder(itemObj)
+      // the below will take you back to the products page??
+      .then(() => this.props.history.push('/products'))
+      .catch((err) => console.error('error from addProductToCart', err));
   }
 
   render() {
@@ -46,7 +70,7 @@ class SingleProduct extends React.Component {
             <p>{rubbish.description}</p>
             <p>{rubbish.isAvailable ? 'Still' : 'No longer'} available</p>
             <p>Price: ${rubbish.price}.00</p>
-            <button>Add to Cart</button>
+            <button onClick={this.addProductToCart}>Add to Cart</button>
           </div>
         </div>
       </div>

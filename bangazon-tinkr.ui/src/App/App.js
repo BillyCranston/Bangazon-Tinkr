@@ -15,7 +15,6 @@ import ShoppingCart from '../components/pages/ShoppingCart/ShoppingCart';
 import SingleProduct from '../components/pages/SingleProduct/SingleProduct';
 import SellerStore from '../components/pages/SellerStore/SellerStore';
 import SearchedRubbish from '../components/pages/SearchedRubbish/SearchedRubbish';
-
 import './App.scss';
 
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
