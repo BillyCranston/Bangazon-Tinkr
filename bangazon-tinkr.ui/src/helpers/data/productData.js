@@ -31,10 +31,12 @@ const getProductsByUserId = (userId) => new Promise((resolve, reject) => {
 const getRubbishByName = (name) => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/Rubbish/Name/${name}`)
     .then((result) => {
-      const rubName= result.data;
-      resolve(rubName)
+      const rubName = result.data;
+      resolve(rubName);
     })
     .catch((error) => reject(error));
 });
 
-export default { getProducts, getRubbishById, getProductsByUserId, getRubbishByName };
+export default {
+  getProducts, getRubbishById, getProductsByUserId, getRubbishByName,
+};

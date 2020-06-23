@@ -14,10 +14,9 @@ import Profile from '../components/pages/Profile/Profile';
 import ShoppingCart from '../components/pages/ShoppingCart/ShoppingCart';
 import SingleProduct from '../components/pages/SingleProduct/SingleProduct';
 import SellerStore from '../components/pages/SellerStore/SellerStore';
-import SearchRubbish from '../components/pages/SearchedRubbish/SearchedRubbish';
+import SearchedRubbish from '../components/pages/SearchedRubbish/SearchedRubbish';
 
 import './App.scss';
-import SearchedRubbish from '../components/pages/SearchedRubbish/SearchedRubbish';
 
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = (props) => (authed === false ? <Component {...props} {...rest}/> : <Redirect to={{ pathname: '/', state: { from: props.location } }} />);

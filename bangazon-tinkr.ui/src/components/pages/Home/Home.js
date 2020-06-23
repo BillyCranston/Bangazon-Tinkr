@@ -1,37 +1,34 @@
 import React from 'react';
 import Dropdown from '../../shared/DropDown/DropDown';
-import Products from '../Products/Products';
-import './Home.scss';
 import SearchInput from '../../shared/SearchInput/SearchInput';
+
+import './Home.scss';
 
 class Home extends React.Component {
   state = {
-    selectedSearchType: "",
-    searchTerm: "",
+    selectedSearchType: '',
+    searchTerm: '',
   }
-  
+
   searchTermChanged = (onChangeEvent) => {
-    this.setState({searchTerm: onChangeEvent.target.value});
-    if (this.state.selectedSearchType === "product") {
-      var filteredProducts = this.state.originalProducts.filter((product) => {
+    this.setState({ searchTerm: onChangeEvent.target.value });
+    if (this.state.selectedSearchType === 'product') {
+      const filteredProducts = this.state.originalProducts.filter((product) => {
         return product.name.includes(onChangeEvent.target.value);
-    
       });
-      this.setState({filteredProducts: filteredProducts});
-      this.selectedSearchType.router.push("/product/") //where does this go
-    } else if (this.state.selectedSearchType === "seller") {
+      this.setState({ filteredProducts });
+      this.selectedSearchType.router.push('/product/');
+    } else if (this.state.selectedSearchType === 'seller') {
       // filter the users
     }
   }
 
   saveSearchType = (e) => {
-    this.setState({selectedSearchType: e.target.value})
-    console.log(e.target.value)
-    
+    this.setState({ selectedSearchType: e.target.value });
   }
 
   SearchCategory = (e) => {
-      this.props.history.push(`/products/search/${this.state.searchTerm}`)
+    this.props.history.push(`/products/search/${this.state.searchTerm}`);
   }
 
   render() {
@@ -48,7 +45,7 @@ class Home extends React.Component {
             </div>
             </div>
             <div className=" home-content col d-flex justify-content-center align-items-center">
-              <div className="input-group mb-3">    
+              <div className="input-group mb-3">
                   <div className="input-group-append">
                   <SearchInput
                     searchTermChanged={this.searchTermChanged}
