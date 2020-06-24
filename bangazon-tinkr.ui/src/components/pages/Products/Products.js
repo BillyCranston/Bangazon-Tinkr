@@ -11,6 +11,7 @@ class Products extends React.Component {
     products: [],
     currentUserId: 3,
     order: {},
+    currentLineItems: [],
   }
 
   getProducts = () => {
@@ -27,6 +28,7 @@ class Products extends React.Component {
     orderData.getOpenUserOrder(orderObj)
       .then((newOrder) => {
         this.setState({ order: newOrder });
+        this.getCurrentOrderDetails(newOrder.orderId);
       })
       .catch((err) => console.error('error from getCurrentOrder', err));
   }
@@ -39,11 +41,33 @@ class Products extends React.Component {
     addProductToCart = (productId) => {
       const { order } = this.state;
       const itemObj = { rubbishId: productId, orderId: order.orderId };
-      orderData.addItemToOrder(itemObj)
-        // once we are removing items from availability we can add additional function in .then section below:
-        .then()
-        .catch((err) => console.error('error from addProductToCart', err));
+      const lineItem = this.checkForItemInCart(productId);
+      if (lineItem === 'undefined') {
+        orderData.addItemToOrder(itemObj)
+          // once we are removing items from availability we can add additional function in .then section below:
+          .then()
+          .catch((err) => console.error('error from addProductToCart', err));
+      } console.log('item already in cart');
     }
+
+    getCurrentOrderDetails = (orderId) => {
+      orderData.getUserOrder(orderId)
+        .then((newOrder) => {
+          this.setState({ currentLineItems: newOrder.lineItems });
+        })
+        .catch((err) => console.error('error from get order', err));
+    }
+
+    checkForItemInCart = (productId) => {
+      // get all line items for current order
+      // check if the line items contain the current product id the user wishes to add to cart
+      const { currentLineItems } = this.state;
+      const lineItemExists = currentLineItems.find((x) => x.productId === productId);
+      // if the item is already in cart, pop up a modal and do not run add item to order
+      console.log('What returned?', lineItemExists);
+      return lineItemExists;
+      // if item is not in cart, run the additemtoorder function
+    };
 
   renderProductView = () => {
     const { products } = this.state;
