@@ -1,5 +1,6 @@
 import React from 'react';
 import ProductCard from '../../shared/ProductCard/ProductCard';
+import ItemInCartAlertModal from '../../shared/ItemInCartAlertModal/ItemInCartAlertModal';
 
 import productData from '../../../helpers/data/productData';
 
@@ -45,9 +46,9 @@ class Products extends React.Component {
       if (lineItem === 'undefined') {
         orderData.addItemToOrder(itemObj)
           // once we are removing items from availability we can add additional function in .then section below:
-          .then()
+          .then(() => 'Item added successfully')
           .catch((err) => console.error('error from addProductToCart', err));
-      } console.log('item already in cart');
+      } return 'Item already in cart';
     }
 
     getCurrentOrderDetails = (orderId) => {
@@ -89,6 +90,7 @@ class Products extends React.Component {
         <div className="card-group">
           {this.renderProductView()}
         </div>
+        <ItemInCartAlertModal />
       </div>
     );
   }
