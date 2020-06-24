@@ -43,12 +43,15 @@ class Products extends React.Component {
       const { order } = this.state;
       const itemObj = { rubbishId: productId, orderId: order.orderId };
       const lineItem = this.checkForItemInCart(productId);
-      if (lineItem === 'undefined') {
-        orderData.addItemToOrder(itemObj)
-          // once we are removing items from availability we can add additional function in .then section below:
-          .then(() => 'Item added successfully')
-          .catch((err) => console.error('error from addProductToCart', err));
-      } return 'Item already in cart';
+      if (lineItem) {
+        return 'Item already in cart';
+      }
+      return orderData.addItemToOrder(itemObj)
+        // once we are removing items from availability we can add additional function in .then section below:
+        .then(() => {
+          return 'Item added successfully';
+        })
+        .catch((err) => console.error('error from addProductToCart', err));
     }
 
     getCurrentOrderDetails = (orderId) => {
@@ -63,7 +66,7 @@ class Products extends React.Component {
       // get all line items for current order
       // check if the line items contain the current product id the user wishes to add to cart
       const { currentLineItems } = this.state;
-      const lineItemExists = currentLineItems.find((x) => x.productId === productId);
+      const lineItemExists = currentLineItems.some((x) => x.productId === productId);
       // if the item is already in cart, pop up a modal and do not run add item to order
       console.log('What returned?', lineItemExists);
       return lineItemExists;

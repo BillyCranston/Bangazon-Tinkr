@@ -19,9 +19,10 @@ class ProductCard extends React.Component {
     e.preventDefault();
     const { product, addProductToCart } = this.props;
     const result = addProductToCart(product.rubbishId);
+    console.log(result);
     if (result === 'Item already in cart') {
-      return <ItemInCartAlertModal isOpen={true} />;
-    } return <ModalExample isOpen={true} buttonLabel="Add To Cart" className="success-modal"/>;
+      return <ItemInCartAlertModal isOpen={true} toggle={toggle}/>;
+    } return <ModalExample isOpen={true} toggle={toggle} buttonLabel="Add To Cart" className="success-modal"/>;
   };
 
   render() {
