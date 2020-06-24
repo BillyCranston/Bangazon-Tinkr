@@ -46,6 +46,7 @@ class MainNavbar extends React.Component {
               </div>
               <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a className="dropdown-item" href="/products">All Rubbish</a>
+                <a className="dropdown-item" href="/categories">All Categories</a>
                 <a className="dropdown-item" href="#">Appliances</a>
                 <a className="dropdown-item" href="#">Cars</a>
                 <a className="dropdown-item" href="#">Clothing</a>

@@ -70,8 +70,8 @@ namespace Bangazon_Tinkr.Controllers
         public IActionResult GetAllRubbishByCategory(int categoryId)
         {
             var rubbishByCategory = _rubbishRepository.GetAllRubbishByCategoryId(categoryId);
-            var isEmpty = !rubbishByCategory.Any();
-            if (isEmpty) return NotFound("Sorry, there is currently no rubbish available in that category.");
+            //var isEmpty = !rubbishByCategory.Any();
+            //if (isEmpty) return NotFound("Sorry, there is currently no rubbish available in that category.");
 
             return Ok(rubbishByCategory);
         }
@@ -100,6 +100,27 @@ namespace Bangazon_Tinkr.Controllers
                 return Ok(rubbishToUpdate);
             }
             return NotFound("That rubbish does not exist and could not be deleted");
+        }
+
+        // api/Rubbish/Categories
+        [HttpGet("Categories")]
+        public IActionResult GetAllCategories()
+        {
+            var allCategories = _rubbishRepository.GetCategories();
+            if (allCategories == null) return NotFound("No categories found.");
+
+            return Ok(allCategories);
+        }
+        
+        // api/Rubbish/Name/shirt
+        [HttpGet("Name/{name}")]
+        public IActionResult GetRubbishByName(string name)
+        {
+            var RubbishByName = _rubbishRepository.getRubbishByName(name);
+            if (RubbishByName == null) return NotFound("That Rubbish does not exist.");
+            return Ok(RubbishByName);
+            
+         
         }
 
     }

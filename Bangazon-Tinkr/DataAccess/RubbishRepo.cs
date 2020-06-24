@@ -137,5 +137,28 @@ namespace Bangazon_Tinkr.DataAccess
 
             }
         }
+
+        public IEnumerable<Category> GetCategories()
+        {
+            using (var db = new SqlConnection(connectionString))
+            {
+                return db.Query<Category>("select * from Category order by Name");
+            }
+        }
+        
+        public IEnumerable <Rubbish> getRubbishByName(string name)
+        {
+            var sql =   @"select *
+                        from Rubbish
+                        where Name LIKE @Name;";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { Name = "%" + name + "%"};
+                var rubbish = db.Query<Rubbish>(sql, parameters);
+                return rubbish;
+            }
+        }
+        
     }
 }

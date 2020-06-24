@@ -1,10 +1,8 @@
 import React from 'react';
 import ProductCard from '../../shared/ProductCard/ProductCard';
-
 import productData from '../../../helpers/data/productData';
-
-import './Products.scss';
 import orderData from '../../../helpers/data/orderData';
+import './Products.scss';
 
 class Products extends React.Component {
   state = {
@@ -15,8 +13,10 @@ class Products extends React.Component {
 
   getProducts = () => {
     productData.getProducts()
-      .then((products) => {
-        this.setState({ products });
+      .then((productsFromAPI) => {
+        this.setState({
+          products: productsFromAPI,
+        });
       })
       .catch((err) => console.error('error from get products', err));
   }
@@ -63,9 +63,9 @@ class Products extends React.Component {
       <div className="Products">
         <h1>All Products</h1>
         <div className="card-group">
-          {this.renderProductView()}
-        </div>
+        {this.renderProductView()}
       </div>
+    </div>
     );
   }
 }
