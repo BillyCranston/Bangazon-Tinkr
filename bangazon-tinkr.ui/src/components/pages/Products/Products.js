@@ -11,7 +11,6 @@ class Products extends React.Component {
     products: [],
     currentUserId: 3,
     order: {},
-    filteredRubbish: [],
     originalProducts: [],
   }
 
@@ -25,7 +24,6 @@ class Products extends React.Component {
     productData.getProducts()
       .then((productsFromAPI) => {
         this.setState({
-          filteredRubbish: productsFromAPI,
           originalProducts: productsFromAPI,
         });
       })
