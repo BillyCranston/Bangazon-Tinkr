@@ -70,7 +70,7 @@ namespace Bangazon_Tinkr.DataAccess
         public IEnumerable<LineItemDetailed> GetLineItemDetailsByOrderId(int orderId)
         {
             var sql = @"
-                        select Rubbish.[Name] as RubbishName, Rubbish.[Description] as RubbishDescription, Rubbish.Price as RubbishPrice, Rubbish.RubbishId
+                        select LineItem.LineItemId, Rubbish.[Name] as RubbishName, Rubbish.[Description] as RubbishDescription, Rubbish.Price as RubbishPrice, Rubbish.RubbishId
                         from LineItem
 	                        join Rubbish
 		                        on LineItem.RubbishId = Rubbish.RubbishId

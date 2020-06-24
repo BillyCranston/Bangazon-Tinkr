@@ -34,9 +34,12 @@ const getOpenUserOrder = (userIdObj) => new Promise((resolve, reject) => {
 
 const addItemToOrder = (itemObj) => axios.post(`${baseUrl}/Order/AddItem`, itemObj);
 
+const deleteLineItem = (lineItemId) => axios.delete(`${baseUrl}/Order/deleteItem/${lineItemId}`)
+
 export default {
   getUserOrder,
   addItemToOrder,
   getOpenUserOrder,
   getOpenOrderByUserId,
+  deleteLineItem,
 };
