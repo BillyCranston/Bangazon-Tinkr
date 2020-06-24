@@ -7,9 +7,9 @@ import ModalExample from '../SuccessModal/SuccessModal';
 import ItemInCartAlertModal from '../ItemInCartAlertModal/ItemInCartAlertModal';
 
 class ProductCard extends React.Component {
-  // state = {
-  //   success: '',
-  // }
+  state = {
+    success: '',
+  }
 
   static propTypes = {
     addProductToCart: PropTypes.func,
@@ -20,13 +20,14 @@ class ProductCard extends React.Component {
     const { product, addProductToCart } = this.props;
     const result = addProductToCart(product.rubbishId);
     console.log(result);
-    if (result === 'Item already in cart') {
-      return <ItemInCartAlertModal isOpen={true} toggle={toggle}/>;
-    } return <ModalExample isOpen={true} toggle={toggle} buttonLabel="Add To Cart" className="success-modal"/>;
+    if (result === 'Item added successfully') {
+      this.setState({ success: 'Item added successfully' });
+    } this.setState({ success: 'Item already in cart' });
   };
 
   render() {
     const { product } = this.props;
+    const { success } = this.state;
     return (
       <div className="ProductCard col-3">
         <div className="card border-dark mb-3">
@@ -37,6 +38,9 @@ class ProductCard extends React.Component {
             <p className="card-text">{product.description}</p>
           </div>
           <div className="card-footer">
+            {
+              (success === 'Item added successfully') ? <ItemInCartAlertModal /> : <ModalExample />
+            }
             <div className="modal-holder btn btn-dark" onClick={this.addProductToCartEvent}>Add To Cart</div>
               {/* <ModalExample buttonLabel="Add To Cart" className="success-modal"/> */}
             <Link to={`/product/${product.rubbishId}`} className="card-link btn btn-outline-dark">More Info...</Link>
