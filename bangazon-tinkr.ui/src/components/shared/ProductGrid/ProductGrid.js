@@ -5,7 +5,7 @@ import './ProductGrid.scss';
 
 class ProductGrid extends React.Component {
   state = {
-    seller: {},
+    products: [],
     orderId: 0,
     currentUserId: 3,
   }
@@ -27,13 +27,15 @@ class ProductGrid extends React.Component {
       .then()
       .catch((err) => console.error('error from addProductToCart', err));
   }
-
+  componentDidMount() {
+    this.getCurrentOrder();
+  }	  
   renderProductView = () => {
     const { products } = this.props;
     if (products.length !== 0) {
       return (
         products.filter((product) => product.isAvailable)
-          .map((product) => <ProductCard key={product.rubbishId} product={product} addProductToCart={this.addProductToCart}/>)
+          .map((product) => <ProductCard key={product.rubbishId} product={product} addProductToCart={this.addProductToCart} />)
       );
     }
     return (
