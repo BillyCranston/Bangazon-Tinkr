@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import ProductGrid from '../../shared/ProductGrid/ProductGrid';
 import ProductCard from '../../shared/ProductCard/ProductCard';
 import productData from '../../../helpers/data/productData';
 import orderData from '../../../helpers/data/orderData';
@@ -11,20 +9,13 @@ class Products extends React.Component {
     products: [],
     currentUserId: 3,
     order: {},
-    originalProducts: [],
-  }
-
-  static propTypes = {
-    searchTermChanged: PropTypes.func,
-    saveSearchType: PropTypes.func,
-    SearchCategory: PropTypes.func,
   }
 
   getProducts = () => {
     productData.getProducts()
       .then((productsFromAPI) => {
         this.setState({
-          originalProducts: productsFromAPI,
+          products: productsFromAPI,
         });
       })
       .catch((err) => console.error('error from get products', err));
@@ -56,7 +47,7 @@ class Products extends React.Component {
 
   renderProductView = () => {
     const { products } = this.state;
-    if (products.length !== 1) {
+    if (products.length !== 0) {
       return (
         products.filter((product) => product.isAvailable)
           .map((product) => <ProductCard key={product.rubbishId} product={product} addProductToCart={this.addProductToCart} />)
@@ -69,11 +60,12 @@ class Products extends React.Component {
 
   render() {
     return (
-    <>
-      <ProductGrid
-        products={this.state.originalProducts}
-      />
-    </>
+      <div className="Products">
+        <h1>All Products</h1>
+        <div className="card-group">
+        {this.renderProductView()}
+      </div>
+    </div>
     );
   }
 }
