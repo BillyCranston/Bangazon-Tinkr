@@ -13,6 +13,18 @@ const getProducts = () => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
+const getCategories = () => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/Rubbish/Categories`)
+    .then((result) => resolve(result.data))
+    .catch((err) => reject('error from GetCategories in productData', err));
+})
+
+const getProductsByCategory = (categoryId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/Rubbish/Category/${categoryId}`)
+    .then((result) => resolve(result.data))
+    .catch((err) => reject('error in productData', err));
+});
+
 const getRubbishById = (rubbishId) => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/Rubbish/${rubbishId}`)
     .then((result) => resolve(result.data))
@@ -38,5 +50,5 @@ const getRubbishByName = (name) => new Promise((resolve, reject) => {
 });
 
 export default {
-  getProducts, getRubbishById, getProductsByUserId, getRubbishByName,
+  getProducts, getCategories, getProductsByCategory, getRubbishById, getProductsByUserId, getRubbishByName,
 };
