@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SearchInput from '../../shared/SearchInput/SearchInput';
 import ProductGrid from '../../shared/ProductGrid/ProductGrid';
 import ProductCard from '../../shared/ProductCard/ProductCard';
-import DropDownBtns from '../../shared/DropDownBtns/DropDownBtns';
 import productData from '../../../helpers/data/productData';
 import orderData from '../../../helpers/data/orderData';
 import './Products.scss';
