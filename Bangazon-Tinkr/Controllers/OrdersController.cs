@@ -139,10 +139,15 @@ namespace Bangazon_Tinkr.Controllers
             if (order && checkOrderIsActive != null)
             {
                 var rubbish = _rubbishRepository.CheckIfRubbishIsAvailable(lineItemToAdd.RubbishId);
+                var itemAlreadyInCart = _ordersRepository.CheckForProductIdOnCurrentOrder(lineItemToAdd);
                 if (rubbish != null)
                 {
-                    var newLineItem = _ordersRepository.AddNewLineItem(lineItemToAdd);
-                    return Ok(newLineItem);
+                    if (itemAlreadyInCart == null)
+                    {
+                        var newLineItem = _ordersRepository.AddNewLineItem(lineItemToAdd);
+                        return Ok(newLineItem);
+                    }
+                    return BadRequest("This item is already in the cart.  Only unique items can be used for new line items.");
                 }
                 return NotFound("That piece of rubbish is no longer available.");
             }
