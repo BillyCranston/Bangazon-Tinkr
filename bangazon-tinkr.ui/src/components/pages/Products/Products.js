@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import ProductGrid from '../../shared/ProductGrid/ProductGrid';
 import ProductCard from '../../shared/ProductCard/ProductCard';
-import ItemInCartAlertModal from '../../shared/ItemInCartAlertModal/ItemInCartAlertModal';
+// import ItemInCartAlertModal from '../../shared/ItemInCartAlertModal/ItemInCartAlertModal';
 
 import productData from '../../../helpers/data/productData';
-
-import './Products.scss';
 import orderData from '../../../helpers/data/orderData';
+import './Products.scss';
 
 class Products extends React.Component {
   state = {
@@ -13,12 +14,21 @@ class Products extends React.Component {
     currentUserId: 3,
     order: {},
     currentLineItems: [],
+    originalProducts: [],
+  }
+
+  static propTypes = {
+    searchTermChanged: PropTypes.func,
+    saveSearchType: PropTypes.func,
+    SearchCategory: PropTypes.func,
   }
 
   getProducts = () => {
     productData.getProducts()
-      .then((products) => {
-        this.setState({ products });
+      .then((productsFromAPI) => {
+        this.setState({
+          originalProducts: productsFromAPI,
+        });
       })
       .catch((err) => console.error('error from get products', err));
   }
@@ -75,7 +85,7 @@ class Products extends React.Component {
 
   renderProductView = () => {
     const { products } = this.state;
-    if (products.length !== 0) {
+    if (products.length !== 1) {
       return (
         products.filter((product) => product.isAvailable)
           .map((product) => <ProductCard key={product.rubbishId} product={product} addProductToCart={this.addProductToCart} />)
@@ -88,13 +98,11 @@ class Products extends React.Component {
 
   render() {
     return (
-      <div className="Products">
-        <h1>All Products</h1>
-        <div className="card-group">
-          {this.renderProductView()}
-        </div>
-        <ItemInCartAlertModal />
-      </div>
+    <>
+      <ProductGrid
+        products={this.state.originalProducts}
+      />
+    </>
     );
   }
 }
