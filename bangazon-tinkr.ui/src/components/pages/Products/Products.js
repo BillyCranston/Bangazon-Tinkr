@@ -34,15 +34,6 @@ class Products extends React.Component {
       .catch((err) => console.error('error from get products', err));
   }
 
-  getRubbishByName = () => {
-    const { searchTerm } = this.props.match.params;
-    productData.getRubbishByName(searchTerm)
-      .then((response) => {
-        this.setState({ searchTerm: response });
-      })
-      .catch((err) => console.error('error from get search product', err));
-  }
-
   getCurrentOrder = () => {
     const { currentUserId } = this.state;
     const orderObj = { userId: currentUserId };
@@ -56,7 +47,6 @@ class Products extends React.Component {
   componentDidMount() {
     this.getProducts();
     this.getCurrentOrder();
-    this.getRubbishByName();
   }
 
     addProductToCart = (productId) => {
@@ -70,7 +60,7 @@ class Products extends React.Component {
 
   renderProductView = () => {
     const { products } = this.state;
-    if (products.length !== 0) {
+    if (products.length !== 1) {
       return (
         products.filter((product) => product.isAvailable)
           .map((product) => <ProductCard key={product.rubbishId} product={product} addProductToCart={this.addProductToCart} />)
@@ -81,15 +71,13 @@ class Products extends React.Component {
     );
   }
 
-  // below should eventually render the products page to include a search bar and dropdown at the top, and a list of filtered product cards based on the search underneath
   render() {
-    const { searchTermChanged, saveSearchType, SearchCategory } = this.props;
     return (
-      <>
-        <SearchInput searchTermChanged={searchTermChanged}/>
-        <DropDownBtns dropDownChanged={saveSearchType} viewChanged={SearchCategory}/>
-        <ProductGrid products={this.state.filteredProducts}/>
-      </>
+    <>
+      <ProductGrid
+        products={this.state.originalProducts}
+      />
+    </>
     );
   }
 }

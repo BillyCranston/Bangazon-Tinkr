@@ -21,12 +21,10 @@ class Home extends React.Component {
     }
   }
 
-  // only works for console logging the value of 'Seller'. Likely an issue with the dropdown setup
   saveSearchType = (e) => {
     this.setState({ selectedSearchType: e.target.value });
   }
 
-  // WIP
   SearchCategory = (e) => {
     this.props.history.push(`/products/search/${this.state.searchTerm}`);
   }
