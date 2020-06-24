@@ -102,5 +102,16 @@ namespace Bangazon_Tinkr.Controllers
             return NotFound("That rubbish does not exist and could not be deleted");
         }
 
+        // api/Rubbish/Name/shirt
+        [HttpGet("Name/{name}")]
+        public IActionResult GetRubbishByName(string name)
+        {
+            var RubbishByName = _rubbishRepository.getRubbishByName(name);
+            if (RubbishByName == null) return NotFound("That Rubbish does not exist.");
+            return Ok(RubbishByName);
+            
+         
+        }
+
     }
 }
