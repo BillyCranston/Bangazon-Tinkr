@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import SearchInput from '../../shared/SearchInput/SearchInput';
 import ProductGrid from '../../shared/ProductGrid/ProductGrid';
 import ProductCard from '../../shared/ProductCard/ProductCard';
-import Dropdown from '../../shared/DropDown/DropDown';
+import DropDownBtns from '../../shared/DropDownBtns/DropDownBtns';
 import productData from '../../../helpers/data/productData';
 import orderData from '../../../helpers/data/orderData';
 import './Products.scss';
@@ -87,7 +87,7 @@ class Products extends React.Component {
     return (
       <>
         <SearchInput searchTermChanged={searchTermChanged}/>
-        <Dropdown dropDownChanged={saveSearchType} viewChanged={SearchCategory}/>
+        <DropDownBtns dropDownChanged={saveSearchType} viewChanged={SearchCategory}/>
         <ProductGrid products={this.state.filteredProducts}/>
       </>
     );

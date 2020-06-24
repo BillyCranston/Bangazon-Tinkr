@@ -1,15 +1,16 @@
 import React from 'react';
 
-class DropDown extends React.Component {
+import './DropDownBtns.scss';
+
+class DropDownBtns extends React.Component {
   state = {
     selectedSearchType: '',
   }
 
   render() {
     const { dropDownChanged } = this.props;
-    const { viewChanged } = this.props;
     return (
-             <select className="homeDropDown" value={this.state.selectedSearchType} id="searchOptions" onChange={dropDownChanged} onKeyDown={viewChanged}>
+             <select className="homeDropDown" value={this.state.selectedSearchType} id="searchOptions" onChange={dropDownChanged}>
                <option id="productOption" value="product">Products</option>
                <option id="productOption" value="seller" defaultValue>Seller</option>
              </select>
@@ -17,4 +18,4 @@ class DropDown extends React.Component {
   }
 }
 
-export default DropDown;
+export default DropDownBtns;

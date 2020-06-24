@@ -1,5 +1,5 @@
 import React from 'react';
-import Dropdown from '../../shared/DropDown/DropDown';
+import DropDownBtns from '../../shared/DropDownBtns/DropDownBtns';
 import SearchInput from '../../shared/SearchInput/SearchInput';
 
 import './Home.scss';
@@ -13,9 +13,7 @@ class Home extends React.Component {
   searchTermChanged = (onChangeEvent) => {
     this.setState({ searchTerm: onChangeEvent.target.value });
     if (this.state.selectedSearchType === 'product') {
-      const filteredProducts = this.state.originalProducts.filter((product) => {
-        return product.name.includes(onChangeEvent.target.value);
-      });
+      const filteredProducts = this.state.originalProducts.filter((product) => product.name.includes(onChangeEvent.target.value));
       this.setState({ filteredProducts });
       this.selectedSearchType.router.push('/product/');
     } else if (this.state.selectedSearchType === 'seller') {
@@ -52,10 +50,10 @@ class Home extends React.Component {
                   <SearchInput
                     searchTermChanged={this.searchTermChanged}
                   />
-                  <Dropdown
+                  <DropDownBtns
                     dropDownChanged={this.saveSearchType}
                   />
-                  <button onClick={this.SearchCategory}>Search</button>
+                  <button className="submitSearchBtn" onClick={this.SearchCategory}>Search</button>
                   </div>
               </div>
             </div>

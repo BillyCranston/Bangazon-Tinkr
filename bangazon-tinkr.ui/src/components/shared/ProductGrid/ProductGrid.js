@@ -1,6 +1,5 @@
 import React from 'react';
 import ProductCard from '../ProductCard/ProductCard';
-// import productData from '../../../helpers/data/productData';
 
 import './ProductGrid.scss';
 
@@ -21,7 +20,7 @@ class ProductGrid extends React.Component {
   render() {
     return (
       <div className="Products">
-        <h1>All Products</h1>
+        <h1>Products</h1>
         <div className="card-group">
           {this.renderProductView()}
         </div>
