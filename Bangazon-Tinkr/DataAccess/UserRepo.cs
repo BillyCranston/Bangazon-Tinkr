@@ -255,21 +255,20 @@ namespace Bangazon_Tinkr.DataAccess
         }
         public IEnumerable<User> GetSellersByName(string sellerInfo)
         {
-            var sql = @"Select * 
-                    from [User]
-                    where [Type] LIKE @Seller
-                    AND FirstName LIKE @SellerInfo
-                    OR LastName LIKE @SellerInfo
-                    OR StreetAddress LIKE @SellerInfo
-                    OR City LIKE @SellerInfo
-                    OR State LIKE @SellerInfo;"
-;
+            var sql = @"Select*
+                      from[User]
+                      where (LOWER(FirstName) LIKE LOWER(@SellerInfo)
+                      OR LOWER(LastName) LIKE LOWER(@SellerInfo)
+                      OR LOWER(StreetAddress) LIKE LOWER(@SellerInfo)
+                      OR LOWER(City) LIKE LOWER(@SellerInfo)
+                      OR LOWER([State]) LIKE LOWER(@SellerInfo))
+                      AND [Type] LIKE @Seller";
 
             using (var db = new SqlConnection(connectionString))
             {
-                var parameters = new { 
-                    SellerInfo = "%" + sellerInfo+ "%",
-                    Seller = "%" + "seller" + "%"
+                var parameters = new {
+                    SellerInfo = "%" + sellerInfo + "%",
+                    Seller = ("%" + "Seller" + "%" ),
                 };
                 var searchedSellers = db.Query<User>(sql, parameters);
                 return searchedSellers;
