@@ -9,10 +9,12 @@ class DropDownBtns extends React.Component {
 
   render() {
     const { dropDownChanged } = this.props;
+    
     return (
-      <select className="homeDropDown" value={this.state.selectedSearchType} id="searchOptions" onChange={dropDownChanged}>
-        <option id="productOption" value="product">Products</option>
-        <option id="productOption" value="seller" defaultValue>Seller</option>
+      <select className="homeDropDown" defaultValue={this.state.selectedSearchType} id="searchOptions" onChange={dropDownChanged}>
+        <option id="productOption" value="DEFAULT" disabled>Choose an option...</option>
+        <option id="productOption" value="products">Products</option>
+        <option id="productOption" value="sellers" >Sellers</option>
       </select>
     );
   }

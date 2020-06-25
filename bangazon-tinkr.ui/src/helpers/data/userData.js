@@ -21,4 +21,13 @@ const getUserByRubbishId = (rubbishId) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export default { getUser, getUserByRubbishId };
+const getSellerByInfo = (sellerInfo) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/User/Info/${sellerInfo}`)
+    .then((result) => {
+      const returnedSellerInfo = result.data;
+      resolve(returnedSellerInfo);
+    })
+    .catch((error) => reject(error));
+});
+
+export default { getUser, getUserByRubbishId, getSellerByInfo };
