@@ -101,6 +101,7 @@ namespace Bangazon_Tinkr.Controllers
             if (checkIncompleteOrder == true)
             {
                 var completeOrder = _ordersRepository.CompleteOrder(orderId);
+                _rubbishRepository.RubbishNoLongerAvailableAfterOrderComplete(orderId);
                 return Ok(completeOrder);
             }
             else
