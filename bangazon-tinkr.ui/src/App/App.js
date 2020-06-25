@@ -58,7 +58,7 @@ class App extends React.Component {
           <PublicRoute path="/categories" exact component={Categories} authed={authed} />
           <PublicRoute path="/products/:sellerId" exact component={SellerStore} authed={authed} />
           <PublicRoute path="/products/search/:searchTerm" exact component={SearchedRubbish} authed={authed} />
-          <PublicRoute path="/sellers/search/:searchTerm" exact component={SearchedSeller} authed={authed} />
+          <PublicRoute path="/sellers/:searchTerm" exact component={SearchedSeller} authed={authed} />
         </Switch>
       </Router>
     </div>
