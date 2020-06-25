@@ -1,6 +1,8 @@
 import React from 'react';
 import ProductCard from '../../shared/ProductCard/ProductCard';
 // import ItemInCartAlertModal from '../../shared/ItemInCartAlertModal/ItemInCartAlertModal';
+import SuccessModal from '../../shared/SuccessModal/SuccessModal';
+import ItemInCartModal from '../../shared/ItemInCartAlertModal/ItemInCartAlertModal';
 
 import productData from '../../../helpers/data/productData';
 import orderData from '../../../helpers/data/orderData';
@@ -11,6 +13,8 @@ class Products extends React.Component {
     products: [],
     currentUserId: 3,
     order: {},
+    success: '',
+    currentLineItems: [],
   }
 
   getProducts = () => {
@@ -21,6 +25,14 @@ class Products extends React.Component {
         });
       })
       .catch((err) => console.error('error from get products', err));
+  }
+
+  getCurrentOrderDetails = (orderId) => {
+    orderData.getUserOrder(orderId)
+      .then((newOrder) => {
+        this.setState({ currentLineItems: newOrder.lineItems });
+      })
+      .catch((err) => console.error('error from get order', err));
   }
 
   getCurrentOrder = () => {
@@ -43,30 +55,20 @@ class Products extends React.Component {
       const { order } = this.state;
       const itemObj = { rubbishId: productId, orderId: order.orderId };
       const lineItem = this.checkForItemInCart(productId);
-      if (lineItem) {
-        return 'Item already in cart';
+      if (lineItem === false) {
+        orderData.addItemToOrder(itemObj)
+          .then(() => {
+            this.setState({ success: 'Item added successfully' });
+            this.getCurrentOrder();
+          })
+          .catch((err) => console.error('error from addProductToCart', err));
       }
-      return orderData.addItemToOrder(itemObj)
-        // once we are removing items from availability we can add additional function in .then section below:
-        .then(() => {
-          return 'Item added successfully';
-        })
-        .catch((err) => console.error('error from addProductToCart', err));
-    }
-
-    getCurrentOrderDetails = (orderId) => {
-      orderData.getUserOrder(orderId)
-        .then((newOrder) => {
-          this.setState({ currentLineItems: newOrder.lineItems });
-        })
-        .catch((err) => console.error('error from get order', err));
+      this.setState({ success: 'Item already in cart' });
     }
 
     checkForItemInCart = (productId) => {
-      // get all line items for current order
-      // check if the line items contain the current product id the user wishes to add to cart
       const { currentLineItems } = this.state;
-      const lineItemExists = currentLineItems.some((x) => x.productId === productId);
+      const lineItemExists = currentLineItems.some((x) => x.rubbishId === productId);
       // if the item is already in cart, pop up a modal and do not run add item to order
       console.log('What returned?', lineItemExists);
       return lineItemExists;
@@ -86,10 +88,22 @@ class Products extends React.Component {
     );
   }
 
+  renderSuccessView = () => {
+    const { success } = this.state;
+    if (success === 'Item added successfully') {
+      return <div>Yay you bought yourself something!</div>;
+    }
+    if (success === 'Item already in cart') {
+      return <div>Sorry, can't have more than one of those</div>;
+    }
+    return <div></div>;
+  }
+
   render() {
     return (
       <div className="Products">
         <h1>All Products</h1>
+        {this.renderSuccessView()}
         <div className="card-group">
         {this.renderProductView()}
       </div>
