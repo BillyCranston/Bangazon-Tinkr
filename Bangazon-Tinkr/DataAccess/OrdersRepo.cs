@@ -67,6 +67,23 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
+        public IEnumerable<Order> GetCompletedOrderByRubbishId(int rubbishId)
+        {
+            var sql = @"
+                        select o.* 
+                        FROM Rubbish r
+                        JOIN LineItem l ON l.RubbishId = r.RubbishId
+                        JOIN [Order] o ON o.OrderId = l.OrderId
+                        Where r.RubbishId = @rubbishId AND r.IsAvailable = 0 AND o.IsComplete = 1 AND o.IsShipped = 0;
+                      ";
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { RubbishId = rubbishId };
+                var result = db.Query<Order>(sql, parameters);
+                return result;
+            }
+        }
+
         public IEnumerable<LineItemDetailed> GetLineItemDetailsByOrderId(int orderId)
         {
             var sql = @"

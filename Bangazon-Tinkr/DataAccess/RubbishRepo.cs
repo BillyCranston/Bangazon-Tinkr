@@ -85,6 +85,23 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
+        public IEnumerable<Rubbish> RubbishToShipByUserId(int userId)
+        {
+            var sql = @"select r.* 
+                        FROM [User] u
+                        JOIN Rubbish r ON r.UserId = u.UserId
+                        JOIN LineItem l ON l.RubbishId = r.RubbishId
+                        JOIN [Order] o ON o.OrderId = l.OrderId
+                        Where r.UserId = 2 AND r.IsAvailable = 0 AND o.IsComplete = 1 AND o.IsShipped = 0";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { UserId = userId };
+                var result = db.Query<Rubbish>(sql, parameters);
+                return result;
+            }
+        }
+
         public IEnumerable<Rubbish> GetAllRubbishByCategoryId(int categoryId)
         {
             var sql = @"select r.* 

@@ -66,6 +66,16 @@ namespace Bangazon_Tinkr.Controllers
             return Ok(RubbishInventoryByUser);
         }
 
+        // api/Rubbish/User/1/toShip
+        [HttpGet("User/{userId}/toShip")]
+        public IActionResult GetRubbishToShipByUserId(int userId)
+        {
+            var RubbishToShip = _rubbishRepository.RubbishToShipByUserId(userId);
+            if (RubbishToShip == null) return NotFound("There's no rubbish that needs to be shipped at the moment.");
+
+            return Ok(RubbishToShip);
+        }
+
         // api/Rubbish/User/1/TotalSales
         [HttpGet("User/{userId}/TotalSales")]
         public IActionResult GetTotalSalesByUserId(int userId)

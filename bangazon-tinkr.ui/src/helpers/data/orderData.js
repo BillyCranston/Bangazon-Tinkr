@@ -30,6 +30,15 @@ const getOpenUserOrder = (userIdObj) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
+const getCompletedOrderByProductId = (rubbishId) => new Promise((resolve, reject) => {
+  axios.post(`${baseUrl}/Order/Completed/Rubbish/${rubbishId}`)
+    .then((result) => {
+      const completedOrder = result.data;
+      resolve(completedOrder);
+    })
+    .catch((err) => reject(err));
+});
+
 const addItemToOrder = (itemObj) => axios.post(`${baseUrl}/Order/AddItem`, itemObj);
 
 const deleteLineItem = (lineItemId) => axios.delete(`${baseUrl}/Order/deleteItem/${lineItemId}`);
@@ -40,4 +49,5 @@ export default {
   getOpenUserOrder,
   getOpenOrderByUserId,
   deleteLineItem,
+  getCompletedOrderByProductId,
 };

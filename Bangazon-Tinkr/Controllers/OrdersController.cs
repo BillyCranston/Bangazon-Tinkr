@@ -35,6 +35,18 @@ namespace Bangazon_Tinkr.Controllers
             return NotFound("Couldn't find an order with that id");
         }
 
+        //api/Order/Completed/Rubbish/{rubbishId}
+        [HttpGet("Completed/Rubbish/{rubbishId}/")]
+        public IActionResult GetCompletedOrderByRubbishId(int rubbishId)
+        {
+            var completedOrder = _ordersRepository.GetCompletedOrderByRubbishId(rubbishId);
+            if (completedOrder != null)
+            {
+                return Ok(completedOrder);
+            }
+            return NotFound("No completed order could be found.");
+        }
+
         //api/Order/OpenOrder/{userId}
         [HttpGet("OpenOrder/{userId}")]
         public IActionResult GetUserOpenOrder(int userId)

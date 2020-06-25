@@ -84,6 +84,12 @@ const getInventoryByUserId = (userId) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
+const getRubbishToShipByUserId = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/Rubbish/User/${userId}/toShip`)
+    .then((result) => resolve(result.data))
+    .catch((err) => reject(err));
+});
+
 export default {
   getProducts,
   getCategories,
@@ -95,4 +101,5 @@ export default {
   getTotalSalesThisMonth,
   getAverageSaleByUserId,
   getInventoryByUserId,
+  getRubbishToShipByUserId,
 };

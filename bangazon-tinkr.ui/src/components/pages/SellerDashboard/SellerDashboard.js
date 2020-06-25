@@ -2,6 +2,7 @@ import './SellerDashboard.scss';
 import PropTypes from 'prop-types';
 import React from 'react';
 import productData from '../../../helpers/data/productData';
+import orderData from '../../../helpers/data/orderData';
 import InventoryProductCard from '../../shared/InventoryProductCard/InventoryProductCard';
 
 class SellerDashboard extends React.Component {
@@ -11,6 +12,7 @@ class SellerDashboard extends React.Component {
     averageSale: 0,
     categories: [],
     products: [],
+    productsToShip: [],
   }
 
   static propTypes = {
@@ -23,6 +25,7 @@ class SellerDashboard extends React.Component {
     this.getAverageSalePerItem();
     this.getCategories();
     this.getInventoryByUserId();
+    this.getProductsToShipByUserId();
   }
 
   getCategories = () => {
@@ -36,6 +39,15 @@ class SellerDashboard extends React.Component {
     productData.getInventoryByUserId(userId)
       .then((products) => this.setState({ products }))
       .catch((err) => console.error('error from getProductsByUserId in SellerDashboard', err));
+  }
+
+  getProductsToShipByUserId = () => {
+    const { userId } = this.props;
+    productData.getRubbishToShipByUserId(userId)
+      .then((productsToShip) => {
+        this.setState({ productsToShip });
+      })
+      .catch((err) => console.error('error from get products to ship', err));
   }
 
   getTotalSalesByUserId = () => {
@@ -64,6 +76,31 @@ class SellerDashboard extends React.Component {
       })
       .catch((err) => console.error('error from get total sales this month', err));
   }
+
+  getCompletedOrderByProductId = (productId) => {
+    orderData.getCompletedOrderByProductId(productId)
+      .then((orderToShip) => {
+        this.setState({ orderToShip });
+      })
+      .catch((err) => console.error('error from split products to ship by order', err));
+  }
+
+  // WIP
+  // splitProductsToShipByOrder = (productId) => {
+  //   const order = orderData.getCompletedOrderByProductId(productId);
+  //   return (
+  //     <div className="InventoryProductCard col-3">
+  //       <div className="card border-dark mb-3">
+  //       {/* <img src="..." className="card-img-top cardImage" alt="..." /> */}
+  //         <div className="card-body" id={order.orderId}>
+  //           <h5 className="card-title">{product.name}</h5>
+  //           <h6 className="card-subtitle mb-2 text-muted">${product.price}</h6>
+  //           <p className="card-text">{product.description}</p>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   splitInventoryByCategory = (categoryId) => {
     const { products } = this.state;
