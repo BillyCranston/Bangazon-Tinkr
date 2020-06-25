@@ -69,6 +69,7 @@ class SellerDashboard extends React.Component {
     const { products } = this.state;
     const rubbishInThisCategory = [];
     for (let i = 0; i < products.length; i += 1) {
+      // TODO: Currently if a product exists within 2 incomplete LineItems, then duplicate cards are printed in the inventory. Code needs to be written to prevent this from happening.
       // const productAlreadyExistsInCategory = Array.Exists(rubbishInThisCategory, (element) => element.key === products[i].key);
       if (products[i].categoryId === categoryId) {
         rubbishInThisCategory.push(products[i]);
