@@ -253,5 +253,21 @@ namespace Bangazon_Tinkr.DataAccess
                 return results;
             }
         }
+
+        public User CheckIfUserIsSeller(int sellerId)
+        {
+            var sql = @"SELECT *
+                        FROM [User]
+                        WHERE UserId = @SellerId
+                        AND Type LIKE '%Seller'";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { SellerId = sellerId };
+
+                var results = db.QueryFirstOrDefault<User>(sql, parameters);
+                return results;
+            }
+        }
     }
 }
