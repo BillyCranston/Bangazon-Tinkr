@@ -69,6 +69,19 @@ namespace Bangazon_Tinkr.Controllers
             return NotFound("That user does not exist");
         }
 
+        // api/Rubbish/User/1/SalesThisMonth
+        [HttpGet("User/{userId}/SalesThisMonth")]
+        public IActionResult TotalSalesThisMonthByUserId(int userId)
+        {
+            var validUser = _usersRepository.GetUserById(userId);
+            if (validUser != null)
+            {
+                var totalSalesThisMonth = _rubbishRepository.returnTotalSalesThisMonth(userId);
+                return Ok(totalSalesThisMonth);
+            }
+            return NotFound("That user does not exist");
+        }
+
         // api/Rubbish/createRubbish
         [HttpPost]
         public IActionResult CreateNewRubbish(Rubbish rubbishToAdd)

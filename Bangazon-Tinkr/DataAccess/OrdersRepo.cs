@@ -154,7 +154,7 @@ namespace Bangazon_Tinkr.DataAccess
         {
             var sql = @"
                         UPDATE [Order]
-                        Set IsComplete = 1
+                        Set IsComplete = 1, DateCompleted = GETDATE()
                         Output inserted.*
                         Where OrderId = @orderId;
                       ";

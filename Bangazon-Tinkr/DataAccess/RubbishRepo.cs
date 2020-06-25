@@ -175,6 +175,25 @@ namespace Bangazon_Tinkr.DataAccess
                 return totalSales;
             }
         }
-        
+
+        public decimal returnTotalSalesThisMonth(int userId)
+        {
+            var sql = @"Select ISNULL(SUM(r.Price), 0) as SalesTotal
+                        FROM [User] u
+                        JOIN Rubbish r on r.UserId = u.UserId
+                        JOIN LineItem l on r.RubbishId = l.RubbishId
+                        JOIN [Order] o on o.OrderId = l.OrderId
+                        WHERE r.UserId = @userId AND o.IsComplete = 1 AND MONTH(DateCompleted) = MONTH(GETDATE())
+                        AND YEAR(DateCompleted) = YEAR(GETDATE())";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { UserId = userId };
+                var totalSales = db.QueryFirstOrDefault<decimal>(sql, parameters);
+                return totalSales;
+            }
+        }
+
+
     }
 }

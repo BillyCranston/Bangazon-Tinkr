@@ -59,6 +59,15 @@ const getTotalSales = (userId) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const getTotalSalesThisMonth = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/Rubbish/User/${userId}/SalesThisMonth`)
+    .then((result) => {
+      const totalSales = result.data;
+      resolve(totalSales);
+    })
+    .catch((error) => reject(error));
+});
+
 export default {
   getProducts,
   getCategories,
@@ -67,4 +76,5 @@ export default {
   getProductsByUserId,
   getRubbishByName,
   getTotalSales,
+  getTotalSalesThisMonth,
 };
