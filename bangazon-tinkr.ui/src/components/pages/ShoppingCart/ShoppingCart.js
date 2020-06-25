@@ -60,6 +60,19 @@ class ShoppingCart extends React.Component {
       .catch((err) => console.error('err from deleteline', err));
   }
 
+  // *Checkout Procedure */
+  // when the user clicks the checkout button, they should be presented with an option to checkout
+  // render checkout view
+  // in view display detailed checkout information
+  // prompt user to verify their payment information, pre-populate their default?
+  // if none is available then they should be prompted to enter their payment information
+  // submit button should not be able to be clicked until payment has been selected
+  // once submitted the application should complete the following tasks:
+  //   1. check that items in cart are still available
+  //   2. update the order to complete
+  //   3. mark all order items as unavailable
+  // notify user the order is completed
+
   renderCartItemView = () => {
     const { products } = this.state;
     if (products.length !== 0) {
