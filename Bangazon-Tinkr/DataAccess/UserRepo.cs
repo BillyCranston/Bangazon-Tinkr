@@ -253,5 +253,27 @@ namespace Bangazon_Tinkr.DataAccess
                 return results;
             }
         }
+        public IEnumerable<User> GetSellersByName(string sellerInfo)
+        {
+            var sql = @"Select * 
+                    from [User]
+                    where [Type] LIKE @Seller
+                    AND FirstName LIKE @SellerInfo
+                    OR LastName LIKE @SellerInfo
+                    OR StreetAddress LIKE @SellerInfo
+                    OR City LIKE @SellerInfo
+                    OR State LIKE @SellerInfo;"
+;
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { 
+                    SellerInfo = "%" + sellerInfo+ "%",
+                    Seller = "%" + "seller" + "%"
+                };
+                var searchedSellers = db.Query<User>(sql, parameters);
+                return searchedSellers;
+            }
+        }
     }
 }
