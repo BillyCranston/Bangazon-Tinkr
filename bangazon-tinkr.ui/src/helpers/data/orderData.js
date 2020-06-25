@@ -1,7 +1,5 @@
 import axios from 'axios';
-
 import apiKeys from '../apiKeys.json';
-import userData from './userData';
 
 const baseUrl = apiKeys.databaseURL;
 

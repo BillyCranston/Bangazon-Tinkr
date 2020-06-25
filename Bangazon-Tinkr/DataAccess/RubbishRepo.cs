@@ -178,19 +178,36 @@ namespace Bangazon_Tinkr.DataAccess
 
         public decimal returnTotalSalesThisMonth(int userId)
         {
-            var sql = @"Select ISNULL(SUM(r.Price), 0) as SalesTotal
+            var sql = @"Select ISNULL(SUM(r.Price), 0) as SalesTotalThisMonth
                         FROM [User] u
                         JOIN Rubbish r on r.UserId = u.UserId
                         JOIN LineItem l on r.RubbishId = l.RubbishId
                         JOIN [Order] o on o.OrderId = l.OrderId
                         WHERE r.UserId = @userId AND o.IsComplete = 1 AND MONTH(DateCompleted) = MONTH(GETDATE())
-                        AND YEAR(DateCompleted) = YEAR(GETDATE())";
+                        AND YEAR(DateCompleted) = YEAR(GETDATE());";
 
             using (var db = new SqlConnection(connectionString))
             {
                 var parameters = new { UserId = userId };
-                var totalSales = db.QueryFirstOrDefault<decimal>(sql, parameters);
+                var totalSales = db.QueryFirst<decimal>(sql, parameters);
                 return totalSales;
+            }
+        }
+
+        public decimal returnAverageSalePerItem(int userId)
+        {
+            var sql = @"Select AVG(r.Price) as AvgPerSale
+                        FROM [User] u
+                        JOIN Rubbish r on r.UserId = u.UserId
+                        JOIN LineItem l on r.RubbishId = l.RubbishId
+                        JOIN [Order] o on o.OrderId = l.OrderId
+                        WHERE r.UserId = @userId AND o.IsComplete = 1;";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { UserId = userId };
+                var avgSale = db.QueryFirst<decimal>(sql, parameters);
+                return avgSale;
             }
         }
 

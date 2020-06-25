@@ -68,6 +68,16 @@ const getTotalSalesThisMonth = (userId) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const getAverageSaleByUserId = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/Rubbish/User/${userId}/AverageSale`)
+    .then((result) => {
+      const avgSalePerItem = result.data;
+      const roundedAvgSale = Math.round(avgSalePerItem, 2);
+      resolve(roundedAvgSale);
+    })
+    .catch((error) => reject(error));
+});
+
 export default {
   getProducts,
   getCategories,
@@ -77,4 +87,5 @@ export default {
   getRubbishByName,
   getTotalSales,
   getTotalSalesThisMonth,
+  getAverageSaleByUserId,
 };

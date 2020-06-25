@@ -7,6 +7,7 @@ class SellerDashboard extends React.Component {
   state = {
     totalSales: 0,
     totalSalesThisMonth: 0,
+    averageSale: 0,
   }
 
   static propTypes = {
@@ -16,6 +17,7 @@ class SellerDashboard extends React.Component {
   componentDidMount() {
     this.getTotalSalesByUserId();
     this.getTotalSalesThisMonth();
+    this.getAverageSalePerItem();
   }
 
   getTotalSalesByUserId = () => {
@@ -36,14 +38,23 @@ class SellerDashboard extends React.Component {
       .catch((err) => console.error('error from get total sales this month', err));
   }
 
+  getAverageSalePerItem = () => {
+    const { userId } = this.props;
+    productData.getAverageSaleByUserId(userId)
+      .then((averageSale) => {
+        this.setState({ averageSale });
+      })
+      .catch((err) => console.error('error from get total sales this month', err));
+  }
+
   render() {
-    const { totalSales, totalSalesThisMonth } = this.state;
+    const { totalSales, totalSalesThisMonth, averageSale } = this.state;
     return (
       <div className="SellerDashboard">
         <h1>Seller Dashboard</h1>
         <h3>Total Sales: ${totalSales} </h3>
         <h3>Total Sales This Month: ${totalSalesThisMonth}</h3>
-        <h3>Average Sale Per Item: </h3>
+        <h3>Average Sale Per Item:${averageSale} </h3>
         <h3>Total Inventory by Category: </h3>
         <h3>Orders that require shipping: </h3>
       </div>
