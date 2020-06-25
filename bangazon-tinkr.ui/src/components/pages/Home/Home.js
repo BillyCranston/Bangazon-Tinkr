@@ -12,15 +12,6 @@ class Home extends React.Component {
 
   searchTermChanged = (onChangeEvent) => {
     this.setState({ searchTerm: onChangeEvent.target.value });
-    if (this.state.selectedSearchType === 'products') {
-      const filteredProducts = this.state.originalProducts.filter((product) => product.name.includes(onChangeEvent.target.value));
-      this.setState({ filteredProducts });
-      this.selectedSearchType.router.push('/products/');
-    } else if (this.state.selectedSearchType === 'sellers') {
-      const filteredSellers = this.state.filteredSellers.filter((seller) => seller.sellerInfo.includes(onChangeEvent.target.value));
-      this.setState({ filteredSellers });
-      this.selectedSearchType.router.push('/sellers/');
-    }
   }
 
   saveSearchType = (e) => {
