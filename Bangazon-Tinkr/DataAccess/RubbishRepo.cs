@@ -96,7 +96,6 @@ namespace Bangazon_Tinkr.DataAccess
                 return result;
             }
         }
-        
 
         public Rubbish CheckIfRubbishIsAvailable(int rubbishId)
         {
@@ -157,6 +156,23 @@ namespace Bangazon_Tinkr.DataAccess
                 var parameters = new { Name = "%" + name + "%"};
                 var rubbish = db.Query<Rubbish>(sql, parameters);
                 return rubbish;
+            }
+        }
+
+        public decimal returnTotalSalesByUserId(int userId)
+        {
+            var sql = @"Select SUM(r.Price) as SalesTotal
+                        FROM [User] u
+                        JOIN Rubbish r on r.UserId = u.UserId
+                        JOIN LineItem l on r.RubbishId = l.RubbishId
+                        JOIN [Order] o on o.OrderId = l.OrderId
+                        WHERE r.UserId = @userId AND o.IsComplete = 1;";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { UserId = userId };
+                var totalSales = db.QueryFirstOrDefault<decimal>(sql, parameters);
+                return totalSales;
             }
         }
         

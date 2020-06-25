@@ -1,20 +1,34 @@
 import React from 'react';
 import SellerDashboard from '../SellerDashboard/SellerDashboard';
+import userData from '../../../helpers/data/userData';
 import './Profile.scss';
 
 class Profile extends React.Component {
   state = {
     // TODO: The below user will need to be updated once user authentication is implemented.
+    // TEST NOTE: For testing you may need to change the userId below to something different depending on your data.  The user will need to have rubbish inside a LineItem linked to a completed Order.
+    userId: 2,
     user: {},
-    userId: 3,
-    order: {},
+  }
+
+  getUserById = () => {
+    const { userId } = this.state;
+    userData.getUser(userId)
+      .then((user) => {
+        this.setState({ user });
+      })
+      .catch((err) => console.error('error from get user', err));
+  }
+
+  componentDidMount() {
+    this.getUserById();
   }
 
   renderSellerDashboard = () => {
-    const { user } = this.state;
+    const { user, userId } = this.state;
     if (user.type !== 'buyer') {
       return (
-        <SellerDashboard />
+        <SellerDashboard userId = { userId }/>
       );
     }
     return (
