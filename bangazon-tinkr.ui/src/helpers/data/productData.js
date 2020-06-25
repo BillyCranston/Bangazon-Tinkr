@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import apiKeys from '../apiKeys.json';
 
 const baseUrl = apiKeys.databaseURL;
@@ -17,7 +16,7 @@ const getCategories = () => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/Rubbish/Categories`)
     .then((result) => resolve(result.data))
     .catch((err) => reject('error from GetCategories in productData', err));
-})
+});
 
 const getProductsByCategory = (categoryId) => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/Rubbish/Category/${categoryId}`)
@@ -28,7 +27,7 @@ const getProductsByCategory = (categoryId) => new Promise((resolve, reject) => {
 const getRubbishById = (rubbishId) => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/Rubbish/${rubbishId}`)
     .then((result) => resolve(result.data))
-    .catch((error) => reject(error));
+    .catch((err) => reject(err));
 });
 
 const getProductsByUserId = (userId) => new Promise((resolve, reject) => {
