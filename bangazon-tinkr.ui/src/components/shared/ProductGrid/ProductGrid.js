@@ -27,9 +27,11 @@ class ProductGrid extends React.Component {
       .then()
       .catch((err) => console.error('error from addProductToCart', err));
   }
+
   componentDidMount() {
     this.getCurrentOrder();
-  }	  
+  }
+
   renderProductView = () => {
     const { products } = this.props;
     if (products.length !== 0) {

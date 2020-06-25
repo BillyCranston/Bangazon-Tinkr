@@ -16,6 +16,7 @@ import SingleProduct from '../components/pages/SingleProduct/SingleProduct';
 import Categories from '../components/pages/Categories/Categories';
 import SellerStore from '../components/pages/SellerStore/SellerStore';
 import SearchedRubbish from '../components/pages/SearchedRubbish/SearchedRubbish';
+import SearchedSeller from '../components/pages/SearchedSeller/SearchedSeller';
 import './App.scss';
 
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
@@ -57,7 +58,7 @@ class App extends React.Component {
           <PublicRoute path="/categories" exact component={Categories} authed={authed} />
           <PublicRoute path="/products/:sellerId" exact component={SellerStore} authed={authed} />
           <PublicRoute path="/products/search/:searchTerm" exact component={SearchedRubbish} authed={authed} />
-
+          <PublicRoute path="/sellers/:searchTerm" exact component={SearchedSeller} authed={authed} />
         </Switch>
       </Router>
     </div>

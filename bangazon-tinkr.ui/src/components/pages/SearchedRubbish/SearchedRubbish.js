@@ -1,8 +1,7 @@
 import React from 'react';
 import productData from '../../../helpers/data/productData';
 import ProductGrid from '../../shared/ProductGrid/ProductGrid';
-import orderData from '../../../helpers/data/orderData';
-import Product from '../../pages/Products/Products';
+
 
 class SearchedRubbish extends React.Component {
   state = {
