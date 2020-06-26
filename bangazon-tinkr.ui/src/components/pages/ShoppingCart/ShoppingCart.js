@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import CartProductCard from '../../shared/CartProductCard/CartProductCard';
 
@@ -60,19 +61,6 @@ class ShoppingCart extends React.Component {
       .catch((err) => console.error('err from deleteline', err));
   }
 
-  // *Checkout Procedure */
-  // when the user clicks the checkout button, they should be presented with an option to checkout
-  // render checkout view
-  // in view display detailed checkout information
-  // prompt user to verify their payment information, pre-populate their default?
-  // if none is available then they should be prompted to enter their payment information
-  // submit button should not be able to be clicked until payment has been selected
-  // once submitted the application should complete the following tasks:
-  //   1. check that items in cart are still available
-  //   2. update the order to complete
-  //   3. mark all order items as unavailable
-  // notify user the order is completed
-
   renderCartItemView = () => {
     const { products } = this.state;
     if (products.length !== 0) {
@@ -91,6 +79,8 @@ class ShoppingCart extends React.Component {
       user,
       orderTax,
       shipping,
+      products,
+      order,
     } = this.state;
 
     return (
@@ -129,7 +119,17 @@ class ShoppingCart extends React.Component {
                   </tr>
                 </tbody>
               </table>
-              <div className="btn btn-dark btn-block p-1 mx-0 my-3">Place Order</div>
+              <Link className="btn btn-dark btn-block p-1 mx-0 my-3" to={{
+                pathname: '/checkout',
+                state: {
+                  products,
+                  user,
+                  order,
+                  itemTotal,
+                  orderTax,
+                  shipping,
+                },
+              }}>Place Order</Link>
               <div className="row">
                 <img className="mapImage col" src="https://d26d74ht2k6aj1.cloudfront.net/images/street-map-sample.png"/>
                 <div className="col">

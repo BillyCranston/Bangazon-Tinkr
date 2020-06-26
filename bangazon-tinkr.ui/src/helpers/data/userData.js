@@ -30,4 +30,18 @@ const getSellerByInfo = (sellerInfo) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-export default { getUser, getUserByRubbishId, getSellerByInfo };
+const getAllPaymentTypes = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/User/${userId}/PaymentTypes`)
+    .then((result) => {
+      const returnedPaymentTypes = result.data;
+      resolve(returnedPaymentTypes);
+    })
+    .catch((error) => reject(error));
+});
+
+export default {
+  getUser,
+  getUserByRubbishId,
+  getSellerByInfo,
+  getAllPaymentTypes,
+};
