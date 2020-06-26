@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import productData from '../../../helpers/data/productData';
 import orderData from '../../../helpers/data/orderData';
+import userData from '../../../helpers/data/userData';
 import InventoryProductCard from '../../shared/InventoryProductCard/InventoryProductCard';
 
 class SellerDashboard extends React.Component {
@@ -77,30 +78,29 @@ class SellerDashboard extends React.Component {
       .catch((err) => console.error('error from get total sales this month', err));
   }
 
-  getCompletedOrderByProductId = (productId) => {
-    orderData.getCompletedOrderByProductId(productId)
-      .then((orderToShip) => {
-        this.setState({ orderToShip });
-      })
-      .catch((err) => console.error('error from split products to ship by order', err));
+  // Need help fixing this
+  showOrders = () => {
+    const { productsToShip } = this.state;
+    productsToShip.forEach((product) => {
+      const completedOrder = orderData.getCompletedOrderByProductId(product.productId);
+      const userWhoOrdered = userData.getUserByOrderId(completedOrder.orderId);
+      return (
+      <div className="ProductToShipCard col-3">
+        <div className="card border-dark mb-3">
+        {/* <img src="..." className="card-img-top cardImage" alt="..." /> */}
+          <div className="card-body" id={completedOrder.orderId}>
+            <h3>Tinkr Item Sold: {product.name}</h3>
+            <h3>Order Completed: {completedOrder.dateCompleted}</h3>
+            <h3>Deliver To: {userWhoOrdered.firstName} {userWhoOrdered.lastName}</h3>
+            <h3>Address: {userWhoOrdered.streetAddress}</h3>
+            <h3>City/State: {userWhoOrdered.city}, {userWhoOrdered.state}</h3>
+            <h3>Zip: {userWhoOrdered.zip}</h3>
+          </div>
+        </div>
+      </div>
+      );
+    });
   }
-
-  // WIP
-  // splitProductsToShipByOrder = (productId) => {
-  //   const order = orderData.getCompletedOrderByProductId(productId);
-  //   return (
-  //     <div className="InventoryProductCard col-3">
-  //       <div className="card border-dark mb-3">
-  //       {/* <img src="..." className="card-img-top cardImage" alt="..." /> */}
-  //         <div className="card-body" id={order.orderId}>
-  //           <h5 className="card-title">{product.name}</h5>
-  //           <h6 className="card-subtitle mb-2 text-muted">${product.price}</h6>
-  //           <p className="card-text">{product.description}</p>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
 
   splitInventoryByCategory = (categoryId) => {
     const { products } = this.state;
@@ -135,6 +135,7 @@ class SellerDashboard extends React.Component {
       totalSalesThisMonth,
       averageSale,
       categories,
+      productsToShip,
     } = this.state;
     return (
       <div className="SellerDashboard">
@@ -147,6 +148,7 @@ class SellerDashboard extends React.Component {
           {this.showInventory(categories)}
         </div>
         <h3>Orders that require shipping: </h3>
+          {this.showOrders(productsToShip)}
       </div>
     );
   }
