@@ -9,7 +9,7 @@ import userData from '../../../helpers/data/userData';
 
 class ShoppingCart extends React.Component {
   state = {
-    itemTotal: 20,
+    itemTotal: 0,
     shipping: 15,
     orderTax: 0,
     products: [],
