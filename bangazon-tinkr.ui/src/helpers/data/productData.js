@@ -15,12 +15,14 @@ const getProducts = () => new Promise((resolve, reject) => {
 const getCategories = () => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/Rubbish/Categories`)
     .then((result) => resolve(result.data))
+    // eslint-disable-next-line prefer-promise-reject-errors
     .catch((err) => reject('error from GetCategories in productData', err));
 });
 
 const getProductsByCategory = (categoryId) => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/Rubbish/Category/${categoryId}`)
     .then((result) => resolve(result.data))
+    // eslint-disable-next-line prefer-promise-reject-errors
     .catch((err) => reject('error in productData', err));
 });
 
@@ -48,6 +50,56 @@ const getRubbishByName = (name) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const getTotalSales = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/Rubbish/User/${userId}/TotalSales`)
+    .then((result) => {
+      const totalSales = result.data;
+      resolve(totalSales);
+    })
+    .catch((error) => reject(error));
+});
+
+const getTotalSalesThisMonth = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/Rubbish/User/${userId}/SalesThisMonth`)
+    .then((result) => {
+      const totalSales = result.data;
+      resolve(totalSales);
+    })
+    .catch((error) => reject(error));
+});
+
+const getAverageSaleByUserId = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/Rubbish/User/${userId}/AverageSale`)
+    .then((result) => {
+      const avgSalePerItem = result.data;
+      const roundedAvgSale = Math.round(avgSalePerItem, 2);
+      resolve(roundedAvgSale);
+    })
+    .catch((error) => reject(error));
+});
+
+const getInventoryByUserId = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/Rubbish/User/${userId}/Inventory`)
+    .then((result) => resolve(result.data))
+    .catch((err) => reject(err));
+});
+
+const getRubbishToShipByUserId = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/Rubbish/User/${userId}/toShip`)
+    .then((result) => resolve(result.data))
+    .catch((err) => reject(err));
+});
+
 export default {
-  getProducts, getCategories, getProductsByCategory, getRubbishById, getProductsByUserId, getRubbishByName,
+  getProducts,
+  getCategories,
+  getProductsByCategory,
+  getRubbishById,
+  getProductsByUserId,
+  getRubbishByName,
+  getTotalSales,
+  getTotalSalesThisMonth,
+  getAverageSaleByUserId,
+  getInventoryByUserId,
+  getRubbishToShipByUserId,
 };

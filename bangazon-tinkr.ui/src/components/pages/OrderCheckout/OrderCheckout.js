@@ -131,7 +131,7 @@ class OrderCheckout extends React.Component {
             <div className="row"><h6>Payment:</h6></div>
             <div className="row">
               <select className="form-control" value={selectedPaymentType} onChange={this.savePaymentTypeEntry}>
-                <option defaultValue value={0}>Select a Payment...</option>
+                <option defaultValue>Select a Payment...</option>
                 { paymentTypes.map((p) => <option key={p.paymentTypeId} value={p.paymentTypeId}>{p.pmtType}     {p.accountNo}</option>)}
               </select>
             </div>

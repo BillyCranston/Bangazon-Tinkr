@@ -21,6 +21,15 @@ const getUserByRubbishId = (rubbishId) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
+const getUserByOrderId = (orderId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/User/Order/${orderId}`)
+    .then((result) => {
+      const user = result.data;
+      resolve(user);
+    })
+    .catch((err) => reject(err));
+});
+
 const getSellerByInfo = (sellerInfo) => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/User/Info/${sellerInfo}`)
     .then((result) => {

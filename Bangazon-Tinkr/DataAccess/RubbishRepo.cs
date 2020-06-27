@@ -68,6 +68,40 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
+        public IEnumerable<Rubbish> RubbishInventoryByUserId(int userId)
+        {
+            var sql = @"select r.* 
+                        FROM [User] u
+                        JOIN Rubbish r ON r.UserId = u.UserId
+                        JOIN LineItem l ON l.RubbishId = r.RubbishId
+                        JOIN [Order] o ON o.OrderId = l.OrderId
+                        Where r.UserId = 2 AND r.IsAvailable = 1 AND o.IsComplete = 0";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { UserId = userId };
+                var result = db.Query<Rubbish>(sql, parameters);
+                return result;
+            }
+        }
+
+        public IEnumerable<Rubbish> RubbishToShipByUserId(int userId)
+        {
+            var sql = @"select r.* 
+                        FROM [User] u
+                        JOIN Rubbish r ON r.UserId = u.UserId
+                        JOIN LineItem l ON l.RubbishId = r.RubbishId
+                        JOIN [Order] o ON o.OrderId = l.OrderId
+                        Where r.UserId = @UserId AND r.IsAvailable = 0 AND o.IsComplete = 1 AND o.IsShipped = 0";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { UserId = userId };
+                var result = db.Query<Rubbish>(sql, parameters);
+                return result;
+            }
+        }
+
         public IEnumerable<Rubbish> GetAllRubbishByCategoryId(int categoryId)
         {
             var sql = @"select r.* 
@@ -87,7 +121,7 @@ namespace Bangazon_Tinkr.DataAccess
         public Rubbish DeleteRubbish(int rubbishId)
         {
             var sql = @"DELETE from Rubbish
-                        WHERE RubbishId = @RubbishId;";
+                        WHERE RubbishId = @RubbishId";
 
             using (var db = new SqlConnection(connectionString))
             {
@@ -96,7 +130,23 @@ namespace Bangazon_Tinkr.DataAccess
                 return result;
             }
         }
-        
+
+        public Rubbish RubbishNoLongerAvailableAfterOrderComplete(int orderId)
+        {
+            var sql = @"UPDATE Rubbish
+                        SET Rubbish.IsAvailable = 0
+                        FROM Rubbish
+                        JOIN LineItem ON LineItem.RubbishId = Rubbish.RubbishId
+                        JOIN [Order] ON [Order].OrderId = LineItem.OrderId
+                        WHERE [Order].OrderId = @orderId";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { OrderId = orderId };
+                var result = db.QueryFirstOrDefault<Rubbish>(sql, parameters);
+                return result;
+            }
+        }
 
         public Rubbish CheckIfRubbishIsAvailable(int rubbishId)
         {
@@ -159,6 +209,59 @@ namespace Bangazon_Tinkr.DataAccess
                 return rubbish;
             }
         }
-        
+
+        public decimal returnTotalSalesByUserId(int userId)
+        {
+            var sql = @"Select ISNULL(SUM(r.Price), 0) as SalesTotal
+                        FROM [User] u
+                        JOIN Rubbish r on r.UserId = u.UserId
+                        JOIN LineItem l on r.RubbishId = l.RubbishId
+                        JOIN [Order] o on o.OrderId = l.OrderId
+                        WHERE r.UserId = @userId AND o.IsComplete = 1;";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { UserId = userId };
+                var totalSales = db.QueryFirstOrDefault<decimal>(sql, parameters);
+                return totalSales;
+            }
+        }
+
+        public decimal returnTotalSalesThisMonth(int userId)
+        {
+            var sql = @"Select ISNULL(SUM(r.Price), 0) as SalesTotalThisMonth
+                        FROM [User] u
+                        JOIN Rubbish r on r.UserId = u.UserId
+                        JOIN LineItem l on r.RubbishId = l.RubbishId
+                        JOIN [Order] o on o.OrderId = l.OrderId
+                        WHERE r.UserId = @userId AND o.IsComplete = 1 AND MONTH(DateCompleted) = MONTH(GETDATE())
+                        AND YEAR(DateCompleted) = YEAR(GETDATE());";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { UserId = userId };
+                var totalSales = db.QueryFirst<decimal>(sql, parameters);
+                return totalSales;
+            }
+        }
+
+        public decimal returnAverageSalePerItem(int userId)
+        {
+            var sql = @"Select ISNULL(AVG(r.Price), 0) as AvgPerSale
+                        FROM [User] u
+                        JOIN Rubbish r on r.UserId = u.UserId
+                        JOIN LineItem l on r.RubbishId = l.RubbishId
+                        JOIN [Order] o on o.OrderId = l.OrderId
+                        WHERE r.UserId = @userId AND o.IsComplete = 1;";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { UserId = userId };
+                var avgSale = db.QueryFirst<decimal>(sql, parameters);
+                return avgSale;
+            }
+        }
+
+
     }
 }
