@@ -15,16 +15,33 @@ class MainNavbar extends React.Component {
 
   render() {
     const { userAuthed } = this.props;
-    const buildLogoutBtn = () => {
+    const buildAuthedNav = () => {
       if (userAuthed) {
         return (
-          <li className="nav-item">
+
+          <div className="collapse navbar-collapse order-2" id="navbarText2">
+          <ul className="navbar-nav ml-auto nav2">
+            <li className="nav-item">
+              <a className="nav-link" href="/shoppingCart">Cart</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/profile">Profile</a>
+            </li>
+            <li className="nav-item">
               <a className="nav-link" href="#">Logout</a>
-          </li>
+            </li>
+          </ul>
+        </div>
         );
       }
       return (
-        <li></li>
+        <div className="collapse navbar-collapse order-2" id="navbarText2">
+          <ul className="navbar-nav ml-auto nav2">
+            <li className="nav-item">
+              <a className="nav-link" href="/login">Login</a>
+            </li>
+          </ul>
+        </div>
       );
     };
     return (
@@ -58,17 +75,7 @@ class MainNavbar extends React.Component {
             </li>
           </ul>
         </div>
-        <div className="collapse navbar-collapse order-2" id="navbarText2">
-          <ul className="navbar-nav ml-auto nav2">
-            <li className="nav-item">
-              <a className="nav-link" href="/shoppingCart">Cart</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/profile">Profile</a>
-            </li>
-            { buildLogoutBtn() }
-          </ul>
-        </div>
+            { buildAuthedNav() }
       </nav>
     );
   }

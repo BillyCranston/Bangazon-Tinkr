@@ -23,19 +23,21 @@ import userData from '../helpers/data/userData';
 
 fbConnection();
 
-const PublicRoute = ({ component: Component, authed, ...rest }) => {
-  const routeChecker = (props) => (authed === false ? <Component {...props} {...rest}/> : <Redirect to={{ pathname: '/', state: { from: props.location } }} />);
-  return <Route {...rest} render={(props) => routeChecker(props)} />;
-};
-
-// const PrivateRoute = ({ component: Component, authed, ...rest }) => {
-//   const routeChecker = (props) => (authed === true ? <Component {...props} {...rest}/> : <Redirect to={{ pathname: '/auth', state: { from: props.location } }} />);
+// const PublicRoute = ({ component: Component, authed, ...rest }) => {
+//   const routeChecker = (props) => (authed === false ? <Component {...props} {...rest}/> : <Redirect to={{ pathname: '/', state: { from: props.location } }} />);
 //   return <Route {...rest} render={(props) => routeChecker(props)} />;
 // };
+
+const PrivateRoute = ({ component: Component, authed, ...rest }) => {
+  const routeChecker = (props) => (authed === true ? <Component {...props} {...rest}/> : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />);
+  return <Route {...rest} render={(props) => routeChecker(props)} />;
+};
 
 class App extends React.Component {
   state = {
     authed: false,
+    registeredUser: {},
+    firebaseUser: {},
   }
 
   componentDidMount() {
@@ -47,11 +49,11 @@ class App extends React.Component {
         // fetch call
           userData.GetUserByEmail(firebaseUser.email)
             .then((response) => {
-              const internalUser = response.data;
+              const registeredUser = response.data;
               if (firebaseUser) {
               // call out to api/user by firebase email, ? internalUserId: currentUserObj.id
               // pass this into the id space on my link
-                this.setState({ authed: true, firebaseUser, internalUser });
+                this.setState({ authed: true, registeredUser });
               } else {
                 this.setState({ authed: false });
               }
@@ -59,32 +61,36 @@ class App extends React.Component {
         });
     });
   }
-  // componentDidMount() {
-  //   // add authentication here when ready
-  //   this.setState({ authed: true });
-  // }
 
-  // componentWillUnmount() {
-  //   this.removeListener();
-  // }
+  componentWillUnmount() {
+    this.removeListener();
+  }
 
   render() {
-    const { authed } = this.state;
+    const { authed, registeredUser } = this.state;
     return (
     <div className="App">
       <Router>
-        <MainNavbar authed={authed} />
+        <MainNavbar authed={authed} registeredUserId={registeredUser?.id} />
         <Switch>
-          <Login />
-          <PublicRoute path="/" exact component={Home} authed={authed} />
-          <PublicRoute path="/profile" exact component={Profile} authed={authed} />
-          <PublicRoute path="/shoppingCart" exact component={ShoppingCart} authed={authed} />
-          <PublicRoute path="/products" exact component={Products} authed={authed} />
-          <PublicRoute path="/product/:productId" exact component={SingleProduct} authed={authed} />
-          <PublicRoute path="/categories" exact component={Categories} authed={authed} />
-          <PublicRoute path="/products/:sellerId" exact component={SellerStore} authed={authed} />
-          <PublicRoute path="/products/search/:searchTerm" exact component={SearchedRubbish} authed={authed} />
-          <PublicRoute path="/sellers/:searchTerm" exact component={SearchedSeller} authed={authed} />
+          <Route path="/" exact component={Home} authed={authed} />
+          <Route
+            path='/login'
+            render={() => (authed ? (
+                <Redirect to='/home' />
+            ) : (
+                <Login />
+            ))
+            }
+          />
+          <PrivateRoute path="/profile" exact component={Profile} authed={authed} userObj={registeredUser}/>
+          <PrivateRoute path="/shoppingCart" exact component={ShoppingCart} authed={authed} />
+          <Route path="/products" exact component={Products} authed={authed} />
+          <Route path="/product/:productId" exact component={SingleProduct} authed={authed} />
+          <Route path="/categories" exact component={Categories} authed={authed} />
+          <Route path="/products/:sellerId" exact component={SellerStore} authed={authed} />
+          <Route path="/products/search/:searchTerm" exact component={SearchedRubbish} authed={authed} />
+          <Route path="/sellers/:searchTerm" exact component={SearchedSeller} authed={authed} />
         </Switch>
       </Router>
     </div>
