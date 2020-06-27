@@ -2,6 +2,7 @@ import React from 'react';
 import CheckoutTableRow from '../../shared/CheckoutTableRow/CheckoutTableRow';
 import userData from '../../../helpers/data/userData';
 import PaymentTypeForm from '../../shared/PaymentTypeForm/PaymentTypeForm';
+import orderData from '../../../helpers/data/orderData';
 
 class OrderCheckout extends React.Component {
   state = {
@@ -13,6 +14,7 @@ class OrderCheckout extends React.Component {
     shipping: 0,
     paymentTypes: [],
     selectedPaymentType: 0,
+    checkoutStatus: 'Incomplete',
   }
 
   // *Checkout Procedure */
@@ -56,6 +58,20 @@ class OrderCheckout extends React.Component {
     this.setState({ selectedPaymentType: e.target.value });
   }
 
+  completeOrder = (e) => {
+    e.preventDefault();
+    const { order, selectedPaymentType } = this.state;
+    orderData.updatePayment(order.orderId, selectedPaymentType)
+      .then(() => {
+        orderData.completeOrder(order.orderId)
+          .then(() => {
+            this.setState({ checkoutStatus: 'Completed' });
+          })
+          .catch((err) => console.error('error from complete order', err));
+      })
+      .catch((err) => console.error('error from update payment', err));
+  }
+
   renderCheckoutList = () => {
     const { products } = this.state;
     if (products.length !== 0) {
@@ -72,6 +88,7 @@ class OrderCheckout extends React.Component {
       orderTax,
       selectedPaymentType,
     } = this.state;
+
     return (
       <div className="col-4">
       <h2 className="mb-3">Cart Summary:</h2>
@@ -99,12 +116,14 @@ class OrderCheckout extends React.Component {
           </tr>
         </tbody>
       </table>
-      { (selectedPaymentType === 0) ? <div className="btn btn-sm btn-dark disabled p-3">Checkout</div> : <div className="btn btn-sm btn-dark p-3">Checkout</div> }
+      { (selectedPaymentType === 0)
+        ? <div className="btn btn-sm btn-dark disabled p-3">Checkout</div>
+        : <div className="btn btn-sm btn-dark p-3" onClick={this.completeOrder}>Checkout</div> }
     </div>
     );
   }
 
-  render() {
+  renderCheckoutInProgress = () => {
     const {
       user,
       paymentTypes,
@@ -112,8 +131,7 @@ class OrderCheckout extends React.Component {
     } = this.state;
 
     return (
-      <div className="orderCheckout">
-        <div className="row">
+    <div className="row">
 
           <div className="col-4">
             <h2>Purchase Details</h2>
@@ -151,6 +169,20 @@ class OrderCheckout extends React.Component {
           { this.renderCartSummary() }
 
         </div>
+    );
+  }
+
+  renderCompletedOrderStatus = () => {
+    return (
+      <h3>You have completed an order!</h3>
+    )
+  }
+
+  render() {
+    const { checkoutStatus } = this.state;
+    return (
+      <div className="orderCheckout">
+        { (checkoutStatus === 'Incomplete') ? this.renderCheckoutInProgress() : this.renderCompletedOrderStatus() }
       </div>
     );
   }

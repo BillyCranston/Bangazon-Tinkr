@@ -290,5 +290,22 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
+        public Order UpdateOrderWithNewPaymentType(int orderId, int paymentId)
+        {
+            var sql = @"
+                        UPDATE[Order]
+                        Set PaymentId = @PaymentId
+                        Output inserted.*
+                        Where OrderId = @OrderId;
+                        ";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { OrderId = orderId, PaymentId = paymentId };
+                var result = db.QueryFirstOrDefault<Order>(sql, parameters);
+                return result;
+            }
+        }
+
     }
 }
