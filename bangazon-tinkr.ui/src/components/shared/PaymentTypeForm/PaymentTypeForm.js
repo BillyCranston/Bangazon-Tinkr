@@ -38,7 +38,6 @@ class PaymentTypeForm extends React.Component {
     userData.addNewPaymentType(newPaymentObj)
       .then(() => {
         this.toggle();
-        // window.location.reload();
         this.props.getPaymentTypes(currentUserId);
       })
       .catch((err) => console.error('error from save Payment', err));

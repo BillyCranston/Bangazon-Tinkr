@@ -12,7 +12,7 @@ class OrderCheckout extends React.Component {
     orderTax: 0,
     shipping: 0,
     paymentTypes: [],
-    selectedPayment: 0,
+    selectedPaymentType: 0,
   }
 
   // *Checkout Procedure */
@@ -51,11 +51,9 @@ class OrderCheckout extends React.Component {
       .catch((err) => console.error('error from getPaymentTypes', err));
   }
 
-  addNewPayment = (newPaymentType) => {
-    const { user } = this.state;
-    userData.addNewPaymentType(newPaymentType)
-      .then(() => this.getPaymentTypes(user.userId))
-      .catch((err) => console.error('error from addNewPayment', err));
+  savePaymentTypeEntry = (e) => {
+    e.preventDefault();
+    this.setState({ selectedPaymentType: e.target.value });
   }
 
   renderCheckoutList = () => {
@@ -68,7 +66,12 @@ class OrderCheckout extends React.Component {
   }
 
   renderCartSummary = () => {
-    const { itemTotal, shipping, orderTax } = this.state;
+    const {
+      itemTotal,
+      shipping,
+      orderTax,
+      selectedPaymentType,
+    } = this.state;
     return (
       <div className="col-4">
       <h2 className="mb-3">Cart Summary:</h2>
@@ -96,7 +99,7 @@ class OrderCheckout extends React.Component {
           </tr>
         </tbody>
       </table>
-      <div className="btn btn-sm btn-dark disabled p-3">Checkout</div>
+      { (selectedPaymentType === 0) ? <div className="btn btn-sm btn-dark disabled p-3">Checkout</div> : <div className="btn btn-sm btn-dark p-3">Checkout</div> }
     </div>
     );
   }
@@ -105,6 +108,7 @@ class OrderCheckout extends React.Component {
     const {
       user,
       paymentTypes,
+      selectedPaymentType,
     } = this.state;
 
     return (
@@ -126,9 +130,9 @@ class OrderCheckout extends React.Component {
             <h2>Payment and Shipping</h2>
             <div className="row"><h6>Payment:</h6></div>
             <div className="row">
-              <select>
-                <option>Select a Payment...</option>
-                { paymentTypes.map((p) => <option key={p.paymentTypeId}>{p.pmtType}     {p.accountNo}</option>)}
+              <select className="form-control" value={selectedPaymentType} onChange={this.savePaymentTypeEntry}>
+                <option defaultValue value={0}>Select a Payment...</option>
+                { paymentTypes.map((p) => <option key={p.paymentTypeId} value={p.paymentTypeId}>{p.pmtType}     {p.accountNo}</option>)}
               </select>
             </div>
             <PaymentTypeForm buttonLabel={'Add New Payment'} currentUserId={user.userId} getPaymentTypes={this.getPaymentTypes}/>
