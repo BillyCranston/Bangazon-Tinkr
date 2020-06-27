@@ -6,6 +6,7 @@ import {
   Switch,
 } from 'react-router-dom';
 
+
 import MainNavbar from '../components/shared/MainNavbar/MainNavbar';
 
 import Home from '../components/pages/Home/Home';
@@ -19,6 +20,9 @@ import SearchedRubbish from '../components/pages/SearchedRubbish/SearchedRubbish
 import SearchedSeller from '../components/pages/SearchedSeller/SearchedSeller';
 import Login from '../components/pages/Login/Login';
 import './App.scss';
+import fbConnection from '../helpers/data/connection';
+
+fbConnection();
 
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = (props) => (authed === false ? <Component {...props} {...rest}/> : <Redirect to={{ pathname: '/', state: { from: props.location } }} />);
