@@ -16,6 +16,7 @@ class SellerDashboard extends React.Component {
     products: [],
     productsToShip: [],
     orderInfoSample: {},
+    sellerOrders: [],
   }
 
   static propTypes = {
@@ -29,6 +30,7 @@ class SellerDashboard extends React.Component {
     this.getCategories();
     this.getInventoryByUserId();
     this.getProductsToShipByUserId();
+    this.getSellersOrders();
   }
 
   getCategories = () => {
@@ -140,6 +142,15 @@ class SellerDashboard extends React.Component {
     ))
   )
 
+  getSellersOrders = () => {
+    const { userId } = this.props;
+    orderData.getOrdersBySeller(userId)
+      .then((sellerOrders) => {
+        this.setState({ sellerOrders });
+      })
+      .catch((err) => console.error('error from get total sales', err));
+  }
+
   render() {
     const {
       totalSales,
@@ -147,6 +158,7 @@ class SellerDashboard extends React.Component {
       averageSale,
       categories,
       productsToShip,
+      sellerOrders,
     } = this.state;
     return (
       <div className="SellerDashboard">
@@ -160,6 +172,8 @@ class SellerDashboard extends React.Component {
         </div>
         <h3>Orders that require shipping: </h3>
           { productsToShip.map((product) => <ProductToShip key={product.rubbishId} product={product} />)}
+        <h3>Orders</h3>
+          {sellerOrders.map((order) => <span>{order.rubbishName}</span>)}
       </div>
     );
   }

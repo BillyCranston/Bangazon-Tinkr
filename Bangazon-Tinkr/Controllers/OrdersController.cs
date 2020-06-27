@@ -192,7 +192,7 @@ namespace Bangazon_Tinkr.Controllers
             }
             else if (isSeller == null)
             {
-                return NotFound("That user doesn't sell anything, mon frere");
+                return NotFound("That user doesn't sell anything, mon frère");
             }
             else
             {
