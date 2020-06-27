@@ -1,11 +1,8 @@
 import React from 'react';
-
 import ProductCard from '../../shared/ProductCard/ProductCard';
-
 import productData from '../../../helpers/data/productData';
 import orderData from '../../../helpers/data/orderData';
-
-import './Categories.scss'
+import './Categories.scss';
 
 class Categories extends React.Component {
   state = {
@@ -49,39 +46,38 @@ class Categories extends React.Component {
   getThreeRubbishes = (categoryId) => {
     const { products } = this.state;
     const rubbishInThisCategory = [];
-    for (let i = 0; i < products.length; i++) {
+    for (let i = 0; i < products.length; i += 1) {
       if (products[i].categoryId === categoryId) {
         rubbishInThisCategory.push(products[i]);
       }
     }
-    
+
     if (rubbishInThisCategory.length > 0 && rubbishInThisCategory.length < 3) {
       return rubbishInThisCategory.map((product) => <ProductCard key={product.rubbishId} product={product} addProductToCart={this.addProductToCart} />);
-    } else if (rubbishInThisCategory.length > 3) {
-      const firstThree = rubbishInThisCategory.slice(0,3);
+    } if (rubbishInThisCategory.length > 3) {
+      const firstThree = rubbishInThisCategory.slice(0, 3);
       return firstThree.map((product) => <ProductCard key={product.rubbishId} product={product} addProductToCart={this.addProductToCart} />);
-    } else {
-      return <p>Sorry, nothing in this category at the moment</p>
     }
+    return <p>Sorry, nothing in this category at the moment</p>;
   }
-  
+
   showCategories = (categories) => (
-      categories.map((category) => (
+    categories.map((category) => (
           <div key={category.categoryId}>
             <h2>{category.name}</h2>
             <div className="card-group">
               {this.getThreeRubbishes(category.categoryId)}
             </div>
           </div>
-      ))
-    )
+    ))
+  )
 
   componentDidMount() {
     this.getCategories();
     this.getProducts();
     this.getCurrentOrder();
   }
-  
+
   render() {
     const { categories } = this.state;
     return (
@@ -89,7 +85,7 @@ class Categories extends React.Component {
         <h1>All Categories</h1>
         {this.showCategories(categories)}
       </div>
-    )
+    );
   }
 }
 

@@ -58,6 +58,22 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
+        public User GetUserByOrderId(int orderId)
+        {
+            var sql = @"select u.*
+                        FROM [User] u
+                        JOIN [Order] o
+                        ON u.UserId = o.UserId
+                        WHERE o.OrderId = @orderId";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { OrderId = orderId };
+                var user = db.QueryFirstOrDefault<User>(sql, parameters);
+                return user;
+            }
+        }
+
         public User CheckIfUserAccountIsDeleted(int userId)
         {
             var sql = @"Select * 

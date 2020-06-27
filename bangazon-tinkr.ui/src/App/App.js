@@ -6,7 +6,6 @@ import {
   Switch,
 } from 'react-router-dom';
 
-
 import MainNavbar from '../components/shared/MainNavbar/MainNavbar';
 
 import Home from '../components/pages/Home/Home';
