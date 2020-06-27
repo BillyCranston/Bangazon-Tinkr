@@ -151,6 +151,18 @@ class SellerDashboard extends React.Component {
       .catch((err) => console.error('error from get total sales', err));
   }
 
+  showSellersOrders = (orders) => (
+    orders.map((order) => (
+      <div key={order.orderId}>
+        <h4>{order.rubbishName}</h4>
+        <h5>${order.price}.00</h5>
+        <h5>Buyer: {order.buyerName}</h5>
+        <h5>{order.streetAddress}</h5>
+        <h5>{order.city}, {order.state} {order.zip}</h5>
+      </div>
+    ))
+  )
+
   render() {
     const {
       totalSales,
@@ -161,7 +173,7 @@ class SellerDashboard extends React.Component {
       sellerOrders,
     } = this.state;
     return (
-      <div className="SellerDashboard">
+      <div className="SellerDashboard container">
         <h1>Seller Dashboard</h1>
         <h3>Total Sales: ${totalSales} </h3>
         <h3>Total Sales This Month: ${totalSalesThisMonth}</h3>
@@ -172,8 +184,8 @@ class SellerDashboard extends React.Component {
         </div>
         <h3>Orders that require shipping: </h3>
           { productsToShip.map((product) => <ProductToShip key={product.rubbishId} product={product} />)}
-        <h3>Orders</h3>
-          {sellerOrders.map((order) => <span>{order.rubbishName}</span>)}
+        <h3>All Orders that include your rubbish:</h3>
+          {this.showSellersOrders(sellerOrders)}
       </div>
     );
   }
