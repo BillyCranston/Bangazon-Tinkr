@@ -39,9 +39,12 @@ const getAllPaymentTypes = (userId) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const addNewPaymentType = (paymentObject) => axios.post(`${baseUrl}/User/PaymentTypes`, paymentObject);
+
 export default {
   getUser,
   getUserByRubbishId,
   getSellerByInfo,
   getAllPaymentTypes,
+  addNewPaymentType,
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import CheckoutTableRow from '../../shared/CheckoutTableRow/CheckoutTableRow';
 import userData from '../../../helpers/data/userData';
+import PaymentTypeForm from '../../shared/PaymentTypeForm/PaymentTypeForm';
 
 class OrderCheckout extends React.Component {
   state = {
@@ -48,6 +49,13 @@ class OrderCheckout extends React.Component {
         this.setState({ paymentTypes: result });
       })
       .catch((err) => console.error('error from getPaymentTypes', err));
+  }
+
+  addNewPayment = (newPaymentType) => {
+    const { user } = this.state;
+    userData.addNewPaymentType(newPaymentType)
+      .then(() => this.getPaymentTypes(user.userId))
+      .catch((err) => console.error('error from addNewPayment', err));
   }
 
   renderCheckoutList = () => {
@@ -123,7 +131,8 @@ class OrderCheckout extends React.Component {
                 { paymentTypes.map((p) => <option key={p.paymentTypeId}>{p.pmtType}     {p.accountNo}</option>)}
               </select>
             </div>
-            <div className="row btn btn-sm btn-outline-dark disabled">Add New Payment</div>
+            <PaymentTypeForm buttonLabel={'Add New Payment'} currentUserId={user.userId} getPaymentTypes={this.getPaymentTypes}/>
+            {/* <div className="row btn btn-sm btn-outline-dark disabled">Add New Payment</div> */}
             <h6 className="row">Shipping Information:</h6>
             <div className="row">
             <div className="col-6">
