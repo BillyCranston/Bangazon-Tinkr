@@ -7,7 +7,7 @@ class Profile extends React.Component {
   state = {
     // TODO: The below user will need to be updated once user authentication is implemented.
     // TEST NOTE: For testing you may need to change the userId below to something different depending on your data.  The user will need to have rubbish inside a LineItem linked to a completed Order.
-    userId: 2,
+    userId: 3,
     user: {},
   }
 

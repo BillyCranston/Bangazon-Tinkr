@@ -92,7 +92,7 @@ namespace Bangazon_Tinkr.DataAccess
                         JOIN Rubbish r ON r.UserId = u.UserId
                         JOIN LineItem l ON l.RubbishId = r.RubbishId
                         JOIN [Order] o ON o.OrderId = l.OrderId
-                        Where r.UserId = 2 AND r.IsAvailable = 0 AND o.IsComplete = 1 AND o.IsShipped = 0";
+                        Where r.UserId = @UserId AND r.IsAvailable = 0 AND o.IsComplete = 1 AND o.IsShipped = 0";
 
             using (var db = new SqlConnection(connectionString))
             {
