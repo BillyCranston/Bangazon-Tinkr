@@ -11,5 +11,7 @@ namespace Bangazon_Tinkr.Models
         public int UserId { get; set; }
         public int PaymentId { get; set; }
         public bool IsComplete { get; set; }
+        public DateTime DateCompleted { get; set; } 
+        public bool IsShipped { get; set; }
     }
 }
