@@ -31,7 +31,7 @@ const getOpenUserOrder = (userIdObj) => new Promise((resolve, reject) => {
 });
 
 const getCompletedOrderByProductId = (rubbishId) => new Promise((resolve, reject) => {
-  axios.post(`${baseUrl}/Order/Completed/Rubbish/${rubbishId}`)
+  axios.get(`${baseUrl}/Order/Completed/Rubbish/${rubbishId}`)
     .then((result) => {
       const completedOrder = result.data;
       resolve(completedOrder);

@@ -67,7 +67,7 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
-        public IEnumerable<Order> GetCompletedOrderByRubbishId(int rubbishId)
+        public Order GetCompletedOrderByRubbishId(int rubbishId)
         {
             var sql = @"
                         select o.* 
@@ -79,7 +79,7 @@ namespace Bangazon_Tinkr.DataAccess
             using (var db = new SqlConnection(connectionString))
             {
                 var parameters = new { RubbishId = rubbishId };
-                var result = db.Query<Order>(sql, parameters);
+                var result = db.QueryFirstOrDefault<Order>(sql, parameters);
                 return result;
             }
         }
