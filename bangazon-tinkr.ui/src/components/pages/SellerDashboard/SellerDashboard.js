@@ -159,7 +159,7 @@ class SellerDashboard extends React.Component {
           {this.showInventory(categories)}
         </div>
         <h3>Orders that require shipping: </h3>
-          { productsToShip.map((product) => <ProductToShip product={product} />)}
+          { productsToShip.map((product) => <ProductToShip key={product.rubbishId} product={product} />)}
       </div>
     );
   }
