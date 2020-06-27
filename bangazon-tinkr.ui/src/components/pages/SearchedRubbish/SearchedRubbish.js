@@ -2,7 +2,6 @@ import React from 'react';
 import productData from '../../../helpers/data/productData';
 import ProductGrid from '../../shared/ProductGrid/ProductGrid';
 
-
 class SearchedRubbish extends React.Component {
   state = {
     filteredProducts: [],

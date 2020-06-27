@@ -65,19 +65,16 @@ class Categories extends React.Component {
     }
   }
   
-  showCategories = (categories) => {
-    return (
-      categories.map((category) => {
-        return (
+  showCategories = (categories) => (
+      categories.map((category) => (
           <div key={category.categoryId}>
             <h2>{category.name}</h2>
             <div className="card-group">
               {this.getThreeRubbishes(category.categoryId)}
             </div>
           </div>
-      )})
-    );
-  }
+      ))
+    )
 
   componentDidMount() {
     this.getCategories();

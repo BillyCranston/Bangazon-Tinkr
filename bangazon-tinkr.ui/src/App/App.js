@@ -17,6 +17,7 @@ import Categories from '../components/pages/Categories/Categories';
 import SellerStore from '../components/pages/SellerStore/SellerStore';
 import SearchedRubbish from '../components/pages/SearchedRubbish/SearchedRubbish';
 import SearchedSeller from '../components/pages/SearchedSeller/SearchedSeller';
+import Login from '../components/pages/Login/Login';
 import './App.scss';
 
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
@@ -50,6 +51,7 @@ class App extends React.Component {
       <Router>
         <MainNavbar authed={authed} />
         <Switch>
+          <Login />
           <PublicRoute path="/" exact component={Home} authed={authed} />
           <PublicRoute path="/profile" exact component={Profile} authed={authed} />
           <PublicRoute path="/shoppingCart" exact component={ShoppingCart} authed={authed} />
