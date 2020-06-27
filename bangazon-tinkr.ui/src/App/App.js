@@ -5,9 +5,8 @@ import {
   Redirect,
   Switch,
 } from 'react-router-dom';
-
+import firebase from 'firebase';
 import MainNavbar from '../components/shared/MainNavbar/MainNavbar';
-
 import Home from '../components/pages/Home/Home';
 import Products from '../components/pages/Products/Products';
 import Profile from '../components/pages/Profile/Profile';
@@ -20,6 +19,7 @@ import SearchedSeller from '../components/pages/SearchedSeller/SearchedSeller';
 import Login from '../components/pages/Login/Login';
 import './App.scss';
 import fbConnection from '../helpers/data/connection';
+import userData from '../helpers/data/userData';
 
 fbConnection();
 
@@ -38,6 +38,27 @@ class App extends React.Component {
     authed: false,
   }
 
+  componentDidMount() {
+    this.removeListener = firebase.auth().onAuthStateChanged((firebaseUser) => {
+      firebaseUser.user.getIdToken()
+      // save the token to the session storage
+        .then((token) => sessionStorage.setItem('token', token))
+        .then(() => {
+        // fetch call
+          userData.GetUserByEmail(firebaseUser.email)
+            .then((response) => {
+              const internalUser = response.data;
+              if (firebaseUser) {
+              // call out to api/user by firebase email, ? internalUserId: currentUserObj.id
+              // pass this into the id space on my link
+                this.setState({ authed: true, firebaseUser, internalUser });
+              } else {
+                this.setState({ authed: false });
+              }
+            });
+        });
+    });
+  }
   // componentDidMount() {
   //   // add authentication here when ready
   //   this.setState({ authed: true });
