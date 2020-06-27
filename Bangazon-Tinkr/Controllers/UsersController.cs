@@ -218,5 +218,14 @@ namespace Bangazon_Tinkr.Controllers
                 return Ok(updatedPmtType);
             }
         }
+
+        // api/User/Info/katie
+        [HttpGet("Info/{sellerInfo}")]
+        public IActionResult GetSellersByName(string sellerInfo)
+        {
+            var SellerByInfo = _userRepository.GetSellersByName(sellerInfo);
+            if (SellerByInfo == null) return NotFound("That Seller does not exist.");
+            return Ok(SellerByInfo);
+        }
     }
 }

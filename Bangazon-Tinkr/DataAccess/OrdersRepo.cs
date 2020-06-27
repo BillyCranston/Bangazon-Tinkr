@@ -274,5 +274,21 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
+        public LineItem CheckForProductIdOnCurrentOrder(LineItem lineItem)
+        {
+            var sql = @"
+                        select *
+                        from LineItem
+                        where orderId = @OrderId and RubbishId = @RubbishId;
+                      ";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { RubbishId = lineItem.RubbishId, OrderId = lineItem.OrderId };
+                var result = db.QueryFirstOrDefault<LineItem>(sql, parameters);
+                return result;
+            }
+        }
+
     }
 }
