@@ -56,6 +56,65 @@ namespace Bangazon_Tinkr.Controllers
             return Ok(allRubbishByUser);
         }
 
+        // api/Rubbish/User/1/Inventory
+        [HttpGet("User/{userId}/Inventory")]
+        public IActionResult GetRubbishInventoryByUserId(int userId)
+        {
+            var RubbishInventoryByUser = _rubbishRepository.RubbishInventoryByUserId(userId);
+            if (RubbishInventoryByUser == null) return NotFound("This user has no rubbish available in their inventory.");
+
+            return Ok(RubbishInventoryByUser);
+        }
+
+        // api/Rubbish/User/1/toShip
+        [HttpGet("User/{userId}/toShip")]
+        public IActionResult GetRubbishToShipByUserId(int userId)
+        {
+            var RubbishToShip = _rubbishRepository.RubbishToShipByUserId(userId);
+            if (RubbishToShip == null) return NotFound("There's no rubbish that needs to be shipped at the moment.");
+
+            return Ok(RubbishToShip);
+        }
+
+        // api/Rubbish/User/1/TotalSales
+        [HttpGet("User/{userId}/TotalSales")]
+        public IActionResult GetTotalSalesByUserId(int userId)
+        {
+            var validUser = _usersRepository.GetUserById(userId);
+            if (validUser != null)
+            {
+                var totalSales = _rubbishRepository.returnTotalSalesByUserId(userId);
+                return Ok(totalSales);
+            }
+            return NotFound("That user does not exist");
+        }
+
+        // api/Rubbish/User/1/SalesThisMonth
+        [HttpGet("User/{userId}/SalesThisMonth")]
+        public IActionResult TotalSalesThisMonthByUserId(int userId)
+        {
+            var validUser = _usersRepository.GetUserById(userId);
+            if (validUser != null)
+            {
+                var totalSalesThisMonth = _rubbishRepository.returnTotalSalesThisMonth(userId);
+                return Ok(totalSalesThisMonth);
+            }
+            return NotFound("That user does not exist");
+        }
+
+        // api/Rubbish/User/1/AverageSale
+        [HttpGet("User/{userId}/AverageSale")]
+        public IActionResult GetAverageSalePerItem(int userId)
+        {
+            var validUser = _usersRepository.GetUserById(userId);
+            if (validUser != null)
+            {
+                var avgSalePerRubbish = _rubbishRepository.returnAverageSalePerItem(userId);
+                return Ok(avgSalePerRubbish);
+            }
+            return NotFound("That user does not exist");
+        }
+
         // api/Rubbish/createRubbish
         [HttpPost]
         public IActionResult CreateNewRubbish(Rubbish rubbishToAdd)

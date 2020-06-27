@@ -95,6 +95,24 @@ namespace Bangazon_Tinkr.Controllers
             else return NotFound("That User does not exist.");
         }
 
+        // api/User/Order/2
+        [HttpGet("Order/{orderId}")]
+        public IActionResult GetSingleUserByOrderId(int orderId)
+        {
+            var singleUser = _userRepository.GetUserByOrderId(orderId);
+            var userId = singleUser.UserId;
+            var singleUserAccountIsDeleted = _userRepository.CheckIfUserAccountIsDeleted(userId);
+            if (singleUser != null)
+            {
+                return Ok(singleUser);
+            }
+            else if (singleUserAccountIsDeleted != null)
+            {
+                return Ok("Account has been Deleted");
+            }
+            else return NotFound("That User does not exist.");
+        }
+
         // api/User/PaymentTypes/3
         [HttpGet("PaymentTypes/{paymentTypeId}")]
         public IActionResult GetSinglePaymentTypeById(int paymentTypeId)
@@ -199,6 +217,15 @@ namespace Bangazon_Tinkr.Controllers
                 var updatedPmtType = _userRepository.UpdatePaymentType(pmtType);
                 return Ok(updatedPmtType);
             }
+        }
+
+        // api/User/Info/katie
+        [HttpGet("Info/{sellerInfo}")]
+        public IActionResult GetSellersByName(string sellerInfo)
+        {
+            var SellerByInfo = _userRepository.GetSellersByName(sellerInfo);
+            if (SellerByInfo == null) return NotFound("That Seller does not exist.");
+            return Ok(SellerByInfo);
         }
     }
 }

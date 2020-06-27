@@ -35,6 +35,18 @@ namespace Bangazon_Tinkr.Controllers
             return NotFound("Couldn't find an order with that id");
         }
 
+        //api/Order/Completed/Rubbish/{rubbishId}
+        [HttpGet("Completed/Rubbish/{rubbishId}/")]
+        public IActionResult GetCompletedOrderByRubbishId(int rubbishId)
+        {
+            var completedOrder = _ordersRepository.GetCompletedOrderByRubbishId(rubbishId);
+            if (completedOrder != null)
+            {
+                return Ok(completedOrder);
+            }
+            return NotFound("No completed order could be found.");
+        }
+
         //api/Order/OpenOrder/{userId}
         [HttpGet("OpenOrder/{userId}")]
         public IActionResult GetUserOpenOrder(int userId)
@@ -101,6 +113,7 @@ namespace Bangazon_Tinkr.Controllers
             if (checkIncompleteOrder == true)
             {
                 var completeOrder = _ordersRepository.CompleteOrder(orderId);
+                _rubbishRepository.RubbishNoLongerAvailableAfterOrderComplete(orderId);
                 return Ok(completeOrder);
             }
             else
@@ -139,10 +152,15 @@ namespace Bangazon_Tinkr.Controllers
             if (order && checkOrderIsActive != null)
             {
                 var rubbish = _rubbishRepository.CheckIfRubbishIsAvailable(lineItemToAdd.RubbishId);
+                var itemAlreadyInCart = _ordersRepository.CheckForProductIdOnCurrentOrder(lineItemToAdd);
                 if (rubbish != null)
                 {
-                    var newLineItem = _ordersRepository.AddNewLineItem(lineItemToAdd);
-                    return Ok(newLineItem);
+                    if (itemAlreadyInCart == null)
+                    {
+                        var newLineItem = _ordersRepository.AddNewLineItem(lineItemToAdd);
+                        return Ok(newLineItem);
+                    }
+                    return BadRequest("This item is already in the cart.  Only unique items can be used for new line items.");
                 }
                 return NotFound("That piece of rubbish is no longer available.");
             }

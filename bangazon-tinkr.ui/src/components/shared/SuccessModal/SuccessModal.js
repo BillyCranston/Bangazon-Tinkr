@@ -20,7 +20,7 @@ const ModalExample = (props) => {
   return (
     <div>
       <Button color="dark" onClick={toggle}>{buttonLabel}</Button>
-      <Modal isOpen={modal} toggle={toggle} className={className}>
+      <Modal isOpen={true} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>Success!</ModalHeader>
         <ModalBody>
           You have added a new item to your cart. Click on your cart when you are ready to check out!
