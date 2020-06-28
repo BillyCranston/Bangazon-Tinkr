@@ -27,15 +27,16 @@ const registerUser = (user) =>
       .then(() => axios.post(`${baseUrl}/RegisteredUser/register`, user));
   });
 
-const loginUser = (user) =>
+const loginUser = (user) => {
   // sub out whatever auth method firebase provides that you want to use.
   // eslint-disable-next-line implicit-arrow-linebreak
-  firebase.auth().signInWithEmailAndPassword(user.email, user.password).then((cred) => {
+  return firebase.auth().signInWithEmailAndPassword(user.email, user.password).then((cred) => {
     // get token from firebase
     cred.user.getIdToken()
       // save the token to the session storage
       .then((token) => sessionStorage.setItem('token', token));
   });
+};
 
 const logoutUser = () => firebase.auth().signOut();
 

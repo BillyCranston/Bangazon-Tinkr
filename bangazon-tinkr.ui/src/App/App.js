@@ -40,27 +40,27 @@ class App extends React.Component {
     firebaseUser: {},
   }
 
-  componentDidMount() {
-    this.removeListener = firebase.auth().onAuthStateChanged((firebaseUser) => {
-      firebaseUser.user.getIdToken()
-      // save the token to the session storage
-        .then((token) => sessionStorage.setItem('token', token))
-        .then(() => {
-        // fetch call
-          userData.GetUserByEmail(firebaseUser.email)
-            .then((response) => {
-              const registeredUser = response.data;
-              if (firebaseUser) {
-              // call out to api/user by firebase email, ? internalUserId: currentUserObj.id
-              // pass this into the id space on my link
-                this.setState({ authed: true, registeredUser });
-              } else {
-                this.setState({ authed: false });
-              }
-            });
-        });
-    });
-  }
+  // componentDidMount() {
+  //   this.removeListener = firebase.auth().onAuthStateChanged((firebaseUser) => {
+  //     firebaseUser.user.getIdToken()
+  //     // save the token to the session storage
+  //       .then((token) => sessionStorage.setItem('token', token))
+  //       .then(() => {
+  //       // fetch call
+  //         userData.GetUserByEmail(firebaseUser.email)
+  //           .then((response) => {
+  //             const registeredUser = response.data;
+  //             if (firebaseUser) {
+  //             // call out to api/user by firebase email, ? internalUserId: currentUserObj.id
+  //             // pass this into the id space on my link
+  //               this.setState({ authed: true, registeredUser });
+  //             } else {
+  //               this.setState({ authed: false });
+  //             }
+  //           });
+  //       });
+  //   });
+  // }
 
   componentWillUnmount() {
     this.removeListener();
