@@ -53,6 +53,7 @@ const addNewPaymentType = (paymentObject) => axios.post(`${baseUrl}/User/Payment
 export default {
   getUser,
   getUserByRubbishId,
+  getUserByOrderId,
   getSellerByInfo,
   getAllPaymentTypes,
   addNewPaymentType,
