@@ -43,6 +43,15 @@ const addItemToOrder = (itemObj) => axios.post(`${baseUrl}/Order/AddItem`, itemO
 
 const deleteLineItem = (lineItemId) => axios.delete(`${baseUrl}/Order/deleteItem/${lineItemId}`);
 
+const getAllUserOrders = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/Order/user/${userId}`)
+    .then((result) => {
+      const userOrders = result.data;
+      resolve(userOrders);
+    })
+    .catch((err) => reject(err));
+});
+
 export default {
   getUserOrder,
   addItemToOrder,
@@ -50,4 +59,5 @@ export default {
   getOpenOrderByUserId,
   deleteLineItem,
   getCompletedOrderByProductId,
+  getAllUserOrders,
 };

@@ -1,7 +1,10 @@
 import React from 'react';
 import SellerDashboard from '../SellerDashboard/SellerDashboard';
+import BuyerProfile from '../BuyerProfile/BuyerProfile';
 import userData from '../../../helpers/data/userData';
 import './Profile.scss';
+import BuyerCard from '../../shared/BuyerCard/BuyerCard';
+import SellerStore from '../SellerStore/SellerStore';
 
 class Profile extends React.Component {
   state = {
@@ -25,15 +28,35 @@ class Profile extends React.Component {
   }
 
   renderSellerDashboard = () => {
-    const { user, userId } = this.state;
-    if (user.type !== 'buyer') {
-      return (
-        <SellerDashboard userId = { userId }/>
-      );
-    }
+    const { userId } = this.state;
     return (
-      <div></div>
+      <SellerDashboard userId = { userId }/>
     );
+  };
+
+  renderBuyerProfile = () => {
+    const { userId } = this.state;
+    return (
+      <BuyerProfile userId = { userId } />
+    );
+  }
+
+  renderBuyerAndSellerProfile = () => {
+    const { userId } = this.state;
+    return (
+      <BuyerProfile userId = { userId } />,
+      <SellerStore userId = { userId } />
+    );
+  }
+
+  renderSwitchProfile = () => {
+    const { user } = this.state;
+    switch (user.type) {
+      case 'Buyer':
+        return this.renderBuyerProfile();
+      default:
+        return this.renderSellerDashboard();
+    }
   }
 
   render() {
@@ -50,7 +73,7 @@ class Profile extends React.Component {
         <h3> State: {user.state}</h3>
         <h3> Zip: {user.zip}</h3>
         <div className="row">
-          {this.renderSellerDashboard()}
+          {this.renderSwitchProfile(user.type)}
         </div>
       </div>
     );
