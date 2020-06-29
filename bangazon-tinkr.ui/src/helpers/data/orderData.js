@@ -51,6 +51,9 @@ const getAllUserOrders = (userId) => new Promise((resolve, reject) => {
     })
     .catch((err) => reject(err));
 });
+const completeOrder = (orderId) => axios.put(`${baseUrl}/Order/checkout/${orderId}`);
+
+const updatePayment = (orderId, paymentId) => axios.put(`${baseUrl}/Order/${orderId}/updatePayment/${paymentId}`);
 
 export default {
   getUserOrder,
@@ -60,4 +63,6 @@ export default {
   deleteLineItem,
   getCompletedOrderByProductId,
   getAllUserOrders,
+  completeOrder,
+  updatePayment,
 };

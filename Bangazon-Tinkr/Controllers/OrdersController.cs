@@ -105,7 +105,7 @@ namespace Bangazon_Tinkr.Controllers
             return NotFound("That user does not exist");
         }
 
-        //api/Order/{orderId}
+        //api/Order/checkout/{orderId}
         [HttpPut("checkout/{orderId}")]
         public IActionResult UpdateOrderStatusToComplete(int orderId)
         {
@@ -178,6 +178,19 @@ namespace Bangazon_Tinkr.Controllers
                 return Ok("The line item has been successfully deleted.");
             }
             return NotFound("That line does not exist and could not be deleted");
+        }
+
+        // api/Order/{orderId}/updatePayment/{paymentTypeId}
+        [HttpPut("{orderId}/updatePayment/{paymentTypeId}")]
+        public IActionResult UpdatePaymentTypeForOrder(int orderId, int paymentTypeId)
+        {
+            var checkOrderIsActive = _ordersRepository.CheckIfOrderIsActive(orderId);
+            if (checkOrderIsActive != null)
+            {
+                var order = _ordersRepository.UpdateOrderWithNewPaymentType(orderId, paymentTypeId);
+                return Ok("Payment on Order Updated Successfully");
+            }
+            return NotFound("That order does not exist");
         }
 
     }
