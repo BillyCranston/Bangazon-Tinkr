@@ -151,17 +151,22 @@ class SellerDashboard extends React.Component {
       .catch((err) => console.error('error from get total sales', err));
   }
 
-  showSellersOrders = (orders) => (
-    orders.map((order) => (
-      <div key={order.orderId}>
-        <h4>{order.rubbishName}</h4>
-        <h5>${order.price}.00</h5>
-        <h5>Buyer: {order.buyerName}</h5>
-        <h5>{order.streetAddress}</h5>
-        <h5>{order.city}, {order.state} {order.zip}</h5>
-      </div>
-    ))
-  )
+  showSellersOrders = (orders) => {
+    if (orders.length == 0) {
+      return <h4>No orders yet</h4>
+    } else {
+      return (orders.map((order) => (
+        <div key={order.orderId}>
+          <h4>Order #{order.orderId}</h4>
+          <h5>{order.rubbishName}</h5>
+          <h5>${order.price}.00</h5>
+          <h5>Buyer: {order.buyerName}</h5>
+          <h5>{order.streetAddress}</h5>
+          <h5>{order.city}, {order.state} {order.zip}</h5>
+        </div>
+      )))
+    }
+  }
 
   render() {
     const {

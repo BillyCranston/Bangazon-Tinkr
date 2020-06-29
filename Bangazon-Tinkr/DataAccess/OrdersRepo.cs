@@ -33,29 +33,40 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
-        public OrderTotal GetSingleOrderDetails(int orderId)
+        public int GetOrderTotal(int orderId)
         {
-            var orderLineItems = GetLineItemDetailsByOrderId(orderId);
             var sql = @"
-                        select *
-                        from [Order]
-                        where OrderId = @OrderId;
-                      ";
-
-            var sql2 = @"
                         select sum(Rubbish.Price) as OrderTotal
                         from LineItem
 	                        join Rubbish
 		                        on LineItem.RubbishId = Rubbish.RubbishId
                         where LineItem.orderId = @OrderId;
                       ";
+            
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { OrderId = orderId };
+                var orderSum = db.QueryFirstOrDefault<int>(sql, parameters);
+                return orderSum;
+            }
+
+        }
+
+        public OrderTotal GetSingleOrderDetails(int orderId)
+        {
+            var orderLineItems = GetLineItemDetailsByOrderId(orderId);
+            var orderSum = GetOrderTotal(orderId);
+            var sql = @"
+                        select *
+                        from [Order]
+                        where OrderId = @OrderId;
+                      ";
 
             using (var db = new SqlConnection(connectionString))
             {
                 var parameters = new { OrderId = orderId };
-                var orderSum = db.QueryFirstOrDefault<decimal>(sql2, parameters);
                 var result = db.QueryFirstOrDefault<Order>(sql, parameters);
-                var parameters2 = new OrderTotal()
+                var orderTotal = new OrderTotal()
                 {
                     OrderId = orderId,
                     LineItems = orderLineItems,
@@ -63,7 +74,7 @@ namespace Bangazon_Tinkr.DataAccess
                     UserId = result.UserId,
                     PaymentId = result.PaymentId
                 };
-                return parameters2;
+                return orderTotal;
             }
         }
 
@@ -312,6 +323,23 @@ namespace Bangazon_Tinkr.DataAccess
             {
                 var parameters = new { RubbishId = lineItem.RubbishId, OrderId = lineItem.OrderId };
                 var result = db.QueryFirstOrDefault<LineItem>(sql, parameters);
+                return result;
+            }
+        }
+
+        public Order UpdateOrderWithNewPaymentType(int orderId, int paymentId)
+        {
+            var sql = @"
+                        UPDATE[Order]
+                        Set PaymentId = @PaymentId
+                        Output inserted.*
+                        Where OrderId = @OrderId;
+                        ";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { OrderId = orderId, PaymentId = paymentId };
+                var result = db.QueryFirstOrDefault<Order>(sql, parameters);
                 return result;
             }
         }
