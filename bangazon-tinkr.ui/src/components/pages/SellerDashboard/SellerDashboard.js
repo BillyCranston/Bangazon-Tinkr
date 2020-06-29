@@ -16,6 +16,7 @@ class SellerDashboard extends React.Component {
     products: [],
     productsToShip: [],
     orderInfoSample: {},
+    sellerOrders: [],
   }
 
   static propTypes = {
@@ -29,6 +30,7 @@ class SellerDashboard extends React.Component {
     this.getCategories();
     this.getInventoryByUserId();
     this.getProductsToShipByUserId();
+    this.getSellersOrders();
   }
 
   getCategories = () => {
@@ -140,6 +142,32 @@ class SellerDashboard extends React.Component {
     ))
   )
 
+  getSellersOrders = () => {
+    const { userId } = this.props;
+    orderData.getOrdersBySeller(userId)
+      .then((sellerOrders) => {
+        this.setState({ sellerOrders });
+      })
+      .catch((err) => console.error('error from get total sales', err));
+  }
+
+  showSellersOrders = (orders) => {
+    if (orders.length == 0) {
+      return <h4>No orders yet</h4>
+    } else {
+      return (orders.map((order) => (
+        <div key={order.orderId}>
+          <h4>Order #{order.orderId}</h4>
+          <h5>{order.rubbishName}</h5>
+          <h5>${order.price}.00</h5>
+          <h5>Buyer: {order.buyerName}</h5>
+          <h5>{order.streetAddress}</h5>
+          <h5>{order.city}, {order.state} {order.zip}</h5>
+        </div>
+      )))
+    }
+  }
+
   render() {
     const {
       totalSales,
@@ -147,9 +175,10 @@ class SellerDashboard extends React.Component {
       averageSale,
       categories,
       productsToShip,
+      sellerOrders,
     } = this.state;
     return (
-      <div className="SellerDashboard">
+      <div className="SellerDashboard container">
         <h1>Seller Dashboard</h1>
         <h3>Total Sales: ${totalSales} </h3>
         <h3>Total Sales This Month: ${totalSalesThisMonth}</h3>
@@ -160,6 +189,8 @@ class SellerDashboard extends React.Component {
         </div>
         <h3>Orders that require shipping: </h3>
           { productsToShip.map((product) => <ProductToShip key={product.rubbishId} product={product} />)}
+        <h3>All Orders that include your rubbish:</h3>
+          {this.showSellersOrders(sellerOrders)}
       </div>
     );
   }

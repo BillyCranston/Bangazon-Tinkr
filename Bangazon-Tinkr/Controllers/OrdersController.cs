@@ -180,6 +180,31 @@ namespace Bangazon_Tinkr.Controllers
             return NotFound("That line does not exist and could not be deleted");
         }
 
+        // api/Order/History/1
+        [HttpGet("History/{sellerId}")]
+        public IActionResult GetOrdersBySellerId(int sellerId)
+        {
+            var isValidUser = _usersRepository.GetUserById(sellerId);
+            var isSeller = _usersRepository.CheckIfUserIsSeller(sellerId);
+            if (isValidUser == null)
+            {
+                return NotFound("Not a real user, my dude");
+            }
+            else if (isSeller == null)
+            {
+                return NotFound("That user doesn't sell anything, mon frère");
+            }
+            else
+            {
+                var orders = _ordersRepository.GetOrdersBySeller(sellerId);
+                var thereAreNoOrders = !orders.Any();
+                if (thereAreNoOrders)
+                {
+                    return NotFound("Keine zutreffende Bestellungen, Alter");
+                }
+                return Ok(orders);
+            }
+        }
         // api/Order/{orderId}/updatePayment/{paymentTypeId}
         [HttpPut("{orderId}/updatePayment/{paymentTypeId}")]
         public IActionResult UpdatePaymentTypeForOrder(int orderId, int paymentTypeId)

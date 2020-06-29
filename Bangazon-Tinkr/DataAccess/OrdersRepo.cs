@@ -242,6 +242,32 @@ namespace Bangazon_Tinkr.DataAccess
             }
         }
 
+        public IEnumerable<OrderForSellerDash> GetOrdersBySeller(int sellerId)
+        {
+            var sql = @"
+                        select o.OrderId,
+                               r.[Name] as RubbishName,
+                               r.Price,
+                               Buyer.FirstName + ' ' + Buyer.LastName as BuyerName,
+	                           Buyer.StreetAddress,
+                               Buyer.City,
+                               Buyer.[State],
+                               Buyer.Zip
+                        from [Order] as o
+	                        join LineItem as l on o.OrderId = l.OrderId
+	                        join Rubbish as r on l.RubbishId = r.RubbishId
+	                        join [User] as Buyer on o.UserId = Buyer.UserId
+                        where r.UserId = @sellerId
+                       ";
+
+            using (var db = new SqlConnection(connectionString))
+            {
+                var parameters = new { SellerId = sellerId };
+                var results = db.Query<OrderForSellerDash>(sql, parameters);
+                return results;
+            }
+        }
+
         public LineItem AddNewLineItem(LineItem lineItemToAdd)
         {
             var sql = @"

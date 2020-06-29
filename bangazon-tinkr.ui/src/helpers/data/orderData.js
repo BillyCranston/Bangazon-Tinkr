@@ -39,6 +39,12 @@ const getCompletedOrderByProductId = (rubbishId) => new Promise((resolve, reject
     .catch((err) => reject(err));
 });
 
+const getOrdersBySeller = (sellerId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/Order/History/${sellerId}`)
+    .then((result) => resolve(result.data))
+    .catch((err) => reject('error in orderData', err));
+});
+
 const addItemToOrder = (itemObj) => axios.post(`${baseUrl}/Order/AddItem`, itemObj);
 
 const deleteLineItem = (lineItemId) => axios.delete(`${baseUrl}/Order/deleteItem/${lineItemId}`);
@@ -54,6 +60,7 @@ export default {
   getOpenOrderByUserId,
   deleteLineItem,
   getCompletedOrderByProductId,
+  getOrdersBySeller,
   completeOrder,
   updatePayment,
 };
