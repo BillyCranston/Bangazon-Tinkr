@@ -26,4 +26,4 @@ package-lock.json
 .eslintrc
 
 src/helpers/apiKeys.json
-src/helpers/constants.js
+src/helpers/constants.json
