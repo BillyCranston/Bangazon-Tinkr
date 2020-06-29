@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import CartProductCard from '../../shared/CartProductCard/CartProductCard';
 
@@ -8,7 +9,7 @@ import userData from '../../../helpers/data/userData';
 
 class ShoppingCart extends React.Component {
   state = {
-    itemTotal: 20,
+    itemTotal: 0,
     shipping: 15,
     orderTax: 0,
     products: [],
@@ -78,6 +79,8 @@ class ShoppingCart extends React.Component {
       user,
       orderTax,
       shipping,
+      products,
+      order,
     } = this.state;
 
     return (
@@ -116,7 +119,17 @@ class ShoppingCart extends React.Component {
                   </tr>
                 </tbody>
               </table>
-              <div className="btn btn-dark btn-block p-1 mx-0 my-3">Place Order</div>
+              <Link className="btn btn-dark btn-block p-1 mx-0 my-3" to={{
+                pathname: '/checkout',
+                state: {
+                  products,
+                  user,
+                  order,
+                  itemTotal,
+                  orderTax,
+                  shipping,
+                },
+              }}>Place Order</Link>
               <div className="row">
                 <img className="mapImage col" src="https://d26d74ht2k6aj1.cloudfront.net/images/street-map-sample.png"/>
                 <div className="col">
