@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Bangazon_Tinkr.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using Bangazon_Tinkr.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bangazon_Tinkr.Controllers
 {
@@ -64,6 +65,7 @@ namespace Bangazon_Tinkr.Controllers
         [HttpPost("userOpenOrder")]
         public IActionResult GetOpenOrderByUserId(Order userId)
         {
+
             // 1. validate user exists
             var validUser = _usersRepository.GetUserById(userId.UserId);
             if (validUser != null)
@@ -128,6 +130,7 @@ namespace Bangazon_Tinkr.Controllers
 
         //api/Order/
         [HttpPost]
+        [Authorize]
         public IActionResult CreateNewOrder(Order orderToAdd)
         {
             var isValidUser = _usersRepository.GetUserById(orderToAdd.UserId);
@@ -145,6 +148,7 @@ namespace Bangazon_Tinkr.Controllers
 
         //api/Order/AddItem
         [HttpPost("AddItem")]
+        [Authorize]
         public IActionResult AddItemToOrder(LineItem lineItemToAdd)
         {
             var order = _ordersRepository.CheckForValidOrderId(lineItemToAdd.OrderId);
@@ -169,6 +173,7 @@ namespace Bangazon_Tinkr.Controllers
 
         // api/Order/deleteItem/{lineItemId}
         [HttpDelete("deleteItem/{lineItemId}")]
+        [Authorize]
         public IActionResult DeleteItemFromOrder(int lineItemId)
         {
             var isValidLine = _ordersRepository.GetLineItemById(lineItemId);

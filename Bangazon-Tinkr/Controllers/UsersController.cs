@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Bangazon_Tinkr.Models;
 using Bangazon_Tinkr.DataAccess;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bangazon_Tinkr.Controllers
 {
@@ -146,6 +147,7 @@ namespace Bangazon_Tinkr.Controllers
 
         // api/User/UpdateUser
         [HttpPut("UpdateUser")]
+        [Authorize]
         public IActionResult UpdateUserInformation(User updateUser)
         {
             var userIdToUpdate = _userRepository.GetUserById(updateUser.UserId);

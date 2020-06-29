@@ -7,6 +7,7 @@ using Bangazon_Tinkr.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration.UserSecrets;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bangazon_Tinkr.Controllers
 {
@@ -68,6 +69,7 @@ namespace Bangazon_Tinkr.Controllers
 
         // api/Rubbish/User/1/toShip
         [HttpGet("User/{userId}/toShip")]
+        [Authorize]
         public IActionResult GetRubbishToShipByUserId(int userId)
         {
             var RubbishToShip = _rubbishRepository.RubbishToShipByUserId(userId);
@@ -78,6 +80,7 @@ namespace Bangazon_Tinkr.Controllers
 
         // api/Rubbish/User/1/TotalSales
         [HttpGet("User/{userId}/TotalSales")]
+        [Authorize]
         public IActionResult GetTotalSalesByUserId(int userId)
         {
             var validUser = _usersRepository.GetUserById(userId);
@@ -91,6 +94,7 @@ namespace Bangazon_Tinkr.Controllers
 
         // api/Rubbish/User/1/SalesThisMonth
         [HttpGet("User/{userId}/SalesThisMonth")]
+        [Authorize]
         public IActionResult TotalSalesThisMonthByUserId(int userId)
         {
             var validUser = _usersRepository.GetUserById(userId);
@@ -104,6 +108,7 @@ namespace Bangazon_Tinkr.Controllers
 
         // api/Rubbish/User/1/AverageSale
         [HttpGet("User/{userId}/AverageSale")]
+        [Authorize]
         public IActionResult GetAverageSalePerItem(int userId)
         {
             var validUser = _usersRepository.GetUserById(userId);
