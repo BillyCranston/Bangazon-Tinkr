@@ -17,6 +17,8 @@ import SellerStore from '../components/pages/SellerStore/SellerStore';
 import SearchedRubbish from '../components/pages/SearchedRubbish/SearchedRubbish';
 import SearchedSeller from '../components/pages/SearchedSeller/SearchedSeller';
 import Login from '../components/pages/Login/Login';
+import OrderCheckout from '../components/pages/OrderCheckout/OrderCheckout';
+
 import './App.scss';
 import fbConnection from '../helpers/data/connection';
 import userData from '../helpers/data/userData';
@@ -91,6 +93,7 @@ class App extends React.Component {
           <Route path="/products/:sellerId" exact component={SellerStore} authed={authed} />
           <Route path="/products/search/:searchTerm" exact component={SearchedRubbish} authed={authed} />
           <Route path="/sellers/:searchTerm" exact component={SearchedSeller} authed={authed} />
+          <PrivateRoute path="/checkout" exact component={OrderCheckout} authed={authed} />
         </Switch>
       </Router>
     </div>
