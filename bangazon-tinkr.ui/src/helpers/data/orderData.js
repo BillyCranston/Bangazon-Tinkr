@@ -49,6 +49,14 @@ const addItemToOrder = (itemObj) => axios.post(`${baseUrl}/Order/AddItem`, itemO
 
 const deleteLineItem = (lineItemId) => axios.delete(`${baseUrl}/Order/deleteItem/${lineItemId}`);
 
+const getAllUserOrders = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/Order/user/${userId}`)
+    .then((result) => {
+      const userOrders = result.data;
+      resolve(userOrders);
+    })
+    .catch((err) => reject(err));
+});
 const completeOrder = (orderId) => axios.put(`${baseUrl}/Order/checkout/${orderId}`);
 
 const updatePayment = (orderId, paymentId) => axios.put(`${baseUrl}/Order/${orderId}/updatePayment/${paymentId}`);
@@ -60,6 +68,7 @@ export default {
   getOpenOrderByUserId,
   deleteLineItem,
   getCompletedOrderByProductId,
+  getAllUserOrders,
   getOrdersBySeller,
   completeOrder,
   updatePayment,
